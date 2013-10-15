@@ -35,7 +35,7 @@
 
 include_once "DB.php";
 
-include_once "@CENTREON_ETC@/centreon.conf.php";
+include_once "/etc/centreon/centreon.conf.php";
 include_once $centreon_path . "/www/class/centreonDB.class.php";
 
 $centreonDbName = $conf_centreon['db'];
@@ -87,6 +87,7 @@ try {
   /*
    * Synch HostGroup List
    */
+  $pearDB->query("TRUNCATE hostgroup");
   $request = "SELECT hostgroup_id, name FROM hostgroups WHERE hostgroup_id NOT IN (SELECT hg_id FROM $centreonDbName.hostgroup)";
   $DBRESULT = $pearDBO->query($request);
   while ($row = $DBRESULT->fetchRow()) {
