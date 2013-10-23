@@ -49,17 +49,56 @@ try {
   /*
    * Init DB connections
    */
-  $pearDB = new CentreonDB();
-  $pearDBO = new CentreonDB("centstorage");
+  $DB = new CentreonDB();
+  $DBO = new CentreonDB("centstorage");
+
+  /*
+   * Sync Poller List 
+   */
+  $request = "SELECT * FROM instances WHERE running = '1'";
+  $DBRESULT = $DBO->query($request);
+  if ($DBRESULT->numRows() != 0) {
+     $DBRESULT = $DBO->query("DELETE FROM instances WHERE running = '0'"); 
+  }
+
+  $DBO->query("DELETE FROM $centreonDbName.nagios_server WHERE id NOT IN (SELECT instance_id FROM instances WHERE running = '1' AND last_alive > '".(time() - 600)."')");
+  
+  $request = "SELECT * FROM instances WHERE instance_id NOT IN (SELECT id FROM $centreonDbName.nagios_server) ORDER BY last_alive DESC LIMIT 1";
+  $DBRESULT = $DBO->query($request);
+  while ($row = $DBRESULT->fetchRow()) {
+      $request = "INSERT INTO nagios_server (id, name, localhost, ns_activate, ns_status) VALUES ('".$row['instance_id']."', '".$row["name"]."', 1, 1, 1)";
+      print $request;
+      $DB->query($request);
+      
+      $request = "INSERT INTO cfg_nagios (nagios_name, nagios_server_id, interval_length, nagios_activate) VALUES ('Main file for ".$row["name"]."', '".$row["instance_id"]."', 60, '1')";
+      print $request;
+      $DB->query($request);
+  }
+
+  /*
+   * Get Engine instance
+   */
+  $request = "SELECT id FROM nagios_server LIMIT 1";
+  $DBRESULT = $DB->query($request);
+  $row = $DBRESULT->fetchRow();
+  $nagios_server_id = $row["id"];    
   
   /*
    * Synch Host List
    */
-  $DBRESULT = $pearDBO->query("SELECT host_id, name, address FROM centreon_storage.hosts WHERE host_id NOT IN (SELECT host_id FROM $centreonDbName.host WHERE host_register = '1') AND enabled = '1'");
+  $DBO->query("DELETE FROM $centreonDbName.host WHERE host_id NOT IN (SELECT host_id FROM hosts WHERE enabled = '1')");
+
+  $DBRESULT = $DBO->query("SELECT host_id, name, address, check_interval, retry_interval, max_check_attempts FROM centreon_storage.hosts WHERE host_id NOT IN (SELECT host_id FROM $centreonDbName.host WHERE host_register = '1') AND enabled = '1'");
   while ($row = $DBRESULT->fetchRow()) {
-    $request = "INSERT INTO host (host_id, host_name, host_address, host_register, host_activate) VALUES ('".$row['host_id']."', '".$row['name']."', '".$row['address']."', '1', '1')";
-    $pearDB->query($request);
+    $request = "INSERT INTO host (host_id, host_name, host_alias, host_address, host_register, host_activate, host_check_interval, host_retry_check_interval, host_max_check_attempts) VALUES ('".$row['host_id']."', '".$row['name']."',  '".$row['name']."', '".$row['address']."', '1', '1', ".$row['check_interval'].", ".$row['retry_interval'].", ".$row['max_check_attempts'].")";
+    $DB->query($request);
     
+    $request = "INSERT INTO extended_host_information (host_host_id) VALUES ('".$row['host_id']."')";
+    $DB->query($request);
+    
+    $request = "INSERT INTO ns_host_relation (nagios_server_id, host_host_id) VALUES ('$nagios_server_id', '".$row['host_id']."')";
+    $DB->query($request);
+
     if ($debug) {
       print "add host: ".$row['name']."(".$row['address'].") [".$row['host_id']."]\n";
     }
@@ -68,16 +107,19 @@ try {
   /*
    * Synch Services List
    */
-  $request = "SELECT s.host_id, s.service_id, s.description, h.name FROM services s, hosts h WHERE h.host_id = s.host_id AND s.service_id NOT IN (SELECT service_id FROM $centreonDbName.service WHERE service_register = '1' AND service_activate = '1') AND s.host_id IN (SELECT host_id FROM $centreonDbName.host WHERE host_register = '1') AND s.enabled = 1";
-  $DBRESULT = $pearDBO->query($request);
+  $request = "SELECT s.host_id, s.service_id, s.description, h.name, s.check_interval, s.retry_interval, s.max_check_attempts FROM services s, hosts h WHERE h.host_id = s.host_id AND s.service_id NOT IN (SELECT service_id FROM $centreonDbName.service WHERE service_register = '1' AND service_activate = '1') AND s.host_id IN (SELECT host_id FROM $centreonDbName.host WHERE host_register = '1') AND s.enabled = '1'";
+  $DBRESULT = $DBO->query($request);
   while ($row = $DBRESULT->fetchRow()) {
     // Insert service
-    $request = "INSERT INTO service (service_id, service_description, service_register, service_activate) VALUES ('".$row['service_id']."', '".$row['description']."', '1', '1')";
-    $pearDB->query($request);
+    $request = "INSERT INTO service (service_id, service_description, service_register, service_activate, service_normal_check_interval, service_retry_check_interval, service_max_check_attempts) VALUES ('".$row['service_id']."', '".$row['description']."', '1', '1', '".$row['check_interval']."', '".$row['retry_interval']."', '".$row['max_check_attempts']."')";
+    $DB->query($request);
+
+    $request = "INSERT INTO extended_service_information (service_service_id) VALUES ('".$row['service_id']."')";
+    $DB->query($request);
     
     // Insert host/service relation
     $request = "INSERT INTO host_service_relation (host_host_id, service_service_id) VALUES ('".$row['host_id']."', '".$row['service_id']."')";
-    $pearDB->query($request);
+    $DB->query($request);
 
     if ($debug) {
       print "add service ".$row['description']." for host ".$row['host_id']."\n";
@@ -87,13 +129,14 @@ try {
   /*
    * Synch HostGroup List
    */
-  $pearDB->query("TRUNCATE hostgroup");
+  $DB->query("DELETE FROM $centreonDbName.hostgroup WHERE hg_id NOT IN (SELECT hostgroup_id FROM hostgroups)");
+
   $request = "SELECT hostgroup_id, name FROM hostgroups WHERE hostgroup_id NOT IN (SELECT hg_id FROM $centreonDbName.hostgroup)";
-  $DBRESULT = $pearDBO->query($request);
+  $DBRESULT = $DBO->query($request);
   while ($row = $DBRESULT->fetchRow()) {
     // insert hostgroup
     $request = "INSERT INTO hostgroup (hg_id, hg_name, hg_activate) VALUES ('".$row['hostgroup_id']."', '".$row['name']."', '1')";
-    $pearDB->query($request);
+    $DB->query($request);
     
     if ($debug) {
       print "add hostgroup ".$row['name']." (".$row['hostgroup_id'].")\n";
@@ -103,12 +146,13 @@ try {
   /*
    * Synch Host Hostgroup links List
    */
-  $DBRESULT = $pearDBO->query("truncate hostgroup_relation");
+  $DBRESULT = $DBO->query("truncate hostgroup_relation");
+
   $request = "SELECT * FROM hosts_hostgroups WHERE host_id IN (SELECT host_id FROM $centreonDbName.host WHERE host_activate = '1' AND host_register = '1')";
-  $DBRESULT = $pearDBO->query($request);
+  $DBRESULT = $DBO->query($request);
   while ($row = $DBRESULT->fetchRow()) {
     $request = "INSERT INTO hostgroup_relation (host_host_id, hostgroup_hg_id) VALUES ('".$row["host_id"]."', '".$row["hostgroup_id"]."')";
-    $pearDB->query($request);
+    $DB->query($request);
 
     if ($debug) {
       print "add hostgroup link between host ".$row["host_id"]." and hostgroup ".$row["hostgroup_id"]."\n";  
@@ -118,8 +162,8 @@ try {
   /*
    * Close connection to databases
    */
-  $pearDB->disconnect();
-  $pearDBO->disconnect();
+  $DB->disconnect();
+  $DBO->disconnect();
 
 } catch (Exception $e) {
   programExit($e->getMessage());
