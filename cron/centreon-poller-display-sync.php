@@ -148,7 +148,7 @@ try {
   /*
    * Synch Host Hostgroup links List
    */
-  $DBRESULT = $DBO->query("truncate hostgroup_relation");
+  $DB->query("TRUNCATE hostgroup_relation");
 
   $request = "SELECT * FROM hosts_hostgroups WHERE host_id IN (SELECT host_id FROM $centreonDbName.host WHERE host_activate = '1' AND host_register = '1')";
   $DBRESULT = $DBO->query($request);
