@@ -131,7 +131,7 @@ try {
   /*
    * Synch HostGroup List
    */
-  $DB->query("DELETE FROM $centreonDbName.hostgroup WHERE hg_id NOT IN (SELECT hostgroup_id FROM hostgroups)");
+  $DB->query("DELETE FROM $centreonDbName.hostgroup WHERE hg_id NOT IN (SELECT DISTINCT hostgroup_id FROM hosts_hostgroups)");
 
   $request = "SELECT hostgroup_id, name FROM hostgroups WHERE hostgroup_id NOT IN (SELECT hg_id FROM $centreonDbName.hostgroup)";
   $DBRESULT = $DBO->query($request);
@@ -144,6 +144,8 @@ try {
       print "add hostgroup ".$row['name']." (".$row['hostgroup_id'].")\n";
     }
   }
+
+  
 
   /*
    * Synch Host Hostgroup links List
