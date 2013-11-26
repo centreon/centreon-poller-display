@@ -69,11 +69,9 @@ try {
   $DBRESULT = $DBO->query($request);
   while ($row = $DBRESULT->fetchRow()) {
       $request = "INSERT INTO nagios_server (id, name, localhost, ns_activate, ns_status) VALUES ('".$row['instance_id']."', '".$row["name"]."', 1, 1, 1)";
-      print $request;
       $DB->query($request);
       
       $request = "INSERT INTO cfg_nagios (nagios_name, nagios_server_id, interval_length, nagios_activate) VALUES ('Main file for ".$row["name"]."', '".$row["instance_id"]."', 60, '1')";
-      print $request;
       $DB->query($request);
   }
 
@@ -109,6 +107,9 @@ try {
   /*
    * Synch Services List
    */
+  $request = "DELETE FROM $centreonDbName.service WHERE service_id NOT IN (SELECT service_service_id FROM $centreonDbName.host_service_relation)";
+  $DB->query($request);
+  
   $request = "SELECT s.host_id, s.service_id, s.description, h.name, s.check_interval, s.retry_interval, s.max_check_attempts FROM services s, hosts h WHERE h.host_id = s.host_id AND s.service_id NOT IN (SELECT service_id FROM $centreonDbName.service WHERE service_register = '1' AND service_activate = '1') AND s.host_id IN (SELECT host_id FROM $centreonDbName.host WHERE host_register = '1') AND s.enabled = '1'";
   $DBRESULT = $DBO->query($request);
   while ($row = $DBRESULT->fetchRow()) {
@@ -131,7 +132,9 @@ try {
   /*
    * Synch HostGroup List
    */
-  $DB->query("DELETE FROM $centreonDbName.hostgroup WHERE hg_id NOT IN (SELECT DISTINCT hostgroup_id FROM hosts_hostgroups)");
+
+  $DB->query("DELETE FROM $centreonDbName.hostgroup WHERE hg_id NOT IN (SELECT hostgroup_hg_id FROM hostgroup_relation)");
+  $DB->query("DELETE FROM $centreonDbName.hostgroup WHERE hg_id NOT IN (SELECT hostgroup_id FROM hostgroups)");
 
   $request = "SELECT hostgroup_id, name FROM hostgroups WHERE hostgroup_id NOT IN (SELECT hg_id FROM $centreonDbName.hostgroup)";
   $DBRESULT = $DBO->query($request);
@@ -144,8 +147,6 @@ try {
       print "add hostgroup ".$row['name']." (".$row['hostgroup_id'].")\n";
     }
   }
-
-  
 
   /*
    * Synch Host Hostgroup links List
