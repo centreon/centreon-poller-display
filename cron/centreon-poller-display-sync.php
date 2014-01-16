@@ -62,18 +62,31 @@ try {
      $DBRESULT = $DBO->query("DELETE FROM instances WHERE running = '1' AND last_alive < '".(time() - 600)."'"); 
   }
 
+  /*
+   * Manage pollers
+   */
   $DBO->query("DELETE FROM $centreonDbName.nagios_server WHERE id NOT IN (SELECT instance_id FROM instances)");
   $DBO->query("DELETE FROM $centreonDbName.nagios_server WHERE id NOT IN (SELECT instance_id FROM instances WHERE running = '1' AND last_alive > '".(time() - 600)."')");
   
   $request = "SELECT * FROM instances WHERE instance_id NOT IN (SELECT id FROM $centreonDbName.nagios_server) ORDER BY last_alive DESC LIMIT 1";
   $DBRESULT = $DBO->query($request);
   while ($row = $DBRESULT->fetchRow()) {
-      $request = "INSERT INTO nagios_server (id, name, localhost, ns_activate, ns_status) VALUES ('".$row['instance_id']."', '".$row["name"]."', 1, 1, 1)";
+      $request = "INSERT INTO nagios_server (id, name, localhost, ns_activate, ns_status) VALUES ('".$row['instance_id']."', '".$row["name"]."', '1', 1, 1)";
       $DB->query($request);
       
-      $request = "INSERT INTO cfg_nagios (nagios_name, nagios_server_id, interval_length, nagios_activate) VALUES ('Main file for ".$row["name"]."', '".$row["instance_id"]."', 60, '1')";
+      $request = "INSERT INTO cfg_nagios (nagios_name, nagios_server_id, interval_length, nagios_activate, command_file) VALUES ('Main file for ".$row["name"]."', '".$row["instance_id"]."', 60, '1', '/var/lib/centreon-engine/rw/centengine.cmd')";
       $DB->query($request);
   }
+
+  /*
+   * Instances on poller are all in localhost
+   */
+  $DBRESULT = $DB->query("UPDATE nagios_server SET localhost = '1'");
+
+  /*
+   * Update command file path for each instances
+   */
+  $DBRESULT = $DB->query("UPDATE cfg_nagios SET command_file = '/var/lib/centreon-engine/rw/centengine.cmd'");
 
   /*
    * Get Engine instance
