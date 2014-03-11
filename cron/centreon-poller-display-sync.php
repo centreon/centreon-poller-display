@@ -71,7 +71,7 @@ try {
   $request = "SELECT * FROM instances WHERE instance_id NOT IN (SELECT id FROM $centreonDbName.nagios_server) ORDER BY last_alive DESC LIMIT 1";
   $DBRESULT = $DBO->query($request);
   while ($row = $DBRESULT->fetchRow()) {
-      $request = "INSERT INTO nagios_server (id, name, localhost, ns_activate, ns_status) VALUES ('".$row['instance_id']."', '".$row["name"]."', '1', 1, 1)";
+      $request = "INSERT INTO nagios_server (id, name, localhost, ns_activate, ns_status, ns_ip_address) VALUES ('".$row['instance_id']."', '".$row["name"]."', '1', 1, 1, '127.0.0.1')";
       $DB->query($request);
       
       $request = "INSERT INTO cfg_nagios (nagios_name, nagios_server_id, interval_length, nagios_activate, command_file) VALUES ('Main file for ".$row["name"]."', '".$row["instance_id"]."', 60, '1', '/var/lib/centreon-engine/rw/centengine.cmd')";
