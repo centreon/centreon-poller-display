@@ -2,7 +2,7 @@
 // Be Carefull with name, it's case sensitive (with directory module name)
 $module_conf['centreon-poller-display']["rname"] = "centreon-poller-display";
 $module_conf['centreon-poller-display']["name"] = "centreon-poller-display";
-$module_conf['centreon-poller-display']["mod_release"] = "1.2.3";
+$module_conf['centreon-poller-display']["mod_release"] = "1.2.4";
 $module_conf['centreon-poller-display']["infos"] = "centreon-poller-display";
 $module_conf['centreon-poller-display']["is_removeable"] = "1";
 $module_conf['centreon-poller-display']["author"] = "Merethis Team";
