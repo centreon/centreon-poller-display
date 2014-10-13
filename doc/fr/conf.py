@@ -29,6 +29,13 @@ on_centreon_rtd = os.environ.get('CENTREON_RTD', None) == 'True'
 # coming with Sphinx (named 'sphinx.ext.*') or your custom ones.
 extensions = ['sphinx.ext.todo', 'sphinx.ext.intersphinx']
 
+intersphinx_mapping = {
+	'centreon-engine': ('http://documentation.centreon.com/docs/centreon-engine/en/latest', None),
+	'centreon-broker': ('http://documentation.centreon.com/docs/centreon-broker/en/latest', None),
+	'centreon-clib': ('http://documentation.centreon.com/docs/centreon-clib/en/latest', None),
+        'ces': ('http://documentation.centreon.com/docs/ces-documentation/en/latest', None),
+	}
+
 # Add any paths that contain templates here, relative to this directory.
 templates_path = ['_templates']
 
@@ -44,7 +51,7 @@ source_suffix = '.rst'
 master_doc = 'index'
 
 # General information about the project.
-project = u'Centreon'
+project = u'Centreon Poller Display'
 copyright = u'2014, Merethis'
 
 # The version info for the project you're documenting, acts as replacement for
@@ -68,7 +75,7 @@ release = '1.3.2'
 
 # List of patterns, relative to source directory, that match files and
 # directories to ignore when looking for source files.
-exclude_patterns = ['_build', 'work']
+exclude_patterns = ['_build']
 
 # The reST default role (used for this markup: `text`) to use for all documents.
 #default_role = None
