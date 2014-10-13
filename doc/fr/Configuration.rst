@@ -1,11 +1,9 @@
 Configuration
 =============
 
-Il est maintenant nécessaire de configurer les différents flux Centreon-Broker.
+Il est maintenant nécessaire de configurer différents nouveaux flux Centreon-Broker au niveau du serveur de type "poller" qui hébergera l'interface web. Ces flux sont à configurer au niveau du serveur central. 
 
-Sur le serveur central :
-
-Pour gérer les différents flux de Centreon-Broker, il est nécessaire de créer trois configurations différentes.
+Pour gérer les différents flux de Centreon-Broker, il est nécessaire de créer trois configurations différentes : 
 
 * Une configuration "classique" entre le module Centreon-Broker du collecteur et le démon Centreon-Broker sur le serveur central
 * Une configuration pour le flux entre le module Centreon-Broker sur le collecteur et le démon Centreon-Broker sur le poller
@@ -43,6 +41,7 @@ Onglet General :
    :align: center
    :width: 800 px
 
+
 Onglet Input :
 
 Ajoutez un Input de type *IPv4*.
@@ -51,6 +50,7 @@ Ajoutez un Input de type *IPv4*.
    :align: center
    :width: 800 px
 
+
 Onglet Logger :
 
 Ajoutez un Logger de type *File*.
@@ -58,6 +58,7 @@ Ajoutez un Logger de type *File*.
 .. image:: images/Logger-1.png
    :align: center
    :width: 800 px
+
 
 Onglet Output :
 
@@ -73,11 +74,13 @@ Ajoutez un Output de type *Perfdata Generator (Centreon Storage)*.
    :align: center
    :width: 800 px
 
+
 Ajoutez un Output de type *IPV4*.
 
 .. image:: images/Output-1-3.png
    :align: center
    :width: 800 px
+
 
 Ajoutez un Output de type *File*.
 
@@ -85,11 +88,13 @@ Ajoutez un Output de type *File*.
    :align: center
    :width: 800 px
 
+
 Ajoutez un Output de type *File*.
 
 .. image:: images/Output-1-5.png
    :align: center
    :width: 800 px
+
 
 Ajoutez un Output de type *File*.
 
