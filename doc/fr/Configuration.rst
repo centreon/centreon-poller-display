@@ -147,14 +147,14 @@ et suivez les différentes étapes.
 
 **Etape 1 : Onglet General**
 
-.. image:: images/General-1.png
+.. image:: images/General-2.png
    :align: center
    :width: 800 px
 
 Configurer votre fichier broker
 
 .. note::
-  Pensez à nommer le fichier de configuration du démon rrd avec le même nom que sur le serveur central afin que le script d'init puisse le prendre en compte sans changement majeur. Le nom doit être central-broker.xml même si le serveur est un poller.
+  Pensez à nommer le fichier de configuration du démon rrd avec le même nom que sur le serveur central afin que le script d'init puisse le prendre en compte sans changement majeur. Le nom doit être central-rrd.xml même si le serveur est un poller.
 
 **Etape 2 : Onglet Input**
 
