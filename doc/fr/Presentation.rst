@@ -12,4 +12,4 @@ Centreon Poller Display permet alors de mettre en place l'architecture suivante 
 
 Pour plus d'information sur cette architecture, merci de vous reporter à la `documentation de Centreon`_.
 
-.. `Documentation de Centreon`::http://documentation-fr.centreon.com/docs/centreon/fr/2.5.x/architecture/03e.html
+.. `documentation de Centreon`::http://documentation-fr.centreon.com/docs/centreon/fr/2.5.x/architecture/03e.html
