@@ -61,11 +61,17 @@ Onglet General :
 
 **Onglet Output :** Ajoutez un Output  de type *Broker SQL database*.
 
+.. note::
+  Attention, les accès à la base de données sont ceux de la base de données du poller. Connectez vous au poller pour connaître le mot de passe de la base de données pour l'utilisateur "centreon".
+
 .. image:: images/Output-1-1.png
    :align: center
    :width: 800 px
 
 Ajoutez un Output de type *Perfdata Generator (Centreon Storage)*.
+
+.. note::
+  Attention, les accès à la base de données sont ceux de la base de données du poller. Connectez vous au poller pour connaître le mot de passe de la base de données pour l'utilisateur "centreon".
 
 .. image:: images/Output-1-2.png
    :align: center
