@@ -130,6 +130,8 @@ Ajoutez un Output de type *File*.
 
 Ajoutez un Output de type *File*.
 
+Vous pouvez maintenant valider le formulaire. Votre configuration est maintenant opérationnel pour cet objet.
+
 |
 
 Configuration "Poller-Display-RRD"
@@ -185,5 +187,8 @@ Ajoutez un Output de type *IPv4*.
    :width: 800 px
 
 Ajoutez un Output de type *File*.
+
+Vous pouvez maintenant valider le formulaire. Votre configuration est maintenant opérationnel pour cet objet.
+
 
 Vous pouvez maintenant passer à l'étape suivante qui consistera à appliquer les modifications.
