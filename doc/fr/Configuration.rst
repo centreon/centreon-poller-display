@@ -170,7 +170,7 @@ Ajoutez un Input de type *IPv4*.
    :align: center
    :width: 800 px
 
- Ajoutez un Logger de type *File*.
+Ajoutez un Logger de type *File*.
 
 **Etape 4 : Onglet Output**
 
