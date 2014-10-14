@@ -114,19 +114,19 @@ Onglet General :
    :width: 800 px
 
 
-**Onglet Input : ** Ajoutez un Input de type *IPv4*.
+**Onglet Input :** Ajoutez un Input de type *IPv4*.
 
 .. image:: images/Input-2.png
    :align: center
    :width: 800 px
 
-**Onglet Logger : ** Ajoutez un Logger de type *File*.
+**Onglet Logger :** Ajoutez un Logger de type *File*.
 
 .. image:: images/Logger-2.png
    :align: center
    :width: 800 px
 
-**Onglet Output : ** Ajoutez un Output de type *IPv4*.
+**Onglet Output :** Ajoutez un Output de type *IPv4*.
 
 .. image:: images/Output-2-1.png
    :align: center
