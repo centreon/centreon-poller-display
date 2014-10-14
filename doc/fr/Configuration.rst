@@ -87,32 +87,32 @@ Ajoutez un Output de type *Broker SQL database*.
 
 Ajoutez un Output de type *Perfdata Generator (Centreon Storage)*.
 
-.. note::
-  Attention, les accès à la base de données sont ceux de la base de données du poller. Connectez vous au poller pour connaître le mot de passe de la base de données pour l'utilisateur "centreon".
-
-**Etape 4c : envoi de flux vers le broker rrd local**
-
 .. image:: images/Output-1-2.png
    :align: center
    :width: 800 px
 
 Ajoutez un Output de type *IPV4*.
 
-**Etape 4d : envoi de flux vers le broker sql local**
+.. note::
+  Attention, les accès à la base de données sont ceux de la base de données du poller. Connectez vous au poller pour connaître le mot de passe de la base de données pour l'utilisateur "centreon".
+
+
+**Etape 4c : envoi de flux vers le broker rrd local**
 
 .. image:: images/Output-1-3.png
    :align: center
    :width: 800 px
 
-Ajoutez un Output de type *File*.
+Ajoutez un Output de type *IPV4*.
 
-**Etape 4e : mise en place du failover master**
+
+**Etape 4d : envoi de flux vers le broker sql local**
 
 .. image:: images/Output-1-4.png
    :align: center
    :width: 800 px
 
-Ajoutez un Output de type *File*.
+Ajoutez un Output de type *IPV4*.
 
 **Etape 4e : mise en place du failover rrd**
 
@@ -127,6 +127,8 @@ Ajoutez un Output de type *File*.
 .. image:: images/Output-1-6.png
    :align: center
    :width: 800 px
+
+Ajoutez un Output de type *File*.
 
 |
 
