@@ -40,41 +40,57 @@ La deuxième étape consiste à configurer le flux entre le module Centreon-Brok
 
 et suivez les différentes étapes.
 
-**Onglet General :** Configurer votre fichier broker
-
-.. note::
-  Pensez à nommer le fichier de configuration du démon sql avec le même nom que sur le serveur central afin que le script d'init puisse le prendre en compte sans changement majeur. Le nom doit être central-broker.xml même si le serveur est un poller.
+**Etape 1 : Onglet General**
 
 .. image:: images/General-1.png
    :align: center
    :width: 800 px
 
+Configurer votre fichier broker
 
-**Onglet Input :** Ajoutez un Input de type *IPv4*.
+.. note::
+  Pensez à nommer le fichier de configuration du démon sql avec le même nom que sur le serveur central afin que le script d'init puisse le prendre en compte sans changement majeur. Le nom doit être central-broker.xml même si le serveur est un poller.
+
+
+**Etape 2 : Onglet Input**
 
 .. image:: images/Input-1.png
    :align: center
    :width: 800 px
 
-**Onglet Logger :** Ajoutez un Logger de type *File*.
+Ajoutez un Input de type *IPv4*.
+
+**Etape 3 : Onglet Logger**
 
 .. image:: images/Logger-1.png
    :align: center
    :width: 800 px
 
-**Onglet Output :** Ajoutez un Output  de type *Broker SQL database*.
+Ajoutez un Logger de type *File*.
 
-.. note::
-  Attention, les accès à la base de données sont ceux de la base de données du poller. Connectez vous au poller pour connaître le mot de passe de la base de données pour l'utilisateur "centreon".
+**Etape 4 : Onglet Output**
+
+Nous allons maintenant ajouter plusieurs "output".
+
+**Etape 4a : Connexion à la base de données 'temps réel'**
 
 .. image:: images/Output-1-1.png
    :align: center
    :width: 800 px
 
+Ajoutez un Output de type *Broker SQL database*.
+
+.. note::
+  Attention, les accès à la base de données sont ceux de la base de données du poller. Connectez vous au poller pour connaître le mot de passe de la base de données pour l'utilisateur "centreon".
+
+**Etape 4b : stockage des données dans data_bin**
+
 Ajoutez un Output de type *Perfdata Generator (Centreon Storage)*.
 
 .. note::
   Attention, les accès à la base de données sont ceux de la base de données du poller. Connectez vous au poller pour connaître le mot de passe de la base de données pour l'utilisateur "centreon".
+
+**Etape 4c : envoi de flux vers le broker rrd local**
 
 .. image:: images/Output-1-2.png
    :align: center
@@ -82,11 +98,15 @@ Ajoutez un Output de type *Perfdata Generator (Centreon Storage)*.
 
 Ajoutez un Output de type *IPV4*.
 
+**Etape 4d : envoi de flux vers le broker sql local**
+
 .. image:: images/Output-1-3.png
    :align: center
    :width: 800 px
 
 Ajoutez un Output de type *File*.
+
+**Etape 4e : mise en place du failover master**
 
 .. image:: images/Output-1-4.png
    :align: center
@@ -94,16 +114,21 @@ Ajoutez un Output de type *File*.
 
 Ajoutez un Output de type *File*.
 
+**Etape 4e : mise en place du failover rrd**
+
 .. image:: images/Output-1-5.png
    :align: center
    :width: 800 px
 
 Ajoutez un Output de type *File*.
 
+**Etape 4e : mise en place du failover sql**
+
 .. image:: images/Output-1-6.png
    :align: center
    :width: 800 px
 
+|
 
 Configuration "Poller-Display-RRD"
 ----------------------------------
@@ -116,35 +141,47 @@ Cette étape consiste maintenant à configurer le flux pour la création des fic
 
 et suivez les différentes étapes.
 
-Onglet General :
+**Etape 1 : Onglet General**
 
 .. image:: images/General-1.png
    :align: center
    :width: 800 px
 
+Configurer votre fichier broker
 
-**Onglet Input :** Ajoutez un Input de type *IPv4*.
+.. note::
+  Pensez à nommer le fichier de configuration du démon rrd avec le même nom que sur le serveur central afin que le script d'init puisse le prendre en compte sans changement majeur. Le nom doit être central-broker.xml même si le serveur est un poller.
+
+**Etape 2 : Onglet Input**
 
 .. image:: images/Input-2.png
    :align: center
    :width: 800 px
 
-**Onglet Logger :** Ajoutez un Logger de type *File*.
+Ajoutez un Input de type *IPv4*.
+
+**Etape 3 : Onglet Logger**
 
 .. image:: images/Logger-2.png
    :align: center
    :width: 800 px
 
-**Onglet Output :** Ajoutez un Output de type *IPv4*.
+ Ajoutez un Logger de type *File*.
+
+**Etape 4 : Onglet Output**
 
 .. image:: images/Output-2-1.png
    :align: center
    :width: 800 px
 
-Ajoutez un Output de type *File*.
+Ajoutez un Output de type *IPv4*.
+
+**Etape 5 : Ajouter un Failover**
 
 .. image:: images/Output-2-2.png
    :align: center
    :width: 800 px
+
+Ajoutez un Output de type *File*.
 
 Vous pouvez maintenant passer à l'étape suivante qui consistera à appliquer les modifications.
