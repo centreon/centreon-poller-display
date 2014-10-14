@@ -45,7 +45,6 @@ Onglet General :
 .. image:: images/General-1.png
    :align: center
    :width: 800 px
-   :padding-bottom: 40px
 
 
 **Onglet Input :** Ajoutez un Input de type *IPv4*.
@@ -53,56 +52,48 @@ Onglet General :
 .. image:: images/Input-1.png
    :align: center
    :width: 800 px
-   :padding-bottom: 40px
 
 **Onglet Logger :** Ajoutez un Logger de type *File*.
 
 .. image:: images/Logger-1.png
    :align: center
    :width: 800 px
-   :padding-bottom: 40px
 
 **Onglet Output :** Ajoutez un Output  de type *Broker SQL database*.
 
 .. image:: images/Output-1-1.png
    :align: center
    :width: 800 px
-   :padding-bottom: 40px
 
 Ajoutez un Output de type *Perfdata Generator (Centreon Storage)*.
 
 .. image:: images/Output-1-2.png
    :align: center
    :width: 800 px
-   :padding-bottom: 40px
 
 Ajoutez un Output de type *IPV4*.
 
 .. image:: images/Output-1-3.png
    :align: center
    :width: 800 px
-   :padding-bottom: 40px
 
 Ajoutez un Output de type *File*.
 
 .. image:: images/Output-1-4.png
    :align: center
    :width: 800 px
-   :padding-bottom: 40px
 
 Ajoutez un Output de type *File*.
 
 .. image:: images/Output-1-5.png
    :align: center
    :width: 800 px
-   :padding-bottom: 40px
 
 Ajoutez un Output de type *File*.
 
 .. image:: images/Output-1-6.png
    :align: center
    :width: 800 px
-   :padding-bottom: 40px
 
 
 Configuration "Poller-Display-RRD"
@@ -121,7 +112,6 @@ Onglet General :
 .. image:: images/General-1.png
    :align: center
    :width: 800 px
-   :padding-bottom: 40px
 
 
 **Onglet Input : **Ajoutez un Input de type *IPv4*.
@@ -129,27 +119,23 @@ Onglet General :
 .. image:: images/Input-2.png
    :align: center
    :width: 800 px
-   :padding-bottom: 40px
 
 **Onglet Logger : **Ajoutez un Logger de type *File*.
 
 .. image:: images/Logger-2.png
    :align: center
    :width: 800 px
-   :padding-bottom: 40px
 
 **Onglet Output : ** Ajoutez un Output de type *IPv4*.
 
 .. image:: images/Output-2-1.png
    :align: center
    :width: 800 px
-   :padding-bottom: 40px
 
 Ajoutez un Output de type *File*.
 
 .. image:: images/Output-2-2.png
    :align: center
    :width: 800 px
-   :padding-bottom: 40px
 
 Vous pouvez maintenant passer à l'étape suivante qui consistera à appliquer les modifications.
