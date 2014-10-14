@@ -40,7 +40,10 @@ La deuxième étape consiste à configurer le flux entre le module Centreon-Brok
 
 et suivez les différentes étapes.
 
-Onglet General :
+**Onglet General :** Configurer votre fichier broker
+
+.. note::
+  Pensez à nommer le fichier de configuration du démon sql avec le même nom que sur le serveur central afin que le script d'init puisse le prendre en compte sans changement majeur. Le nom doit être central-broker.xml même si le serveur est un poller.
 
 .. image:: images/General-1.png
    :align: center
