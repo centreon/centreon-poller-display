@@ -12,6 +12,11 @@ Pour l'installer, il est nécessaire d'installer un serveur centreon central et 
 
  yum install centreon-poller-display
 
+.. note::
+   Il est possible d'installer les paquets Centreon sur un poller déjà existant afin de lui ajouter l'interface local.
+
+.. warning::
+   En cas d'installation sur un poller dèjà existant, il sera alors nécessaire de reconfigurer centreontrapd (l'installation des paquets Centreon écrasent la configuration).
 
 Installation Web
 -----------------
