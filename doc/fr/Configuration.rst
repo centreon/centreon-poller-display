@@ -26,8 +26,14 @@ La première étape revient à configurer votre poller avec une configuration cl
 * Selectionnez le protocole  de communication (NDO ou BBDO). Cela doit être le même que pour votre serveur central.
 * Indiquez l'addresse du serveur Central.
 
-Il est possible que vous n'ayez pas besoin de passer par cette étape si votre poller est déjà en fonctionnement et que les données remontent déjà sur le serveur central. Dans ce cas, passez à la deuxième étape.
+Il est possible que vous n'ayez pas besoin de passer par cette étape si votre poller est déjà en fonctionnement et que les données remontent déjà sur le serveur central.
 
+Il est toutefois nécessaire de configurer la connexion entre ce module Broker et le démon broker local. 
+Pour cela, dans la confguration de ce poller, il est nécessaire d'ajouter un **Output** de type **IPv4** :
+
+.. image:: images/poller-output.png
+   :align: center
+   :width: 800 px
 
 Configuration "Poller-Display-Broker"
 -------------------------------------
