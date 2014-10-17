@@ -29,7 +29,7 @@ Accéder au menu de gestion des modules : Administration > Extensions sur l'inte
    :align: center
    :width: 800 px
    
-Au niveau du module "centreon-map-server" , cliquer sur l'icône d'installation.
+Au niveau du module **centreon-poller-display** , cliquer sur l'icône d'installation.
 
 Sur la nouvelle page cliquer sur "Installer Module" .
 

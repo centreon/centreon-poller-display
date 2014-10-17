@@ -197,18 +197,5 @@ Ajoutez un Output de type *File*.
 Vous pouvez maintenant valider le formulaire. Votre configuration est maintenant opérationnel pour cet objet.
 
 |
-Affichage des graphiques sur l'interface local
-----------------------------------------------
-
-Afin de pouvoir afficher les graphiques de performance sur l'interface locale, il est nécessaire d'autoriser l'insertion de données dans la tabe **index_data** par Centreon.
-Sur le poller dans le menu :
-
-::
-
- Administration > Options > CentStorage
-
-Cochez la case : **Enable resources's insertion in index_data by Centreon**.
-
-|
 
 Vous pouvez maintenant passer à l'étape suivante qui consistera à appliquer les modifications.
