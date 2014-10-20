@@ -97,6 +97,10 @@ Ajoutez un Output de type *Perfdata Generator (Centreon Storage)*.
    :align: center
    :width: 800 px
 
+.. note::
+   Les options **Store in performance data in data_bin** et **Insert in index data** doivent être à **Yes** sinon les graphiques ne pourront pas se créer.
+
+
 Ajoutez un Output de type *IPV4*.
 
 .. note::
@@ -197,5 +201,8 @@ Ajoutez un Output de type *File*.
 Vous pouvez maintenant valider le formulaire. Votre configuration est maintenant opérationnel pour cet objet.
 
 |
+
+.. warning::
+   Sur l'interface du poller dans le menu : **Administration** > **Options** > **Centstorage** > **Options**, l'option **Enable resources's insertion in index_data by Centreon** ne doit pas être cochée.
 
 Vous pouvez maintenant passer à l'étape suivante qui consistera à appliquer les modifications.
