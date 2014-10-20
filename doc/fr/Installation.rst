@@ -6,7 +6,7 @@ Depuis le repository
 
 Centreon-poller-display est compatible uniquement sur les pollers installés par la distribution CES (2.2 ou 3.0).
 
-Pour l'installer, il est nécessaire d'installer un serveur centreon central (comprenant toutes les composantes : BDD, Apache, Broker, ...) et de le configurer comme étant un poller. Suite à cela, il est possible d'installer le module :
+Pour l'installer, il est nécessaire d'installer un serveur centreon central (comprenant tous les composants : BDD, Apache, Broker, ...) et de le configurer comme étant un poller. Suite à cela, il est possible d'installer le module :
 
 ::
 
