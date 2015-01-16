@@ -29,7 +29,7 @@ La première étape revient à configurer votre poller avec une configuration cl
 Il est possible que vous n'ayez pas besoin de passer par cette étape si votre poller est déjà en fonctionnement et que les données remontent déjà sur le serveur central.
 
 Il est toutefois nécessaire de configurer la connexion entre ce module Broker et le démon broker local. 
-Pour cela, dans la confguration de ce poller, il est nécessaire d'ajouter un **Output** de type **IPv4** :
+Pour cela, dans la configuration de ce poller, il est nécessaire d'ajouter un **Output** de type **IPv4** :
 
 .. image:: images/poller-output.png
    :align: center
