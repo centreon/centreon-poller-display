@@ -1,8 +1,6 @@
 Presentation
 =============
-Centreon-Poller-Display is a module that is designed to provide a light version of Centreon web GUI locally on your pollers. This interface allows users to view the monitored resources of the poller from the poller itself. This is interesting for users who are near the Poller server and away from the Central or in case of a Central/network outage. 
-
-In case of a network outage between the Central and the Poller, this interface can be used as a backup solution. It also allows not to use WAN interconnections for example.
+Centreon-Poller-Display is a module that is designed to provide a light version of Centreon locally on your pollers. This interface allows users to view the monitored resources of the poller from the poller itself. This is interesting for users who are near the Poller server and away from the Central or in case of a Central/network outage. It can be used as a backup solution. It also allows not to use WAN interconnections for example.
 
 Centreon Poller Display allows to build the following architecture :
 
