@@ -5,7 +5,7 @@ Specific Centreon Broker streams configurations are required for the "Poller" se
 
 It is necessary to setup tree Centreon-Broker streams:
 
-* A "classic" configuration for the stream between Centreon-Broker module on the Poller server and Centreon-Broker daemon (cbd) on the Central server
+* A "classic" configuration for the streams between Centreon-Broker module on the Poller server and Centreon-Broker daemon (cbd) on the Central server
 * A configuration for the stream between Centreon-Broker module on the Poller server and Centreon-Broker daemon (cbd) on the Poller server
 * A configuration for the stream between Centreon-Broker module on the Poller server and Centreon-Broker daemon (cbd) on the Central server for RRDs files generation
 
@@ -30,7 +30,7 @@ You may not have to proceed with this step if your Poller server is already link
 
 However you need to configure the stream between Centreon-Broker module on the Poller server and the Centreon-Broker daemon (cbd) on the Poller server.
 
-For that, in the Poller configuration, you need to add an **Output** of type **IPv4** :
+For that, in the Poller configuration, you need to add an **IPv4** **Output** type :
 
 .. image:: images/Poller-output.png
    :align: center
