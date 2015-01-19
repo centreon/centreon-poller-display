@@ -1,7 +1,7 @@
 Configuration
 =============
 
-Specific Centreon Broker streams configurations are required for the "Poller" server that will host the Centreon light web GUI. These streams are configured from the main Centreon Web GUI on the Central server. Supervised ressources configuration is not made on the Poller. Only ACLs, contacts and general options can be configured at the Poller's end.
+Specific Centreon Broker streams configurations are required for the "Poller" server that will host Centreon Poller Display. These streams are configured from the Central server like monitored ressources configuration. Only ACLs, contacts and general options can be configured at the Poller's end.
 
 It is necessary to setup tree Centreon-Broker streams:
 
