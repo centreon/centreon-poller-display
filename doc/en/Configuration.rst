@@ -117,7 +117,7 @@ Add an *IPV4* output type
 Add an *IPV4* output type
 
 
-**Etape 4d : Network stream to the local MySQL Broker**
+**Step 4d : Network stream to the local MySQL Broker**
 
 .. image:: images/Output-1-4.png
    :align: center
@@ -125,7 +125,7 @@ Add an *IPV4* output type
 
 Add an *IPV4* output type
 
-**Etape 4e : RRD Failover**
+**Step 4e : RRD Failover**
 
 .. image:: images/Output-1-5.png
    :align: center
@@ -133,7 +133,7 @@ Add an *IPV4* output type
 
 Add a *File* output type
 
-**Etape 4e : SQL Failover**
+**Step 4f : SQL Failover**
 
 .. image:: images/Output-1-6.png
    :align: center
@@ -167,7 +167,7 @@ Configure your Broker file
 .. note::
   You must name the configuration of the RRD Broker daemon file on the Poller with the same name of the Central for the init file to work out without any major changes. The name must be Central-rrd.xml even if server is a Poller.
 
-**Etape 2 : Input tab**
+**Step 2 : Input tab**
 
 .. image:: images/Input-2.png
    :align: center
@@ -175,7 +175,7 @@ Configure your Broker file
 
 Add an *IPV4* output type
 
-**Etape 3 : Logger tab**
+**Step 3 : Logger tab**
 
 .. image:: images/Logger-2.png
    :align: center
@@ -183,7 +183,7 @@ Add an *IPV4* output type
 
 Add a *Logger* of  *File* type
 
-**Etape 4 : Output tab**
+**Step 4 : Output tab**
 
 .. image:: images/Output-2-1.png
    :align: center
@@ -191,7 +191,7 @@ Add a *Logger* of  *File* type
 
 Add an *IPV4* output type
 
-**Etape 5 : Add a Failover**
+**Step 5 : Add a Failover**
 
 .. image:: images/Output-2-2.png
    :align: center

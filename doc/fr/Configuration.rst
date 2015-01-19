@@ -132,7 +132,7 @@ Ajoutez un Output de type *IPV4*.
 
 Ajoutez un Output de type *File*.
 
-**Etape 4e : mise en place du failover sql**
+**Etape 4f : mise en place du failover sql**
 
 .. image:: images/Output-1-6.png
    :align: center
