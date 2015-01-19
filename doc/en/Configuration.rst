@@ -48,84 +48,82 @@ For that, go to:
 
 And follow the following steps.
 
-**Etape 1 : Onglet General**
+**Step 1 : General tab**
 
 .. image:: images/General-1.png
    :align: center
    :width: 800 px
 
-Configure your broker file.
+Configure your Broker file.
 
 .. note::
-  Ouch....
-  Pensez à nommer le fichier de configuration du démon sql avec le même nom que sur le serveur Central afin que le script d'init puisse le prendre en compte sans changement majeur. Le nom doit être Central-broker.xml même si le serveur est un Poller.
+  You must name the configuration of the Broker sql daemon file on the Poller with the same name of the Central in order for the init file to work out without any major changes. The name must be Central-Broker.xml even if server is a Poller.
 
 
-**Etape 2 : Onglet Input**
+**Step 2 : Input tab**
 
 .. image:: images/Input-1.png
    :align: center
    :width: 800 px
 
-Add an *IPv4* output.
+Add an *IPV4* output type
 
-**Etape 3 : Onglet Logger**
+**Step 3 : Logger tab**
 
 .. image:: images/Logger-1.png
    :align: center
    :width: 800 px
 
-Add a *Logger* of type *FIle*.
+Add a *Logger* of  *File* type
 
-**Etape 4 : Onglet Output**
+**Step 4 : Output tab**
 
 Now we add several *output*.
 
-**Etape 4a : Connexion à la base de données 'temps réel'**
+**Step 4a : 'Real time' database connection**
 
 .. image:: images/Output-1-1.png
    :align: center
    :width: 800 px
 
-Ajoutez un Output de type *Broker SQL database*.
+Add a *Broker SQL database* output type
 
 .. note::
-  Attention, les accès à la base de données sont ceux de la base de données du Poller. Connectez vous au Poller pour connaître le mot de passe de la base de données pour l'utilisateur "centreon".
+  Warning, Centreon database access is made on the poller. Use the centreon MySQL user credentials of the poller.
 
-**Etape 4b : stockage des données dans data_bin**
+**Step 4b : data_bin data storage**
 
-Ajoutez un Output de type *Perfdata Generator (Centreon Storage)*.
+Add a *Perfdata Generator (Centreon Storage)* output type
 
 .. image:: images/Output-1-2.png
    :align: center
    :width: 800 px
 
 .. note::
-   Les options **Store in performance data in data_bin** et **Insert in index data** doivent être à **Yes** sinon les graphiques ne pourront pas se créer.
+   The options **Store in performance data in data_bin** and **Insert in index data** must be  **Yes** otherwise graphs won't be generated.
 
-
-Ajoutez un Output de type *IPV4*.
+Add an *IPV4* output type
 
 .. note::
-  Attention, les accès à la base de données sont ceux de la base de données du Poller. Connectez vous au Poller pour connaître le mot de passe de la base de données pour l'utilisateur "centreon".
+  Warning, Centreon database access is made on the poller. Use the centreon MySQL user credentials of the poller.
 
 
-**Etape 4c : envoi de flux vers le broker rrd local**
+**Step 4c : Network stream to the local RRD Broker**
 
 .. image:: images/Output-1-3.png
    :align: center
    :width: 800 px
 
-Ajoutez un Output de type *IPV4*.
+Add an *IPV4* output type
 
 
-**Etape 4d : envoi de flux vers le broker sql local**
+**Etape 4d : Network stream to the local MySQL Broker**
 
 .. image:: images/Output-1-4.png
    :align: center
    :width: 800 px
 
-Ajoutez un Output de type *IPV4*.
+Add an *IPV4* output type
 
 **Etape 4e : mise en place du failover rrd**
 
@@ -133,7 +131,7 @@ Ajoutez un Output de type *IPV4*.
    :align: center
    :width: 800 px
 
-Ajoutez un Output de type *File*.
+Add a *File* output type
 
 **Etape 4e : mise en place du failover sql**
 
@@ -141,33 +139,33 @@ Ajoutez un Output de type *File*.
    :align: center
    :width: 800 px
 
-Ajoutez un Output de type *File*.
+Add a *File* output type
 
-Vous pouvez maintenant valider le formulaire. Votre configuration est maintenant opérationnel pour cet objet.
+You can now validate form. Configuration is now Ok for this object.
 
 |
 
-Configuration "Poller-Display-RRD"
+"Poller-Display-RRD" configuration
 ----------------------------------
 
-Cette étape consiste maintenant à configurer le flux pour la création des fichiers RRDs sur le Poller. Un démon "RRD" sera également ajouté pour la création des bases de données RRDTool sur le Poller comme nous avons l'habitude de le faire sur le serveur Central. Pour cela aller dans : 
+This step aims to configure the dedicated stream for RRD's file generation on the Poller. For this go to : 
 
 ::
 
  Configuration > Centreon > Centreon-Broker > Configuration > Add
 
-et suivez les différentes étapes.
+and follow this steps.
 
-**Etape 1 : Onglet General**
+**Step 1 : General tab**
 
 .. image:: images/General-2.png
    :align: center
    :width: 800 px
 
-Configurer votre fichier broker
+Configure your Broker file
 
 .. note::
-  Pensez à nommer le fichier de configuration du démon rrd avec le même nom que sur le serveur Central afin que le script d'init puisse le prendre en compte sans changement majeur. Le nom doit être Central-rrd.xml même si le serveur est un Poller.
+  You must name the configuration of the RRD Broker daemon file on the Poller with the same name of the Central in order for the init file to work out without any major changes. The name must be Central-rrd.xml even if server is a Poller.
 
 **Etape 2 : Onglet Input**
 
@@ -175,7 +173,7 @@ Configurer votre fichier broker
    :align: center
    :width: 800 px
 
-Ajoutez un Input de type *IPv4*.
+Add an *IPV4* output type
 
 **Etape 3 : Onglet Logger**
 
@@ -183,7 +181,7 @@ Ajoutez un Input de type *IPv4*.
    :align: center
    :width: 800 px
 
-Ajoutez un Logger de type *File*.
+Add a *Logger* of  *File* type
 
 **Etape 4 : Onglet Output**
 
@@ -191,7 +189,7 @@ Ajoutez un Logger de type *File*.
    :align: center
    :width: 800 px
 
-Ajoutez un Output de type *IPv4*.
+Add an *IPV4* output type
 
 **Etape 5 : Ajouter un Failover**
 
@@ -199,13 +197,13 @@ Ajoutez un Output de type *IPv4*.
    :align: center
    :width: 800 px
 
-Ajoutez un Output de type *File*.
+Add a *File* output type
 
-Vous pouvez maintenant valider le formulaire. Votre configuration est maintenant opérationnel pour cet objet.
+You can now validate form. Configuration is done for this object.
 
 |
 
 .. warning::
-   Sur l'interface du Poller dans le menu : **Administration** > **Options** > **Centstorage** > **Options**, l'option **Enable resources's insertion in index_data by Centreon** ne doit pas être cochée.
+   On the Centreon light GUI on the poller's side in the menu : **Administration** > **Options** > **Centstorage** > **Options**, the option **Enable resources's insertion in index_data by Centreon** must not be checked.
 
-Vous pouvez maintenant passer à l'étape suivante qui consistera à appliquer les modifications.
+You can now proceed to the next step to apply changes.

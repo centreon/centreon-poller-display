@@ -4,7 +4,7 @@ Centreon-Poller-Display is a module that is designed to provide a light version 
 
 In case of a network outage between the Central and the Poller, this interface can be used as a backup solution. It also allows not to use WAN interconnections for example.
 
-Centreon Poller Display then allows to build the following architecture :
+Centreon Poller Display allows to build the following architecture :
 
 .. image :: /images/eschema.png
    :align: center 

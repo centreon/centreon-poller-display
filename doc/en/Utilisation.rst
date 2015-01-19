@@ -1,17 +1,17 @@
 Utilisation
 ===========
 
-Vous allez maintenant devoir appliquer la nouvelle configuration sur le poller depuis le serveur Central. Pour faire cela veuillez procéder dans l'ordre aux étapes suivantes : 
+Now you must apply new configuration to the Poller from the Central. For this please proceed with this steps in the following order :
 
-* Générez la nouvelle configuration pour le poller en question
-* Testez cette configuration
-* Si l'étape précédente est validée, exportez la configuration vers le poller 
-* Connectez vous sur le poller et démarrez le broker sur le poller (/etc/init.d/cbd start)
-* Redémarrez alors le centreon-engine sur le poller.
+* Generate new configuration for the Poller
+* Test new configuration
+* Export new configuration
+* Connect on the Poller and start the Broker (/etc/init.d/cbd start)
+* Start centreon-engine on the Poller.
 
-Les statuts remontent alors sur le serveur central et sur l'interface "light" du poller. Les graphiques de performance sont maintenant disponibles sur ce poller et les informations d'accessibilité seront également calculé de manière quotidienne sur le poller. 
+Monitoring states, performance graphs and Dashboard are now available on the Poller in addition to the Central.
 
 .. note::
-  Si vous n'utilisez pas Centreon Engine 1.4 minimum, pensez à mettre à minima un host pour voir des informations dans l'interface sur le poller.
+  If you don't use at least Centreon Engine 1.4, consider putting at least one host or Centreon Engine won't start.
 
-Il vous est également possible de configurer des contacts et des ACL pour avoir des vues restreintes pour certains utilisateurs. Pensez à configurer l'auto import des utilisateurs via l'authentification LDAP.
+You can make use of ACL's on the poller. Consider configuring auto import of users with LDAP authentification.
