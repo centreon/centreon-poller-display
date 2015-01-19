@@ -23,7 +23,7 @@ In the first step you need a classic configuration for your Poller server which 
 * Click Next.
 * Give a name to your configuration file (We will use "Poller" in our example).
 * Select the desired Requester.
-* Select communication protocol (NDO or BBDO). It must be the same protocol that is used on the Central.
+* Select communication protocol (NDO or BBDO). Protocol must be the same as the one used on the Central.
 * Specify the Central server IP address.
 
 You may not have to proceed with this step if your Poller server is already linked to the Central server.
@@ -57,7 +57,7 @@ And follow the following steps.
 Configure your Broker file.
 
 .. note::
-  You must name the configuration of the Broker sql daemon file on the Poller with the same name of the Central in order for the init file to work out without any major changes. The name must be Central-Broker.xml even if server is a Poller.
+  You must name the configuration of the SQL Broker daemon file on the Poller with the same name of the Central for the init file to work out without any major changes. The name must be Central-Broker.xml even if server is a Poller.
 
 
 **Step 2 : Input tab**
@@ -100,7 +100,7 @@ Add a *Perfdata Generator (Centreon Storage)* output type
    :width: 800 px
 
 .. note::
-   The options **Store in performance data in data_bin** and **Insert in index data** must be  **Yes** otherwise graphs won't be generated.
+   The option **Store in performance data in data_bin** and **Insert in index data** must be set to **Yes** otherwise graphs won't be generated.
 
 Add an *IPV4* output type
 
@@ -125,7 +125,7 @@ Add an *IPV4* output type
 
 Add an *IPV4* output type
 
-**Etape 4e : mise en place du failover rrd**
+**Etape 4e : RRD Failover**
 
 .. image:: images/Output-1-5.png
    :align: center
@@ -133,7 +133,7 @@ Add an *IPV4* output type
 
 Add a *File* output type
 
-**Etape 4e : mise en place du failover sql**
+**Etape 4e : SQL Failover**
 
 .. image:: images/Output-1-6.png
    :align: center
@@ -165,9 +165,9 @@ and follow this steps.
 Configure your Broker file
 
 .. note::
-  You must name the configuration of the RRD Broker daemon file on the Poller with the same name of the Central in order for the init file to work out without any major changes. The name must be Central-rrd.xml even if server is a Poller.
+  You must name the configuration of the RRD Broker daemon file on the Poller with the same name of the Central for the init file to work out without any major changes. The name must be Central-rrd.xml even if server is a Poller.
 
-**Etape 2 : Onglet Input**
+**Etape 2 : Input tab**
 
 .. image:: images/Input-2.png
    :align: center
@@ -175,7 +175,7 @@ Configure your Broker file
 
 Add an *IPV4* output type
 
-**Etape 3 : Onglet Logger**
+**Etape 3 : Logger tab**
 
 .. image:: images/Logger-2.png
    :align: center
@@ -183,7 +183,7 @@ Add an *IPV4* output type
 
 Add a *Logger* of  *File* type
 
-**Etape 4 : Onglet Output**
+**Etape 4 : Output tab**
 
 .. image:: images/Output-2-1.png
    :align: center
@@ -191,7 +191,7 @@ Add a *Logger* of  *File* type
 
 Add an *IPV4* output type
 
-**Etape 5 : Ajouter un Failover**
+**Etape 5 : Add a Failover**
 
 .. image:: images/Output-2-2.png
    :align: center
