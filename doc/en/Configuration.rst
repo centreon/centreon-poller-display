@@ -32,7 +32,7 @@ However you need to configure the stream between Centreon-Broker module on the P
 
 For that, in the Poller configuration, you need to add an **IPv4** **Output** type :
 
-.. image:: images/Poller-output.png
+.. image:: images/poller-output.png
    :align: center
    :width: 800 px
 
