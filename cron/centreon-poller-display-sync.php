@@ -118,7 +118,16 @@ try {
         }
         $add++;
     }
-  
+ 
+    /*
+    * Update Host properties
+    */
+    $DBRESULT = $DBO->query("SELECT storage.host_id, storage.name, storage.alias, storage.address FROM centreon_storage.hosts AS storage, centreon.host AS centreon WHERE storage.host_id=centreon.host_id AND storage.enabled = '1' AND (storage.name != centreon.host_name OR storage.alias != centreon.host_alias OR storage.address != centreon.host_address)");
+    while ($row = $DBRESULT->fetchRow()) {
+        $request = "UPDATE host SET host_name = '".$row['name']."', host_alias = '".$row['alias']."', host_address = '".$row['address']."' WHERE host_id = '".$row['host_id']."'";
+        $DB->query($request);
+    }
+ 
     /*
      * Synch Services List
      */
