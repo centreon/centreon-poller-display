@@ -102,9 +102,9 @@ try {
      */
     $DBO->query("DELETE FROM $centreonDbName.host WHERE host_id NOT IN (SELECT host_id FROM hosts WHERE enabled = '1')");
 
-    $DBRESULT = $DBO->query("SELECT host_id, name, address, check_interval, retry_interval, max_check_attempts FROM centreon_storage.hosts WHERE host_id NOT IN (SELECT host_id FROM $centreonDbName.host WHERE host_register = '1') AND enabled = '1'");
+    $DBRESULT = $DBO->query("SELECT host_id, name, alias, address, check_interval, retry_interval, max_check_attempts FROM centreon_storage.hosts WHERE host_id NOT IN (SELECT host_id FROM $centreonDbName.host WHERE host_register = '1') AND enabled = '1'");
     while ($row = $DBRESULT->fetchRow()) {
-        $request = "INSERT INTO host (host_id, host_name, host_alias, host_address, host_register, host_activate, host_check_interval, host_retry_check_interval, host_max_check_attempts) VALUES ('".$row['host_id']."', '".$row['name']."',  '".$row['name']."', '".$row['address']."', '1', '1', ".$row['check_interval'].", ".$row['retry_interval'].", ".$row['max_check_attempts'].")";
+        $request = "INSERT INTO host (host_id, host_name, host_alias, host_address, host_register, host_activate, host_check_interval, host_retry_check_interval, host_max_check_attempts) VALUES ('".$row['host_id']."', '".$row['name']."',  '".$row['alias']."', '".$row['address']."', '1', '1', ".$row['check_interval'].", ".$row['retry_interval'].", ".$row['max_check_attempts'].")";
         $DB->query($request);
     
         $request = "INSERT INTO extended_host_information (host_host_id) VALUES ('".$row['host_id']."')";
