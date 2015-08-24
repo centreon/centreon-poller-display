@@ -33,7 +33,6 @@ Pour cela, dans la configuration de ce poller, il est nécessaire d'ajouter un *
 
 .. image:: images/poller-output.png
    :align: center
-   :width: 800 px
 
 Configuration "Poller-Display-Broker"
 -------------------------------------
@@ -50,7 +49,6 @@ et suivez les différentes étapes.
 
 .. image:: images/General-1.png
    :align: center
-   :width: 800 px
 
 Configurer votre fichier broker
 
@@ -62,7 +60,6 @@ Configurer votre fichier broker
 
 .. image:: images/Input-1.png
    :align: center
-   :width: 800 px
 
 Ajoutez un Input de type *IPv4*.
 
@@ -70,7 +67,6 @@ Ajoutez un Input de type *IPv4*.
 
 .. image:: images/Logger-1.png
    :align: center
-   :width: 800 px
 
 Ajoutez un Logger de type *File*.
 
@@ -82,7 +78,6 @@ Nous allons maintenant ajouter plusieurs "output".
 
 .. image:: images/Output-1-1.png
    :align: center
-   :width: 800 px
 
 Ajoutez un Output de type *Broker SQL database*.
 
@@ -95,7 +90,6 @@ Ajoutez un Output de type *Perfdata Generator (Centreon Storage)*.
 
 .. image:: images/Output-1-2.png
    :align: center
-   :width: 800 px
 
 .. note::
    Les options **Store in performance data in data_bin** et **Insert in index data** doivent être à **Yes** sinon les graphiques ne pourront pas se créer.
@@ -111,7 +105,6 @@ Ajoutez un Output de type *IPV4*.
 
 .. image:: images/Output-1-3.png
    :align: center
-   :width: 800 px
 
 Ajoutez un Output de type *IPV4*.
 
@@ -120,7 +113,6 @@ Ajoutez un Output de type *IPV4*.
 
 .. image:: images/Output-1-4.png
    :align: center
-   :width: 800 px
 
 Ajoutez un Output de type *IPV4*.
 
@@ -128,7 +120,6 @@ Ajoutez un Output de type *IPV4*.
 
 .. image:: images/Output-1-5.png
    :align: center
-   :width: 800 px
 
 Ajoutez un Output de type *File*.
 
@@ -136,7 +127,6 @@ Ajoutez un Output de type *File*.
 
 .. image:: images/Output-1-6.png
    :align: center
-   :width: 800 px
 
 Ajoutez un Output de type *File*.
 
@@ -159,7 +149,6 @@ et suivez les différentes étapes.
 
 .. image:: images/General-2.png
    :align: center
-   :width: 800 px
 
 Configurer votre fichier broker
 
@@ -170,7 +159,6 @@ Configurer votre fichier broker
 
 .. image:: images/Input-2.png
    :align: center
-   :width: 800 px
 
 Ajoutez un Input de type *IPv4*.
 
@@ -178,7 +166,6 @@ Ajoutez un Input de type *IPv4*.
 
 .. image:: images/Logger-2.png
    :align: center
-   :width: 800 px
 
 Ajoutez un Logger de type *File*.
 
@@ -186,7 +173,6 @@ Ajoutez un Logger de type *File*.
 
 .. image:: images/Output-2-1.png
    :align: center
-   :width: 800 px
 
 Ajoutez un Output de type *IPv4*.
 
@@ -194,7 +180,6 @@ Ajoutez un Output de type *IPv4*.
 
 .. image:: images/Output-2-2.png
    :align: center
-   :width: 800 px
 
 Ajoutez un Output de type *File*.
 

@@ -34,7 +34,6 @@ For that, in the Poller configuration, you need to add an **IPv4** **Output** ty
 
 .. image:: images/poller-output.png
    :align: center
-   :width: 800 px
 
 "Poller-Display-Broker" Configuration
 -------------------------------------
@@ -52,7 +51,6 @@ And follow the following steps.
 
 .. image:: images/General-1.png
    :align: center
-   :width: 800 px
 
 Configure your Broker file.
 
@@ -64,7 +62,6 @@ Configure your Broker file.
 
 .. image:: images/Input-1.png
    :align: center
-   :width: 800 px
 
 Add an *IPV4* output type
 
@@ -72,7 +69,6 @@ Add an *IPV4* output type
 
 .. image:: images/Logger-1.png
    :align: center
-   :width: 800 px
 
 Add a *Logger* of  *File* type
 
@@ -84,7 +80,6 @@ Now we add several *output*.
 
 .. image:: images/Output-1-1.png
    :align: center
-   :width: 800 px
 
 Add a *Broker SQL database* output type
 
@@ -97,7 +92,6 @@ Add a *Perfdata Generator (Centreon Storage)* output type
 
 .. image:: images/Output-1-2.png
    :align: center
-   :width: 800 px
 
 .. note::
    The option **Store in performance data in data_bin** and **Insert in index data** must be set to **Yes** otherwise graphs won't be generated.
@@ -112,7 +106,6 @@ Add an *IPV4* output type
 
 .. image:: images/Output-1-3.png
    :align: center
-   :width: 800 px
 
 Add an *IPV4* output type
 
@@ -121,7 +114,6 @@ Add an *IPV4* output type
 
 .. image:: images/Output-1-4.png
    :align: center
-   :width: 800 px
 
 Add an *IPV4* output type
 
@@ -129,7 +121,6 @@ Add an *IPV4* output type
 
 .. image:: images/Output-1-5.png
    :align: center
-   :width: 800 px
 
 Add a *File* output type
 
@@ -137,7 +128,6 @@ Add a *File* output type
 
 .. image:: images/Output-1-6.png
    :align: center
-   :width: 800 px
 
 Add a *File* output type
 
@@ -160,7 +150,6 @@ and follow this steps.
 
 .. image:: images/General-2.png
    :align: center
-   :width: 800 px
 
 Configure your Broker file
 
@@ -171,7 +160,6 @@ Configure your Broker file
 
 .. image:: images/Input-2.png
    :align: center
-   :width: 800 px
 
 Add an *IPV4* output type
 
@@ -179,7 +167,6 @@ Add an *IPV4* output type
 
 .. image:: images/Logger-2.png
    :align: center
-   :width: 800 px
 
 Add a *Logger* of  *File* type
 
@@ -187,7 +174,6 @@ Add a *Logger* of  *File* type
 
 .. image:: images/Output-2-1.png
    :align: center
-   :width: 800 px
 
 Add an *IPV4* output type
 
@@ -195,7 +181,6 @@ Add an *IPV4* output type
 
 .. image:: images/Output-2-2.png
    :align: center
-   :width: 800 px
 
 Add a *File* output type
 
