@@ -189,6 +189,6 @@ You can now validate form. Configuration is done for this object.
 |
 
 .. warning::
-   On the Centreon light GUI on the poller's side in the menu : **Administration** > **Options** > **Centstorage** > **Options**, the option **Enable resources's insertion in index_data by Centreon** must not be checked.
+   On the Central web interface in the menu : **Administration** > **Options** > **Centstorage** > **Options**, the option **Enable resources's insertion in index_data by Centreon** must be checked.
 
 You can now proceed to the next step to apply changes.

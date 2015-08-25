@@ -188,6 +188,6 @@ Vous pouvez maintenant valider le formulaire. Votre configuration est maintenant
 |
 
 .. warning::
-   Sur l'interface du poller dans le menu : **Administration** > **Options** > **Centstorage** > **Options**, l'option **Enable resources's insertion in index_data by Centreon** ne doit pas être cochée.
+   Sur l'interface du central dans le menu : **Administration** > **Options** > **Centstorage** > **Options**, l'option **Enable resources's insertion in index_data by Centreon** doit être cochée.
 
 Vous pouvez maintenant passer à l'étape suivante qui consistera à appliquer les modifications.
