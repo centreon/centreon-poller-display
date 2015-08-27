@@ -10,7 +10,7 @@ Pour l'installer, il est nécessaire d'installer un serveur centreon central (co
 
 ::
 
- yum install centreon-poller-display
+ yum install centreon-base-config-centreon-engine centreon-poller-display
 
 .. note::
    Il est possible d'installer les paquets Centreon sur un poller déjà existant afin de lui ajouter l'interface local.

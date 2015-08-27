@@ -10,7 +10,7 @@ To install, proceed with the Central Server with Database installation option of
 
 ::
 
- yum install centreon-poller-display
+ yum install centreon-base-config-centreon-engine centreon-poller-display
 
 .. note::
    It is possible to install the package on an already existing Poller.
