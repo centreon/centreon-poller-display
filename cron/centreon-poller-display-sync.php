@@ -54,19 +54,9 @@ try {
     $DBO = new CentreonDB("centstorage");
 
     /*
-     * Sync Poller List 
-     */
-    $request = "SELECT * FROM instances WHERE running = '1'";
-    $DBRESULT = $DBO->query($request);
-    if ($DBRESULT->numRows() != 0) {
-        $DBRESULT = $DBO->query("DELETE FROM instances WHERE running = '0'"); 
-        $DBRESULT = $DBO->query("DELETE FROM instances WHERE running = '1' AND last_alive < '".(time() - 600)."'"); 
-    }
-
-    /*
      * Manage pollers
      */
-    $DBO->query("DELETE FROM $centreonDbName.nagios_server WHERE id NOT IN (SELECT instance_id FROM instances)");
+    $DBO->query("DELETE FROM $centreonDbName.nagios_server WHERE id NOT IN (SELECT instance_id FROM instances WHERE running = '0')");
     $DBO->query("DELETE FROM $centreonDbName.nagios_server WHERE id NOT IN (SELECT instance_id FROM instances WHERE running = '1' AND last_alive > '".(time() - 600)."')");
   
     $request = "SELECT * FROM instances WHERE instance_id NOT IN (SELECT id FROM $centreonDbName.nagios_server) ORDER BY last_alive DESC LIMIT 1";
