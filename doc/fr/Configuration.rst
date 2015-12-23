@@ -17,10 +17,10 @@ La première étape revient à configurer votre poller avec une configuration cl
 
 ::
 
- Configuration > Centreon > Centreon-Broker > Configuration > Add with wizard
+ Configuration > Collecteurs > Configuration de Centreon Broker > Ajouter avec l'assistant
 
-* Sélectionnez l'option *Simple Poller*.
-* Cliquez sur Next.
+* Sélectionnez l'option *Collecteur uniquement*.
+* Cliquez sur Suivant.
 * Donnez un nom à votre fichier de configuration (nous utiliserons "poller" dans notre exemple).
 * Sélectionnez le poller voulu.
 * Selectionnez le protocole  de communication (NDO ou BBDO). Cela doit être le même que pour votre serveur central.
@@ -41,7 +41,7 @@ La deuxième étape consiste à configurer le flux entre le module Centreon-Brok
 
 ::
 
- Configuration > Centreon > Centreon-Broker > Configuration > Add
+ Configuration > Collecteurs > Configuration de Centreon Broker > Ajouter
 
 et suivez les différentes étapes.
 
@@ -76,10 +76,10 @@ Nous allons maintenant ajouter plusieurs "output".
 
 **Etape 4a : Connexion à la base de données 'temps réel'**
 
+Ajoutez un Output de type *Broker SQL database*.
+
 .. image:: images/Output-1-1.png
    :align: center
-
-Ajoutez un Output de type *Broker SQL database*.
 
 .. note::
   Attention, les accès à la base de données sont ceux de la base de données du poller. Connectez vous au poller pour connaître le mot de passe de la base de données pour l'utilisateur "centreon".
@@ -91,48 +91,15 @@ Ajoutez un Output de type *Perfdata Generator (Centreon Storage)*.
 .. image:: images/Output-1-2.png
    :align: center
 
-.. note::
-   Les options **Store in performance data in data_bin** et **Insert in index data** doivent être à **Yes** sinon les graphiques ne pourront pas se créer.
-
+**Etape 4c : envoi de flux vers le broker rrd local**
 
 Ajoutez un Output de type *IPV4*.
-
-.. note::
-  Attention, les accès à la base de données sont ceux de la base de données du poller. Connectez vous au poller pour connaître le mot de passe de la base de données pour l'utilisateur "centreon".
-
-
-**Etape 4c : envoi de flux vers le broker rrd local**
 
 .. image:: images/Output-1-3.png
    :align: center
 
-Ajoutez un Output de type *IPV4*.
-
-
-**Etape 4d : envoi de flux vers le broker sql local**
-
-.. image:: images/Output-1-4.png
-   :align: center
-
-Ajoutez un Output de type *IPV4*.
-
-**Etape 4e : mise en place du failover rrd**
-
-.. image:: images/Output-1-5.png
-   :align: center
-
-Ajoutez un Output de type *File*.
-
-**Etape 4f : mise en place du failover sql**
-
-.. image:: images/Output-1-6.png
-   :align: center
-
-Ajoutez un Output de type *File*.
-
 Vous pouvez maintenant valider le formulaire. Votre configuration est maintenant opérationnel pour cet objet.
 
-|
 
 Configuration "Poller-Display-RRD"
 ----------------------------------
@@ -141,7 +108,7 @@ Cette étape consiste maintenant à configurer le flux pour la création des fic
 
 ::
 
- Configuration > Centreon > Centreon-Broker > Configuration > Add
+ Configuration > Collecteurs > Configuration de Centreon Broker > Ajouter
 
 et suivez les différentes étapes.
 
@@ -157,37 +124,25 @@ Configurer votre fichier broker
 
 **Etape 2 : Onglet Input**
 
+Ajoutez un Input de type *IPv4*
+
 .. image:: images/Input-2.png
    :align: center
 
-Ajoutez un Input de type *IPv4*.
-
 **Etape 3 : Onglet Logger**
+
+Ajoutez un Logger de type *File*
 
 .. image:: images/Logger-2.png
    :align: center
 
-Ajoutez un Logger de type *File*.
-
 **Etape 4 : Onglet Output**
+
+Ajoutez un Output de type *IPv4*.
 
 .. image:: images/Output-2-1.png
    :align: center
 
-Ajoutez un Output de type *IPv4*.
-
-**Etape 5 : Ajouter un Failover**
-
-.. image:: images/Output-2-2.png
-   :align: center
-
-Ajoutez un Output de type *File*.
-
 Vous pouvez maintenant valider le formulaire. Votre configuration est maintenant opérationnel pour cet objet.
-
-|
-
-.. warning::
-   Sur l'interface du central dans le menu : **Administration** > **Options** > **Centstorage** > **Options**, l'option **Enable resources's insertion in index_data by Centreon** doit être cochée.
 
 Vous pouvez maintenant passer à l'étape suivante qui consistera à appliquer les modifications.

@@ -11,7 +11,4 @@ Vous allez maintenant devoir appliquer la nouvelle configuration sur le Poller d
 
 Les statuts, les graphiques de performance et le Dashboard sont désormais disponibles sur le serveur Central et sur l'interface "light" du Poller.
 
-.. note::
-  Si vous n'utilisez pas Centreon Engine 1.4 minimum, pensez à peupler votre configuration d'au moins un host ou Centreon Engine ne pourra pas démarrer sur le Poller.
-
 Il vous est également possible de configurer des contacts et des ACL pour avoir des vues restreintes pour certains utilisateurs. Pensez à configurer l'auto import des utilisateurs via l'authentification LDAP.
