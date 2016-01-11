@@ -14,5 +14,5 @@ UPDATE topology SET topology_show = '1' WHERE topology_page = '50102';
 UPDATE topology SET topology_show = '1' WHERE topology_parent = '50102';
 UPDATE topology SET topology_show = '1' WHERE topology_page = '508';
 UPDATE topology SET topology_show = '1' WHERE topology_parent = '508';
-UPDATE topology SET topology_show = '1' WHERE topology_page = '50502';
+UPDATE topology SET topology_show = '1' WHERE topology_page = '505';
 UPDATE topology SET topology_show = '1' WHERE topology_page = '50503';
