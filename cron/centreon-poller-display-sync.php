@@ -150,7 +150,7 @@ try {
      */
 
     $DB->query("DELETE FROM hostgroup WHERE hg_id NOT IN (SELECT hostgroup_hg_id FROM hostgroup_relation)");
-    $DBO->query("DELETE FROM $centreonDbName.hostgroup WHERE hg_id NOT IN (SELECT hostgroup_id FROM hostgroups WHERE enabled = '1')");
+    $DBO->query("DELETE FROM $centreonDbName.hostgroup WHERE hg_id NOT IN (SELECT hostgroup_id FROM hostgroups)");
 
     $request = "SELECT hostgroup_id, name FROM hostgroups WHERE hostgroup_id NOT IN (SELECT hg_id FROM $centreonDbName.hostgroup) AND enabled = '1'";
     $DBRESULT = $DBO->query($request);
@@ -198,4 +198,3 @@ try {
     programExit($e->getMessage());
 }
 
-?>
