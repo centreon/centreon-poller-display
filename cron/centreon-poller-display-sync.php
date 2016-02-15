@@ -121,11 +121,11 @@ try {
     /*
      * Synch Services List
      */
-    $request = "DELETE FROM $centreonDbName.service WHERE service_id NOT IN (SELECT service_service_id FROM $centreonDbName.host_service_relation)";
+    $request = "DELETE FROM service WHERE service_id NOT IN (SELECT service_service_id FROM host_service_relation)";
     $DB->query($request);
 
     $request = "DELETE FROM $centreonDbName.service WHERE service_id IN (SELECT service_id FROM services WHERE enabled = 0)";
-    $DB->query($request);
+    $DBO->query($request);
 
     $request = "SELECT s.host_id, s.service_id, s.description, h.name, s.check_interval, s.retry_interval, s.max_check_attempts FROM services s, hosts h WHERE h.host_id = s.host_id AND s.service_id NOT IN (SELECT service_id FROM $centreonDbName.service WHERE service_register = '1' AND service_activate = '1') AND s.host_id IN (SELECT host_id FROM $centreonDbName.host WHERE host_register = '1') AND s.enabled = '1'";
     $DBRESULT = $DBO->query($request);
