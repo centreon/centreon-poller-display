@@ -138,7 +138,7 @@ Ajoutez un Logger de type *File*
 
 **Etape 4 : Onglet Output**
 
-Ajoutez un Output de type *IPv4*.
+Ajoutez un Output de type *RRD file generator*.
 
 .. image:: images/Output-2-1.png
    :align: center
