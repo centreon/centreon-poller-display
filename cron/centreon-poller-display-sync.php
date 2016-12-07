@@ -64,8 +64,14 @@ try {
     while ($row = $DBRESULT->fetchRow()) {
         $request = "INSERT INTO nagios_server (id, name, localhost, ns_activate, ns_status, ns_ip_address) VALUES ('".$row['instance_id']."', '".$row["name"]."', '1', 1, 1, '127.0.0.1')";
         $DB->query($request);
-      
-        $request = "INSERT INTO cfg_nagios (nagios_name, nagios_server_id, interval_length, nagios_activate, command_file) VALUES ('Main file for ".$row["name"]."', '".$row["instance_id"]."', 60, '1', '/var/lib/centreon-engine/rw/centengine.cmd')";
+
+        $request = "SELECT * FROM cfg_nagios WHERE nagios_server_id='".$row["instance_id"]."' LIMIT 1";
+        $DBRESULT2 = $DB->query($request);
+        if ($DBRESULT2->numRows()>0){
+            $request = "UPDATE cfg_nagios SET interval_length='60', nagios_activate='1', command_file='/var/lib/centreon-engine/rw/centengine.cmd' WHERE nagios_server_id='".$row["instance_id"]."'";
+        }else{
+            $request = "INSERT INTO cfg_nagios (nagios_name, nagios_server_id, interval_length, nagios_activate, command_file) VALUES ('Main file for ".$row["name"]."', '".$row["instance_id"]."', 60, '1', '/var/lib/centreon-engine/rw/centengine.cmd')";
+        }
         $DB->query($request);
     }
 
@@ -99,7 +105,10 @@ try {
     
         $request = "INSERT INTO extended_host_information (host_host_id) VALUES ('".$row['host_id']."')";
         $DB->query($request);
-    
+
+        $request = "DELETE FROM ns_host_relation WHERE host_host_id='".$row['host_id']."')";
+        $DB->query($request);
+
         $request = "INSERT INTO ns_host_relation (nagios_server_id, host_host_id) VALUES ('$nagios_server_id', '".$row['host_id']."')";
         $DB->query($request);
 
@@ -135,12 +144,20 @@ try {
         $request = "INSERT INTO service (service_id, service_description, service_register, service_activate, service_normal_check_interval, service_retry_check_interval, service_max_check_attempts) VALUES ('".$row['service_id']."', '".$row['description']."', '1', '1', '".$row['check_interval']."', '".$row['retry_interval']."', '".$row['max_check_attempts']."')";
         $DB->query($request);
 
-        $request = "INSERT INTO extended_service_information (service_service_id) VALUES ('".$row['service_id']."')";
-        $DB->query($request);
-    
-        // Insert host/service relation
-        $request = "INSERT INTO host_service_relation (host_host_id, service_service_id) VALUES ('".$row['host_id']."', '".$row['service_id']."')";
-        $DB->query($request);
+        $request = "SELECT * FROM extended_service_information WHERE service_service_id='".$row["service_id"]."' LIMIT 1";
+        $DBRESULT2 = $DB->query($request);
+        if (!($DBRESULT2->numRows()>0)){
+            $request = "INSERT INTO extended_service_information (service_service_id) VALUES ('".$row['service_id']."')";
+            $DB->query($request);
+        }
+
+        $request = "SELECT * FROM host_service_relation WHERE service_service_id='".$row["service_id"]."' AND host_host_id='".$row['host_id']."' LIMIT 1";
+        $DBRESULT2 = $DB->query($request);
+        if (!($DBRESULT2->numRows()>0)){
+            // Insert host/service relation
+            $request = "INSERT INTO host_service_relation (host_host_id, service_service_id) VALUES ('".$row['host_id']."', '".$row['service_id']."')";
+            $DB->query($request);
+        }
 
         if ($debug) {
             print "add service ".$row['description']." for host ".$row['host_id']."\n";
