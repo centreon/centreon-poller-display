@@ -108,6 +108,15 @@ try {
         }
         $add++;
     }
+    
+    /*
+    * Update Host Instance relation
+    */
+    $DBRESULT = $DBO->query("SELECT host_id FROM $centreonDbName.host WHERE host_id NOT IN (SELECT host_host_id FROM $centreonDbName.ns_host_relation)");
+    while ($row = $DBRESULT->fetchRow()) {
+        $request = "INSERT INTO $centreonDbName.ns_host_relation (nagios_server_id, host_host_id) VALUES ('$nagios_server_id', '".$row['host_id']."')";
+        $DB->query($request);
+    }
  
     /*
     * Update Host properties
