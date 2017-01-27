@@ -21,6 +21,11 @@ Pour l'installer, il est nécessaire d'installer un serveur centreon central (co
 Installation Web
 -----------------
 
+.. note::
+    Avant d'activer le module, il est nécessaire de créer les comptes utilisateurs ainsi que les ACL.
+    En effet, une fois le module activé, ces menus ne seront plus disponibles. Toutefois, vous pouvez désactiver
+    le module pour modifier la configuration des utilisateurs et des ACL puis réactiver ce dernier.
+
 La suite de l'installation de l'extension s'effectue via l'interface Web de **Centreon**.
 
 Accéder au menu de gestion des modules : Administration > Extensions sur l'interface de votre poller

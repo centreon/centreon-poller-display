@@ -21,6 +21,11 @@ To install, proceed with the Central Server with Database installation option of
 Web Installation
 -----------------
 
+.. note::
+    Before enable this module, you have to create your users account and set ACL definition. Indeed, if the module
+    is enabled, the menus to configure this objects will no more available. However, you can disable the module
+    to configure this objects and enable after.
+
 Next Installation steps are made from **Centreon** WEB interface. 
 
 Go to the modules management menu : Administration > Extensions
