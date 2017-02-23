@@ -39,31 +39,17 @@ use CentreonPollerDisplayCentral\ConfigGenerate\Object;
 
 class Acl extends Object
 {
-    /**
-     * @var \CentreonDB
-     */
-    protected $db;
 
     /**
      * @var table
      */
-    protected $table;
+    protected $table = 'acl_resources';
 
     /**
      * @var array
      * columns wanted
      */
-    protected $columns;
-
-    /**
-     * Factory constructor.
-     * @param $db \CentreonDB
-     */
-    public function __construct($db)
-    {
-        $this->table = 'acl_resources';
-        $this->columns = array('*');
-        $this->db = $db;
-    }
-
+    protected $columns = array(
+        '*'
+    );
 }

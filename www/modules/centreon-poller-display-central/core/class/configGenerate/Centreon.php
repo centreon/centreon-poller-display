@@ -35,7 +35,19 @@
 
 namespace CentreonPollerDisplayCentral\ConfigGenerate;
 
-class Central
+use \CentreonPollerDisplayCentral\ConfigGenerate\Bam\Acl;
+use \CentreonPollerDisplayCentral\ConfigGenerate\Bam\Host;
+use \CentreonPollerDisplayCentral\ConfigGenerate\Bam\Hostgroup;
+use \CentreonPollerDisplayCentral\ConfigGenerate\Bam\HostgroupRelation;
+use \CentreonPollerDisplayCentral\ConfigGenerate\Bam\HostInformation;
+use \CentreonPollerDisplayCentral\ConfigGenerate\Bam\HostRelation;
+use \CentreonPollerDisplayCentral\ConfigGenerate\Bam\HostServiceRelation;
+use \CentreonPollerDisplayCentral\ConfigGenerate\Bam\NagiosCfg;
+use \CentreonPollerDisplayCentral\ConfigGenerate\Bam\NagiosServer;
+use \CentreonPollerDisplayCentral\ConfigGenerate\Bam\Service;
+use \CentreonPollerDisplayCentral\ConfigGenerate\Bam\ServiceInformation;
+
+class Centreon
 {
     /**
      * @var \CentreonDB
@@ -49,14 +61,34 @@ class Central
     public function __construct($db)
     {
         $this->db = $db;
+
+        $oAcl = new Acl($db);
+        $oHost = new Host($db);
+        $oHostgroup = new Hostgroup($db);
+        $oHostgroupRelation = new HostgroupRelation($db);
+        $oHostInformation = new HostInformation($db);
+        $oHostRelation = new HostRelation($db);
+        $oHostServiceRelation = new HostRelation($db);
+        $oNagiosCfg = new NagiosCfg($db);
+        $oNagiosServer = new NagiosServer($db);
+        $oService = new Service($db);
+        $oServiceInformation = new ServiceInformation($db);
+
+        $contentFile = '';
+        $contentFile .=  $oAcl->generateSql(). "\n";
+        $contentFile .=  $oHost->generateSql(). "\n";
+        $contentFile .=  $oHostgroup->generateSql(). "\n";
+        $contentFile .=  $oHostgroupRelation->generateSql(). "\n";
+        $contentFile .=  $oHostInformation->generateSql(). "\n";
+        $contentFile .=  $oHostRelation->generateSql(). "\n";
+        $contentFile .=  $oHostServiceRelation->generateSql(). "\n";
+        $contentFile .=  $oNagiosCfg->generateSql(). "\n";
+        $contentFile .=  $oNagiosServer->generateSql(). "\n";
+        $contentFile .=  $oService->generateSql(). "\n";
+        $contentFile .=  $oServiceInformation->generateSql(). "\n";
+
+        return $contentFile;
+
     }
 
-    /**
-     *
-     * @return \CentreonPollerDisplayCentral\PollerDisplay
-     */
-    public function newPollerDisplay()
-    {
-        return new PollerDisplay($this->db);
-    }
 }

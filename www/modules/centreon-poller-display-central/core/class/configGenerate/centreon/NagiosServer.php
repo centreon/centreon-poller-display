@@ -39,32 +39,16 @@ use CentreonPollerDisplayCentral\ConfigGenerate\Object;
 
 class NagiosServer extends Object
 {
-    /**
-     * @var \CentreonDB
-     */
-    protected $db;
 
     /**
      * @var table
      */
-    protected $table;
+    protected $table = 'nagios_server';
 
     /**
      * @var array
      * columns wanted
      */
-    protected $columns;
-
-    /**
-     * Factory constructor.
-     * @param $db \CentreonDB
-     */
-    public function __construct($db)
-    {
-        $this->table = 'nagios_server';
-        $this->columns = array('*');
-        $this->db = $db;
-    }
-
+    protected $columns = array('*');
 
 }

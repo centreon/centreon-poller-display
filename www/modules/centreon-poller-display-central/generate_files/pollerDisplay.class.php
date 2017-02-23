@@ -13,7 +13,9 @@
 
 require_once dirname(__FILE__) . '/../centreon-poller-display-central.conf.php';
 
+
 use \CentreonPollerDisplayCentral\ConfigGenerate\Bam;
+use \CentreonPollerDisplayCentral\ConfigGenerate\Centreon;
 
 class PollerDisplay extends \AbstractObject
 {
@@ -34,8 +36,11 @@ class PollerDisplay extends \AbstractObject
 
         if($stmt->fetch()){
 
-            $stmt = $this->backend_instance->db->prepare("SELECT ba_id
-                                                    FROM mod_bam_poller_relations 
+            $contentCentreon = new Centreon($this->backend_instance->db);
+            $this->generateFile($pollerConfigPath,$this->generate_filename,$contentCentreon);
+
+            $stmt = $this->backend_instance->db->prepare("SELECT ba_id 
+                                                    FROM mod_bam_poller_relations
                                                     WHERE poller_id = :pollerId");
             $stmt->bindParam(':pollerId', $poller_id, PDO::PARAM_INT);
             $stmt->execute();
@@ -52,6 +57,7 @@ class PollerDisplay extends \AbstractObject
         }
         */
     }
+
 }
 
 

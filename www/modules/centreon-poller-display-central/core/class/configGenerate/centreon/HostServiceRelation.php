@@ -39,32 +39,16 @@ use CentreonPollerDisplayCentral\ConfigGenerate\Object;
 
 class HostServiceRelation extends Object
 {
-    /**
-     * @var \CentreonDB
-     */
-    protected $db;
 
     /**
      * @var table
      */
-    protected $table;
+    protected $table = 'host_service_relation';
 
     /**
      * @var array
      * columns wanted
      */
-    protected $columns;
-
-    /**
-     * Factory constructor.
-     * @param $db \CentreonDB
-     */
-    public function __construct($db)
-    {
-        $this->table = 'host_service_relation';
-        $this->columns = array('*');
-        $this->db = $db;
-    }
-
+    protected $columns = array('*');
 
 }

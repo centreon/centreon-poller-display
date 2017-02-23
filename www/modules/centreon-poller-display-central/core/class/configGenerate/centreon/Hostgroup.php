@@ -34,36 +34,22 @@
  */
 
 namespace CentreonPollerDisplayCentral\ConfigGenerate\Centreon;
-
 use CentreonPollerDisplayCentral\ConfigGenerate\Object;
 
 class Hostgroup extends Object
 {
     /**
-     * @var \CentreonDB
-     */
-    protected $db;
-
-    /**
      * @var table
      */
-    protected $table;
+    protected $table = 'hostgroup';
 
     /**
      * @var array
      * columns wanted
      */
-    protected $columns;
+    protected $columns = array(
+        '*'
+    );
 
-    /**
-     * Factory constructor.
-     * @param $db \CentreonDB
-     */
-    public function __construct($db)
-    {
-        $this->table = 'hostgroup';
-        $this->columns = array('*');
-        $this->db = $db;
-    }
 
 }
