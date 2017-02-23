@@ -44,9 +44,21 @@ use \CentreonPollerDisplayCentral\ConfigGenerate\Bam\Ba;
  */
 class Bam extends \AbstractObject
 {
+    protected $engine = false;
+    protected $broker = true;
+    protected $generate_filename = 'bam-poller-display.sql';
+
     public function generateObjects()
     {
         $baObj = new Ba($this->backend_instance->db);
         $sql = $baObj->generateSql();
+
+        $this->createFile($this->backend_instance->getPath());
+
+        /*
+         * Write SQL file
+         */
+
+        $this->closeFile();
     }
 }

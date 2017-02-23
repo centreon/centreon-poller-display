@@ -15,11 +15,11 @@ require_once dirname(__FILE__) . '/../centreon-poller-display-central.conf.php';
 
 use \CentreonPollerDisplayCentral\ConfigGenerate\Bam;
 
-class PollerDisplay extends AbstractObject
+class PollerDisplay extends \AbstractObject
 {
     protected $engine = false;
     protected $broker = true;
-    protected $generate_filename = 'poller-display.sql';
+    protected $generate_filename = 'bam-poller-display.sql';
 
     public function generateFromPollerId($poller_id, $localhost)
     {
