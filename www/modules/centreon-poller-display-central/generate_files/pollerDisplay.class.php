@@ -15,6 +15,7 @@ require_once dirname(__FILE__) . '/../centreon-poller-display-central.conf.php';
 
 use \CentreonPollerDisplayCentral\ConfigGenerate\Bam\Ba;
 use \CentreonPollerDisplayCentral\ConfigGenerate\Centreon\Host;
+use \CentreonPollerDisplayCentral\ConfigGenerate\Centreon;
 
 class PollerDisplay extends AbstractObject
 {
@@ -39,6 +40,9 @@ class PollerDisplay extends AbstractObject
     }
 
     public function generateFromPollerId($poller_id, $localhost) {
+
+        $pollerConfigPath = "/usr/share/centreon/filesGeneration/broker/$poller_id/";
+
         $baObj = new Ba($this->backend_instance->db);
         $sql = $baObj->generateSql();
 
@@ -55,8 +59,8 @@ class PollerDisplay extends AbstractObject
 
         if($stmt->fetch()){
 
-
-
+            $contentCentreon = new Centreon($this->backend_instance->db);
+            $this->generateFile($pollerConfigPath,$this->generate_filename,$contentCentreon);
 
             $stmt = $this->backend_instance->db->prepare("SELECT ba_id 
                                                     FROM mod_bam_poller_relations 
@@ -74,9 +78,30 @@ class PollerDisplay extends AbstractObject
 
             }
         }
+    }
 
+
+    public function generateFile($root, $name, $content) {
+
+        $path = $root . $name;
+        if (!file_exists($path)) {
+            touch($path);
+        }
+
+        $handle=fopen($path, "rw");
+        fwrite($handle, $content);
+        fclose($handle);
 
     }
+
+
+
+
+
+
+
+
+
 }
 
 

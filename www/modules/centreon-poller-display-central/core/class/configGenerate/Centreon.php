@@ -62,30 +62,30 @@ class Centreon
     {
         $this->db = $db;
 
-        $oAcl = new Acl();
-        $oHost = new Host();
-        $oHostgroup = new Hostgroup();
-        $oHostgroupRelation = new HostgroupRelation();
-        $oHostInformation = new HostInformation();
-        $oHostRelation = new HostRelation();
-        $oHostServiceRelation = new HostRelation();
-        $oNagiosCfg = new NagiosCfg();
-        $oNagiosServer = new NagiosServer();
-        $oService = new Service();
-        $oServiceInformation = new ServiceInformation();
+        $oAcl = new Acl($db);
+        $oHost = new Host($db);
+        $oHostgroup = new Hostgroup($db);
+        $oHostgroupRelation = new HostgroupRelation($db);
+        $oHostInformation = new HostInformation($db);
+        $oHostRelation = new HostRelation($db);
+        $oHostServiceRelation = new HostRelation($db);
+        $oNagiosCfg = new NagiosCfg($db);
+        $oNagiosServer = new NagiosServer($db);
+        $oService = new Service($db);
+        $oServiceInformation = new ServiceInformation($db);
 
         $contentFile = '';
-        $contentFile .=  $oAcl->generateSql();
-        $contentFile .=  $oHost->generateSql();
-        $contentFile .=  $oHostgroup->generateSql();
-        $contentFile .=  $oHostgroupRelation->generateSql();
-        $contentFile .=  $oHostInformation->generateSql();
-        $contentFile .=  $oHostRelation->generateSql();
-        $contentFile .=  $oHostServiceRelation->generateSql();
-        $contentFile .=  $oNagiosCfg->generateSql();
-        $contentFile .=  $oNagiosServer->generateSql();
-        $contentFile .=  $oService->generateSql();
-        $contentFile .=  $oServiceInformation->generateSql();
+        $contentFile .=  $oAcl->generateSql(). "\n";
+        $contentFile .=  $oHost->generateSql(). "\n";
+        $contentFile .=  $oHostgroup->generateSql(). "\n";
+        $contentFile .=  $oHostgroupRelation->generateSql(). "\n";
+        $contentFile .=  $oHostInformation->generateSql(). "\n";
+        $contentFile .=  $oHostRelation->generateSql(). "\n";
+        $contentFile .=  $oHostServiceRelation->generateSql(). "\n";
+        $contentFile .=  $oNagiosCfg->generateSql(). "\n";
+        $contentFile .=  $oNagiosServer->generateSql(). "\n";
+        $contentFile .=  $oService->generateSql(). "\n";
+        $contentFile .=  $oServiceInformation->generateSql(). "\n";
 
         return $contentFile;
 
