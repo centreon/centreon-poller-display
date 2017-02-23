@@ -54,7 +54,7 @@ $tpl = initSmartyTpl($path, $tpl);
 $form = new HTML_QuickForm('Form', 'post', "?p=" . $p);
 
 $valid = false;
-if ($form->validate())  {
+if ($form->validate()) {
     $valid = true;
     $pollerDisplayObj->insertFromForm($_POST);
     $form->freeze();
@@ -72,7 +72,7 @@ $form->addElement('select2', 'poller_display', _("Poller display list"), array()
 $subC = $form->addElement('submit', 'submitC', _("Save"), array("class" => "btc bt_success"));
 $res = $form->addElement('reset', 'reset', _("Reset"));
 
-if ($valid)  {
+if ($valid) {
     $form->freeze();
 }
 
