@@ -40,30 +40,16 @@ use CentreonPollerDisplayCentral\ConfigGenerate\Object;
 class Host extends Object
 {
     /**
-     * @var \CentreonDB
-     */
-    protected $db;
-
-    /**
      * @var table
      */
-    protected $table;
+    protected $table = 'host';
 
     /**
      * @var array
      * columns wanted
      */
-    protected $columns;
-
-    /**
-     * Factory constructor.
-     * @param $db \CentreonDB
-     */
-    public function __construct($db)
-    {
-        $this->table = 'host';
-        $this->columns = array('*');
-        $this->db = $db;
-    }
-
+    protected $columns = array(
+        'host_id',
+        'host_name'
+    );
 }

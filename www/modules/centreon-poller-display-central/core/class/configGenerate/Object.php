@@ -81,7 +81,7 @@ abstract class Object
     protected function generateInsertQuery()
     {
         $insertQuery = 'INSERT INTO ' . $this->table . ' '
-            . implode(',', $this->columns) . ' '
+            . '(' . implode(',', $this->columns) . ') '
             . 'VALUES ';
 
         $objects = $this->getList();
@@ -112,7 +112,7 @@ abstract class Object
             . 'FROM ' . $this->table . ' ';
         $result = $this->db->query($query);
 
-        while ($row = $result->fetch()) {
+        while ($row = $result->fetch(\PDO::FETCH_ASSOC)) {
             $list[] = $row;
         }
 

@@ -14,6 +14,7 @@
 require_once dirname(__FILE__) . '/../centreon-poller-display-central.conf.php';
 
 use \CentreonPollerDisplayCentral\ConfigGenerate\Bam\Ba;
+use \CentreonPollerDisplayCentral\ConfigGenerate\Centreon\Host;
 
 class PollerDisplay extends AbstractObject
 {
@@ -40,6 +41,9 @@ class PollerDisplay extends AbstractObject
     public function generateFromPollerId($poller_id, $localhost) {
         $baObj = new Ba($this->backend_instance->db);
         $sql = $baObj->generateSql();
+
+        $obj = new Host($this->backend_instance->db);
+        $sql = $obj->generateSql();
 
         var_dump($sql);
 
