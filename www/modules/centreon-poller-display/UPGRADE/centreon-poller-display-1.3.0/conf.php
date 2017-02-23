@@ -7,4 +7,3 @@ $upgrade_conf['centreon-poller-display']["author"] = "Merethis";
 $upgrade_conf['centreon-poller-display']["lang_files"] = "0";
 $upgrade_conf['centreon-poller-display']["sql_files"] = "0";
 $upgrade_conf['centreon-poller-display']["php_files"] = "0";
-?>

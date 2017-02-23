@@ -7,4 +7,3 @@ $upgrade_conf['centreon-poller-display']["author"] = "Centreon";
 $upgrade_conf['centreon-poller-display']["lang_files"] = "0";
 $upgrade_conf['centreon-poller-display']["sql_files"] = "1";
 $upgrade_conf['centreon-poller-display']["php_files"] = "1";
-?>
