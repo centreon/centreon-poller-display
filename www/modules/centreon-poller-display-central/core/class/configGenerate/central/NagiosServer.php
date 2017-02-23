@@ -37,7 +37,7 @@ namespace CentreonPollerDisplayCentral\ConfigGenerate\central;
 
 use CentreonPollerDisplayCentral\ConfigGenerate\Object;
 
-class Service extends Object
+class NagiosServer extends Object
 {
     /**
      * @var \CentreonDB
@@ -45,11 +45,23 @@ class Service extends Object
     protected $db;
 
     /**
+     * @var table
+     */
+    protected $table;
+
+    /**
+     * @var array
+     * columns wanted
+     */
+    protected $columns;
+
+    /**
      * Factory constructor.
      * @param $db \CentreonDB
      */
     public function __construct($db)
     {
+        $this->table = 'nagios_server';
         $this->db = $db;
     }
 

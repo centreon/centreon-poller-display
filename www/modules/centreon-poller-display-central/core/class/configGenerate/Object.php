@@ -33,16 +33,18 @@
  *
  */
 
-namespace CentreonPollerDisplayCentral\ConfigGenerate\central;
+namespace CentreonPollerDisplayCentral\ConfigGenerate;
 
-use CentreonPollerDisplayCentral\ConfigGenerate\Object;
-
-class NagiosCfg extends Object
+/**
+ * User: kduret
+ * Date: 23/02/2017
+ * Time: 09:19
+ */
+abstract class Object
 {
-    /**
-     * @var \CentreonDB
-     */
-    protected $db;
+    protected $db = null;
+    protected $table = null;
+    protected $columns = null;
 
     /**
      * Factory constructor.
@@ -53,13 +55,67 @@ class NagiosCfg extends Object
         $this->db = $db;
     }
 
-    /**
-     *
-     * @return \CentreonPollerDisplayCentral\PollerDisplay
-     */
-    public function newPollerDisplay()
+
+    public function generateSql()
     {
-        return new PollerDisplay($this->db);
+        if (is_null($this->table) || is_null($this->columns)) {
+            return null;
+        }
+
+        $truncateQuery = $this->generateTruncateQuery();
+
+        $insertQuery = $this->generateInsertQuery();
+
+        $finalQuery = $truncateQuery . "\n" . $insertQuery;
+
+
+        return $finalQuery;
     }
 
+    protected function generateTruncateQuery()
+    {
+        $query = 'TRUNCATE ' . $this->table . ';';
+        return $query;
+    }
+
+    protected function generateInsertQuery()
+    {
+        $insertQuery = 'INSERT INTO ' . $this->table . ' '
+            . implode(',', $this->columns) . ' '
+            . 'VALUES ';
+
+        $objects = $this->getList();
+
+        if (!count($objects)) {
+            return '';
+        }
+
+        $first = true;
+        foreach ($objects as $object) {
+            if (!$first) {
+                $insertQuery .= ',';
+            }
+            $insertQuery .= '(' . implode(',', array_values($object)) . ')';
+            $first = false;
+        }
+
+        $insertQuery .= ';';
+
+        return $insertQuery;
+    }
+
+    protected function getList()
+    {
+        $list = array();
+
+        $query = 'SELECT ' . implode(',', $this->columns) . ' '
+            . 'FROM ' . $this->table . ' ';
+        $result = $this->db->query($query);
+
+        while ($row = $result->fetch()) {
+            $list[] = $row;
+        }
+
+        return $list;
+    }
 }

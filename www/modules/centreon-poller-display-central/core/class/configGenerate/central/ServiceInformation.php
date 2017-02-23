@@ -37,7 +37,7 @@ namespace CentreonPollerDisplayCentral\ConfigGenerate\central;
 
 use CentreonPollerDisplayCentral\ConfigGenerate\Object;
 
-class HostRelation extends Object
+class ServiceInformation extends Object
 {
     /**
      * @var \CentreonDB
@@ -45,11 +45,23 @@ class HostRelation extends Object
     protected $db;
 
     /**
+     * @var table
+     */
+    protected $table;
+
+    /**
+     * @var array
+     * columns wanted
+     */
+    protected $columns;
+
+    /**
      * Factory constructor.
      * @param $db \CentreonDB
      */
     public function __construct($db)
     {
+        $this->table = 'extended_service_information';
         $this->db = $db;
     }
 

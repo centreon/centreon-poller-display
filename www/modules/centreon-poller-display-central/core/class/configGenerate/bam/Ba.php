@@ -33,32 +33,19 @@
  *
  */
 
-namespace CentreonPollerDisplayCentral\ConfigGenerate\central;
-use CentreonPollerDisplayCentral\ConfigGenerate\Object;
+namespace CentreonPollerDisplayCentral\ConfigGenerate\Bam;
 
-class Acl extends Object
+use \CentreonPollerDisplayCentral\ConfigGenerate\Object;
+
+/**
+ * User: kduret
+ * Date: 23/02/2017
+ * Time: 09:19
+ */
+class Ba extends Object
 {
-    /**
-     * @var \CentreonDB
-     */
-    protected $db;
-
-    /**
-     * Factory constructor.
-     * @param $db \CentreonDB
-     */
-    public function __construct($db)
-    {
-        $this->db = $db;
-    }
-
-    /**
-     *
-     * @return \CentreonPollerDisplayCentral\PollerDisplay
-     */
-    public function newPollerDisplay()
-    {
-        return new PollerDisplay($this->db);
-    }
-
+    protected $table = 'mod_bam';
+    protected $columns = array(
+        'ba_id'
+    );
 }

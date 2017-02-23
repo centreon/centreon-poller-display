@@ -33,14 +33,11 @@
  *
  */
 
-namespace CentreonPollerDisplayCentral\ConfigGenerate\Bam;
+namespace CentreonPollerDisplayCentral\ConfigGenerate\central;
 
-/**
- * User: kduret
- * Date: 23/02/2017
- * Time: 09:19
- */
-class BA
+use CentreonPollerDisplayCentral\ConfigGenerate\Object;
+
+class HostInformation extends Object
 {
     /**
      * @var \CentreonDB
@@ -48,11 +45,23 @@ class BA
     protected $db;
 
     /**
+     * @var table
+     */
+    protected $table;
+
+    /**
+     * @var array
+     * columns wanted
+     */
+    protected $columns;
+
+    /**
      * Factory constructor.
      * @param $db \CentreonDB
      */
     public function __construct($db)
     {
+        $this->table = 'extended_host_information';
         $this->db = $db;
     }
 
@@ -64,4 +73,5 @@ class BA
     {
         return new PollerDisplay($this->db);
     }
+
 }

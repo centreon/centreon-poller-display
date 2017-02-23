@@ -23,12 +23,41 @@ require_once dirname(__FILE__) . '/../../core/class/config-generate/central/Serv
 require_once dirname(__FILE__) . '/../../core/class/config-generate/central/ServiceInformation.php';
 
 
-class ExportCentral extends AbstractObject {
+class ExportCentral extends AbstractObject
+{
+    public function generateObjects($poller)
+    {
 
-    public function generateObjects($poller) {
+        $oAcl = new Acl();
+        $o = new Host();
+        $oAcl = new Acl();
+        $oAcl = new Acl();
+        $oAcl = new Acl();
+        $oAcl = new Acl();
 
-        ExportCentral::getInstance()->generateObjects();
 
 
+
+        $contentFile = '';
+        $contentFile .=  $oAcl->generateSql();
+        $contentFile .=  $oAcl->generateSql();
+        $contentFile .=  $oAcl->generateSql();
+        $contentFile .=  $oAcl->generateSql();
+        $contentFile .=  $oAcl->generateSql();
+        $contentFile .=  $oAcl->generateSql();
+        $contentFile .=  $oAcl->generateSql();
+
+        $contentFile .= Host::getInstance()->generateSql();
+        $contentFile .= Hostgroup::getInstance()->generateSql();
+        $contentFile .= HostgroupRelation::getInstance()->generateSql();
+        $contentFile .= HostInformation::getInstance()->generateSql();
+        $contentFile .= HostRelation::getInstance()->generateSql();
+        $contentFile .= HostServiceRelation::getInstance()->generateSql();
+        $contentFile .= NagiosCfg::getInstance()->generateSql();
+        $contentFile .= NagiosServer::getInstance()->generateSql();
+        $contentFile .= Service::getInstance()->generateSql();
+        $contentFile .= ServiceInformation::getInstance()->generateSql();
+
+        return $contentFile;
     }
 }
