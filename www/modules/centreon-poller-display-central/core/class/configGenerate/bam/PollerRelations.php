@@ -40,9 +40,9 @@ namespace CentreonPollerDisplayCentral\ConfigGenerate\Bam;
  * Date: 23/02/2017
  * Time: 09:19
  */
-class Kpi
+class PollerRelations
 {
-    protected $table = 'mod_bam_kpi';
+    protected $table = 'mod_bam_poller_relations';
     protected $columns = array(
         '*'
     );

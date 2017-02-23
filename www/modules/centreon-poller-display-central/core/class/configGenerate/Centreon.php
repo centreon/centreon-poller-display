@@ -47,48 +47,42 @@ use \CentreonPollerDisplayCentral\ConfigGenerate\Bam\NagiosServer;
 use \CentreonPollerDisplayCentral\ConfigGenerate\Bam\Service;
 use \CentreonPollerDisplayCentral\ConfigGenerate\Bam\ServiceInformation;
 
-class Centreon
+class Centreon extends \AbstractObject
 {
-    /**
-     * @var \CentreonDB
-     */
-    protected $db;
+    protected $engine = false;
+    protected $broker = true;
+    protected $generate_filename = 'centreon-poller-display.sql';
 
-    /**
-     * Factory constructor.
-     * @param $db \CentreonDB
-     */
-    public function __construct($db)
+    public function generateObjects()
     {
-        $this->db = $db;
+        $oAcl = new Acl($this->backend_instance->db);
+        $oHost = new Host($this->backend_instance->db);
+        $oHostgroup = new Hostgroup($this->backend_instance->db);
+        $oHostgroupRelation = new HostgroupRelation($this->backend_instance->db);
+        $oHostInformation = new HostInformation($this->backend_instance->db);
+        $oHostRelation = new HostRelation($this->backend_instance->db);
+        $oHostServiceRelation = new HostRelation($this->backend_instance->db);
+        $oNagiosCfg = new NagiosCfg($this->backend_instance->db);
+        $oNagiosServer = new NagiosServer($this->backend_instance->db);
+        $oService = new Service($this->backend_instance->db);
+        $oServiceInformation = new ServiceInformation($this->backend_instance->db);
 
-        $oAcl = new Acl($db);
-        $oHost = new Host($db);
-        $oHostgroup = new Hostgroup($db);
-        $oHostgroupRelation = new HostgroupRelation($db);
-        $oHostInformation = new HostInformation($db);
-        $oHostRelation = new HostRelation($db);
-        $oHostServiceRelation = new HostRelation($db);
-        $oNagiosCfg = new NagiosCfg($db);
-        $oNagiosServer = new NagiosServer($db);
-        $oService = new Service($db);
-        $oServiceInformation = new ServiceInformation($db);
+        $sql = '';
+        $sql .=  $oAcl->generateSql(). "\n";
+        $sql .=  $oHost->generateSql(). "\n";
+        $sql .=  $oHostgroup->generateSql(). "\n";
+        $sql .=  $oHostgroupRelation->generateSql(). "\n";
+        $sql .=  $oHostInformation->generateSql(). "\n";
+        $sql .=  $oHostRelation->generateSql(). "\n";
+        $sql .=  $oHostServiceRelation->generateSql(). "\n";
+        $sql .=  $oNagiosCfg->generateSql(). "\n";
+        $sql .=  $oNagiosServer->generateSql(). "\n";
+        $sql .=  $oService->generateSql(). "\n";
+        $sql .=  $oServiceInformation->generateSql(). "\n";
 
-        $contentFile = '';
-        $contentFile .=  $oAcl->generateSql(). "\n";
-        $contentFile .=  $oHost->generateSql(). "\n";
-        $contentFile .=  $oHostgroup->generateSql(). "\n";
-        $contentFile .=  $oHostgroupRelation->generateSql(). "\n";
-        $contentFile .=  $oHostInformation->generateSql(). "\n";
-        $contentFile .=  $oHostRelation->generateSql(). "\n";
-        $contentFile .=  $oHostServiceRelation->generateSql(). "\n";
-        $contentFile .=  $oNagiosCfg->generateSql(). "\n";
-        $contentFile .=  $oNagiosServer->generateSql(). "\n";
-        $contentFile .=  $oService->generateSql(). "\n";
-        $contentFile .=  $oServiceInformation->generateSql(). "\n";
-
-        return $contentFile;
-
+        $this->createFile($this->backend_instance->getPath());
+        fwrite($this->fp, $sql);
+        $this->close_file();
     }
 
 }
