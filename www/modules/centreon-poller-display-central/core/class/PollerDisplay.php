@@ -54,6 +54,11 @@ class PollerDisplay
         $this->db = $db;
     }
 
+    /**
+     * Delete values in database
+     *
+     * @param int|null $id
+     */
     public function delete($id = null)
     {
         $query = 'DELETE FROM mod_poller_display_server_relations ';
@@ -65,8 +70,54 @@ class PollerDisplay
         $this->db->query($query);
     }
 
-    public function insert($id)
+    /**
+     * Insert values in database
+     *
+     * @param array $ids
+     * @return null
+     */
+    public function insert($ids = array())
     {
+        if (!count($ids)) {
+            return null;
+        }
 
+        $query = 'INSERT INTO mod_poller_display_server_relations (nagios_server_id) '
+            . 'VALUES (' . implode('),(', $ids) . ') ';
+        $this->db->query($query);
+    }
+
+    /**
+     * Insert values from configuration form
+     *
+     * @param array $postValues
+     */
+    public function insertFromForm($postValues = array())
+    {
+        $pollerIds = isset($postValues['poller_display']) ? array_values($postValues['poller_display']) : array();
+
+        $this->delete();
+        $this->insert($pollerIds);
+    }
+
+    /**
+     * Get list of poller which are poller display
+     *
+     * @return array of pollers
+     */
+    public function getList()
+    {
+        $query = 'SELECT ns.id, ns.name '
+            . 'FROM nagios_server ns '
+            . 'INNER JOIN mod_poller_display_server_relations sr '
+            . 'ON sr.nagios_server_id = ns.id ';
+        $result = $this->db->query($query);
+
+        $pollers = array();
+        while ($row = $result->fetchRow()) {
+            $pollers[$row['name']] = $row['id'];
+        }
+
+        return $pollers;
     }
 }

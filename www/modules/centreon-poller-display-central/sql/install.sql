@@ -1,7 +1,8 @@
 CREATE TABLE IF NOT EXISTS mod_poller_display_server_relations (
-	`id` int(11) NOT NULL,
+	`id` int(11) NOT NULL AUTO_INCREMENT,
 	`nagios_server_id` int(11) NOT NULL,
 	KEY `nagios_server_id` (`nagios_server_id`),
+	PRIMARY KEY (`id`),
 	CONSTRAINT `mod_poller_display_server_relations_ibfk_1` FOREIGN KEY (`nagios_server_id`) REFERENCES `nagios_server` (`id`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 

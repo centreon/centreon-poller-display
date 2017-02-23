@@ -37,51 +37,65 @@ if (!isset($oreon)) {
     exit();
 }
 
-require_once "HTML/QuickForm.php";
-require_once 'HTML/QuickForm/Renderer/ArraySmarty.php';
-require_once "help.php";
-require_once "DB-Func.php";
+require_once _CENTREON_PATH_ . '/www/modules/centreon-poller-display-central/centreon-poller-display-central.conf.php';
+require_once _CENTREON_PATH_ . '/www/lib/HTML/QuickForm.php';
+require_once _CENTREON_PATH_ . '/www/lib/HTML/QuickForm/Renderer/ArraySmarty.php';
+require_once _MODULE_PATH_ . 'core/configuration/help.php';
+
+use \CentreonPollerDisplayCentral\Factory;
+
+$factoryObj = new Factory();
+$pollerDisplayObj = $factoryObj->newPollerDisplay();
 
 // Smarty template Init
-$path = _CENTREON_PATH_ . "/www/modules/centreon-poller-display-central/core/configuration/";
+$path = _MODULE_PATH_ . "/core/configuration/";
 $tpl = new Smarty();
 $tpl = initSmartyTpl($path, $tpl);
 $form = new HTML_QuickForm('Form', 'post', "?p=" . $p);
 
-$form->addElement('header', 'title', _("Centreon Poller Display settings"));
+$valid = false;
+if ($form->validate())  {
+    $valid = true;
+    $pollerDisplayObj->insertFromForm($_POST);
+    $form->freeze();
+}
 
+$form->addElement('header', 'title', _("Centreon Poller Display settings"));
 $attrPollers = array(
     'datasourceOrigin' => 'ajax',
     'availableDatasetRoute' => './include/common/webServices/rest/internal.php?object=centreon_configuration_poller&action=list',
     'multiple' => true,
-    'defaultDataset' => array('titi' => 1)
+    'defaultDataset' => $pollerDisplayObj->getList()
 );
-$form->addElement('select2', 'contact_cgNotif', _("Poller display list"), array(), $attrPollers);
+$form->addElement('select2', 'poller_display', _("Poller display list"), array(), $attrPollers);
 
 $subC = $form->addElement('submit', 'submitC', _("Save"), array("class" => "btc bt_success"));
 $res = $form->addElement('reset', 'reset', _("Reset"));
 
-$valid = false;
-if ($form->validate())  {
-    updateOptionsInDB($pearDB, $_POST);
-
-    $valid = true;
+if ($valid)  {
     $form->freeze();
 }
 
-$form->addElement("button", "change", _("Modify"), array("onClick"=>"javascript:window.location.href='?p=".$p."'", 'class' => 'btc bt_info'));
+$form->addElement(
+    "button",
+    "change",
+    _("Modify"),
+    array(
+        "onClick" => "javascript:window.location.href='?p=" . $p . "'",
+        'class' => 'btc bt_info'
+    )
+);
 
-$helptext = "";
-foreach ($help as $key => $text) {
-    $helptext .= '<span style="display:none" id="help:' . $key . '">' . $text . '</span>' . "\n";
-}
-$tpl->assign("helptext", $helptext);
 
 $renderer = new HTML_QuickForm_Renderer_ArraySmarty($tpl, true);
-$renderer->setRequiredTemplate('{$label}&nbsp;<font color="red" size="1">*</font>');
-$renderer->setErrorTemplate('<font color="red">{$error}</font><br />{$html}');
 $form->accept($renderer);
+
+$helpText = "";
+foreach ($help as $key => $text) {
+    $helpText .= '<span style="display:none" id="help:' . $key . '">' . $text . '</span>' . "\n";
+}
+$tpl->assign("helpText", $helpText);
 $tpl->assign('form', $renderer->toArray());
 $tpl->assign('valid', $valid);
 
-$tpl->display("listOptions.ihtml");
+$tpl->display("form.tpl");

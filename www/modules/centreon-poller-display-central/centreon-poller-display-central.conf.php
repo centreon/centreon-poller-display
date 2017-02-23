@@ -25,7 +25,7 @@ spl_autoload_register(function ($className) use ($classDirectory) {
     $explodedClassName = explode('\\', $className);
     array_shift($explodedClassName);
 
-    $classPath = $classDirectory . implode('/', $explodedClassName) . 'php';
+    $classPath = $classDirectory . implode('/', $explodedClassName) . '.php';
 
     if (file_exists($classPath)) {
         require_once $classPath;
