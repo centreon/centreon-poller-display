@@ -42,6 +42,7 @@ namespace CentreonPollerDisplayCentral\ConfigGenerate;
  */
 abstract class Object
 {
+    protected $db = null;
     protected $table = null;
     protected $columns = null;
 
@@ -66,6 +67,9 @@ abstract class Object
         $insertQuery = $this->generateInsertQuery();
 
         $finalQuery = $truncateQuery . "\n" . $insertQuery;
+
+
+        return $finalQuery;
     }
 
     protected function generateTruncateQuery()
@@ -77,9 +81,15 @@ abstract class Object
     protected function generateInsertQuery()
     {
         $insertQuery = 'INSERT INTO ' . $this->table . ' '
+            . implode(',', $this->columns) . ' '
             . 'VALUES ';
 
         $objects = $this->getList();
+
+        if (!count($objects)) {
+            return '';
+        }
+
         $first = true;
         foreach ($objects as $object) {
             if (!$first) {
@@ -102,7 +112,7 @@ abstract class Object
             . 'FROM ' . $this->table . ' ';
         $result = $this->db->query($query);
 
-        while ($row = $result->fetchRow()) {
+        while ($row = $result->fetch()) {
             $list[] = $row;
         }
 
