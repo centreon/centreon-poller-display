@@ -17,15 +17,31 @@ try {
       node {
         sh 'cd /opt/centreon-build && git pull && cd -'
         sh '/opt/centreon-build/jobs/poller-display/mon-poller-display-unittest.sh centos6'
+	step([
+          $class: 'XUnitBuilder',
+          thresholds: [
+            [$class: 'FailedThreshold', failureThreshold: '0'],
+            [$class: 'SkippedThreshold', failureThreshold: '0']
+          ],
+          tools: [[$class: 'PHPUnitJunitHudsonTestType', pattern: 'ut.xml']]
+        ])
       }
     },
     'centos7': {
       node {
         sh 'cd /opt/centreon-build && git pull && cd -'
         sh '/opt/centreon-build/jobs/poller-display/mon-poller-display-unittest.sh centos7'
+	step([
+          $class: 'XUnitBuilder',
+          thresholds: [
+            [$class: 'FailedThreshold', failureThreshold: '0'],
+            [$class: 'SkippedThreshold', failureThreshold: '0']
+          ],
+          tools: [[$class: 'PHPUnitJunitHudsonTestType', pattern: 'ut.xml']]
+        ])
         step([
           $class: 'hudson.plugins.checkstyle.CheckStylePublisher',
-          pattern: '**/codestyle.xml',
+          pattern: 'codestyle.xml',
           usePreviousBuildAsReference: true,
           useDeltaValues: true,
           failedNewAll: '0'
