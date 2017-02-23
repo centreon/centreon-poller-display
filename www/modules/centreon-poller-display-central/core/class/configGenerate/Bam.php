@@ -35,33 +35,18 @@
 
 namespace CentreonPollerDisplayCentral\ConfigGenerate;
 
+use \CentreonPollerDisplayCentral\ConfigGenerate\Bam\Ba;
+
 /**
  * User: kduret
  * Date: 23/02/2017
  * Time: 09:19
  */
-class Bam
+class Bam extends \AbstractObject
 {
-    /**
-     * @var \CentreonDB
-     */
-    protected $db;
-
-    /**
-     * Factory constructor.
-     * @param $db \CentreonDB
-     */
-    public function __construct($db)
+    public function generateObjects()
     {
-        $this->db = $db;
-    }
-
-    /**
-     *
-     * @return \CentreonPollerDisplayCentral\PollerDisplay
-     */
-    public function newPollerDisplay()
-    {
-        return new PollerDisplay($this->db);
+        $baObj = new Ba($this->backend_instance->db);
+        $sql = $baObj->generateSql();
     }
 }

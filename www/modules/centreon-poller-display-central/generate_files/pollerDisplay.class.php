@@ -13,8 +13,7 @@
 
 require_once dirname(__FILE__) . '/../centreon-poller-display-central.conf.php';
 
-use \CentreonPollerDisplayCentral\ConfigGenerate\Bam\Ba;
-use \CentreonPollerDisplayCentral\ConfigGenerate\Centreon\Host;
+use \CentreonPollerDisplayCentral\ConfigGenerate\Bam;
 
 class PollerDisplay extends AbstractObject
 {
@@ -22,31 +21,11 @@ class PollerDisplay extends AbstractObject
     protected $broker = true;
     protected $generate_filename = 'poller-display.sql';
 
-    public static function getInstance() {
-        static $instances = array();
+    public function generateFromPollerId($poller_id, $localhost)
+    {
+        Bam::getInstance()->generateobjects();
 
-        $calledClass = get_called_class();
-
-        if (!isset($instances[$calledClass])) {
-            $instances[$calledClass] = new $calledClass();
-        }
-
-        return $instances[$calledClass];
-    }
-
-    public function reset() {
-
-    }
-
-    public function generateFromPollerId($poller_id, $localhost) {
-        $baObj = new Ba($this->backend_instance->db);
-        $sql = $baObj->generateSql();
-
-        $obj = new Host($this->backend_instance->db);
-        $sql = $obj->generateSql();
-
-        var_dump($sql);
-
+        /*
         $stmt = $this->backend_instance->db->prepare("SELECT id 
                                                     FROM mod_poller_display_server_relations 
                                                     WHERE nagios_server_id = :pollerId");
@@ -55,10 +34,7 @@ class PollerDisplay extends AbstractObject
 
         if($stmt->fetch()){
 
-
-
-
-            $stmt = $this->backend_instance->db->prepare("SELECT ba_id 
+            $stmt = $this->backend_instance->db->prepare("SELECT ba_id
                                                     FROM mod_bam_poller_relations 
                                                     WHERE poller_id = :pollerId");
             $stmt->bindParam(':pollerId', $poller_id, PDO::PARAM_INT);
@@ -74,8 +50,7 @@ class PollerDisplay extends AbstractObject
 
             }
         }
-
-
+        */
     }
 }
 
