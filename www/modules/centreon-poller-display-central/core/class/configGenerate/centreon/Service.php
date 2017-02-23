@@ -39,31 +39,15 @@ use CentreonPollerDisplayCentral\ConfigGenerate\Object;
 
 class Service extends Object
 {
-    /**
-     * @var \CentreonDB
-     */
-    protected $db;
 
     /**
      * @var table
      */
-    protected $table;
-
+    protected $table = 'service';
     /**
      * @var array
      * columns wanted
      */
-    protected $columns;
-
-    /**
-     * Factory constructor.
-     * @param $db \CentreonDB
-     */
-    public function __construct($db)
-    {
-        $this->table = 'service';
-        $this->columns = array('*');
-        $this->db = $db;
-    }
+    protected $columns= array('*');
 
 }

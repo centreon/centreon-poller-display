@@ -39,32 +39,16 @@ use CentreonPollerDisplayCentral\ConfigGenerate\Object;
 
 class HostRelation extends Object
 {
-    /**
-     * @var \CentreonDB
-     */
-    protected $db;
 
     /**
      * @var table
      */
-    protected $table;
+    protected $table = 'ns_host_relation';
 
     /**
      * @var array
      * columns wanted
      */
-    protected $columns;
-
-    /**
-     * Factory constructor.
-     * @param $db \CentreonDB
-     */
-    public function __construct($db)
-    {
-        $this->table = 'ns_host_relation';
-        $this->columns = array('*');
-        $this->db = $db;
-    }
-
+    protected $columns = array('*');
 
 }
