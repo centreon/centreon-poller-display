@@ -55,10 +55,8 @@ class Bam extends \AbstractObject
 
         $this->createFile($this->backend_instance->getPath());
 
-        /*
-         * Write SQL file
-         */
+        fwrite($this->fp, $sql);
 
-        $this->closeFile();
+        $this->close_file();
     }
 }
