@@ -7,6 +7,11 @@
     <mkdir dir="${builddir}/coverage"/>
   </target>
 
+  <target name="unittest" depends="prepare">
+    <touch file="${builddir}/phpunit.xml" />
+    <touch file="${builddir}/coverage.xml" />
+  </target>
+
   <target name="codestyle" depends="prepare">
     <phpcodesniffer standard="PSR2">
       <formatter type="full" usefile="false"/>
