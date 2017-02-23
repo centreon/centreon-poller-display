@@ -41,6 +41,7 @@ try {
         ])
         step([
           $class: 'CloverPublisher',
+          cloverReportDir: '.',
           cloverReportFileName: 'coverage.xml'
         ])
         step([
