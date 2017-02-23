@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="centreon-poller-display" basedir="." default="main">
+  <property name="builddir" value="./build"/>
+
+  <target name="prepare">
+    <mkdir dir="${builddir}"/>
+    <mkdir dir="${builddir}/coverage"/>
+  </target>
+
+  <target name="codestyle" depends="prepare">
+    <phpcodesniffer standard="PSR2">
+      <formatter type="full" usefile="false"/>
+      <formatter type="checkstyle" outfile="${builddir}/checkstyle.xml"/>
+      <fileset dir="www/modules">
+        <include name="**/*.php"/>
+      </fileset>
+    </phpcodesniffer>
+  </target>
+
+  <target name="main"></target>
+</project>
