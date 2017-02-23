@@ -8,15 +8,28 @@
   </target>
 
   <target name="unittest" depends="prepare">
-    <touch file="${builddir}/phpunit.xml" />
-    <touch file="${builddir}/coverage.xml" />
+    <coverage-setup database="${builddir}/coverage.db">
+      <fileset dir="www/modules/centreon-poller-display-central/core/class">
+        <include name="**/*.php"/>
+      </fileset>
+    </coverage-setup>
+    <phpunit bootstrap="tests/centreon-poller-display-central/php/bootstrap.php" codecoverage="true">
+      <formatter type="plain" usefile="false"/>
+      <formatter type="xml" outfile="${builddir}/phpunit.xml"/>
+      <formatter type="clover" outfile="${builddir}/coverage.xml"/>
+      <batchtest>
+        <fileset dir="tests/centreon-poller-display-central/php/class/">
+          <include name="**/*Test.php" />
+        </fileset>
+      </batchtest>
+    </phpunit>
   </target>
 
   <target name="codestyle" depends="prepare">
     <phpcodesniffer standard="PSR2">
       <formatter type="full" usefile="false"/>
       <formatter type="checkstyle" outfile="${builddir}/checkstyle.xml"/>
-      <fileset dir="www/modules">
+      <fileset dir="www/modules/centreon-poller-display-central">
         <include name="**/*.php"/>
       </fileset>
     </phpcodesniffer>

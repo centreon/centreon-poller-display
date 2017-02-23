@@ -35,8 +35,6 @@
 
 namespace CentreonPollerDisplayCentral;
 
-require_once _CENTREON_PATH_ . '/www/class/centreonDB.class.php';
-
 /**
  * Factory class for poller display.
  * User: kduret
@@ -52,10 +50,11 @@ class Factory
 
     /**
      * Factory constructor.
+     * @param $db \CentreonDB
      */
-    public function __construct()
+    public function __construct($db)
     {
-        $this->db = new \CentreonDB();
+        $this->db = $db;
     }
 
     /**

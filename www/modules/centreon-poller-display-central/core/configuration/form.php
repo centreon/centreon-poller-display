@@ -44,7 +44,7 @@ require_once _MODULE_PATH_ . 'core/configuration/help.php';
 
 use \CentreonPollerDisplayCentral\Factory;
 
-$factoryObj = new Factory();
+$factoryObj = new Factory($pearDB);
 $pollerDisplayObj = $factoryObj->newPollerDisplay();
 
 // Smarty template Init
@@ -54,7 +54,7 @@ $tpl = initSmartyTpl($path, $tpl);
 $form = new HTML_QuickForm('Form', 'post', "?p=" . $p);
 
 $valid = false;
-if ($form->validate())  {
+if ($form->validate()) {
     $valid = true;
     $pollerDisplayObj->insertFromForm($_POST);
     $form->freeze();
@@ -63,7 +63,8 @@ if ($form->validate())  {
 $form->addElement('header', 'title', _("Centreon Poller Display settings"));
 $attrPollers = array(
     'datasourceOrigin' => 'ajax',
-    'availableDatasetRoute' => './include/common/webServices/rest/internal.php?object=centreon_configuration_poller&action=list',
+    'availableDatasetRoute' => './include/common/webServices/rest/internal.php?'
+        . 'object=centreon_configuration_poller&action=list',
     'multiple' => true,
     'defaultDataset' => $pollerDisplayObj->getList()
 );
@@ -72,7 +73,7 @@ $form->addElement('select2', 'poller_display', _("Poller display list"), array()
 $subC = $form->addElement('submit', 'submitC', _("Save"), array("class" => "btc bt_success"));
 $res = $form->addElement('reset', 'reset', _("Reset"));
 
-if ($valid)  {
+if ($valid) {
     $form->freeze();
 }
 
