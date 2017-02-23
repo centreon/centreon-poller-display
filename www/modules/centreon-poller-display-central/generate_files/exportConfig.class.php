@@ -17,7 +17,10 @@ class CentralExport extends AbstractObject
 {
 
 
-    public function generateFromPollerId($poller_id, $localhost) {
+    public function generateFromPollerId($poller_id, $localhost)
+    {
+
+        $dir ='/usr/share/centreon/filesGeneration/broker/'.$poller_id;
 
         $stmt = $this->backend_instance->db->prepare("SELECT id 
                                                     FROM mod_poller_display_server_relations 
@@ -25,72 +28,37 @@ class CentralExport extends AbstractObject
         ");
         $stmt->bindParam(':pollerId', $poller_id, PDO::PARAM_INT);
         $stmt->execute();
-        $polerDisplays = $stmt->fetchAll(PDO::FETCH_GROUP | PDO::FETCH_UNIQUE | PDO::FETCH_ASSOC);
+        while ($data = $stmt->fetch()) {
+            $polerDisplays = $data['id'];
+        }
 
-        if($polerDisplays){
 
-            ExportCentral::getInstance()->generateObjects($poller_id);
+        if ($polerDisplays) {
 
-            if($bam){
+            $pathCentral = $dir.'/Export_central_cfg.sql';
+            if (!file_exists($pathCentral)) {
+                touch($pathCentral);
+            }
+            $centralFile = ExportCentral::getInstance()->generateObjects($poller_id);
+
+            $handle=fopen($pathCentral, "rw");
+            fwrite($handle, $centralFile);
+            fclose($handle, $centralFile);
+
+            $stmt = $this->backend_instance->db->prepare("SELECT ba_id 
+                                                    FROM mod_bam_poller_relations 
+                                                    WHERE poller_id = :pollerId");
+
+            $stmt->bindParam(':pollerId', $poller_id, PDO::PARAM_INT);
+            $stmt->execute();
+            while ($data = $stmt->fetch()) {
+                $bamDisplays = $data['ba_id'];
+            }
+
+            if ($bamDisplays) {
                 ExportBam::getInstance()->generateObjects($poller_id);
             }
         }
     }
-
-
-/*
-    public function centralExport($polerDisplays)
-    {
-        foreach ($polerDisplays AS $polerID) {
-
-            if (!is_dir($exportDir)) {
-                mkdir($exportDir);
-            }
-
-            $fileName = 'Export_central_cfg.sql.gz';
-            $file = $exportDir . $fileName;
-
-            $mysql_base = 'centreon';
-
-            $mysql_data_table = 'nagios_server cfg_nagios host extended_host_information ns_host_relation '
-                .'service extended_service_information host_service_relation hostgroup hostgroup_relation '
-                .'acl_resources';
-
-            $dump = $mysql_base . ' ' . $mysql_data_table;
-
-            $cmd = '`mysqldump -u ' . user
-                . ' -h ' . db
-                . ' -p ' . password . $dump
-                . ' > ' . $file . '`;';
-
-        }
-        exec($cmd);
-    }
-
-    public function bamExport($polerDisplays)
-    {
-        foreach ($polerDisplays AS $polerID) {
-            $exportDir = "/usr/share/centreon/filesGeneration/broker/$polerID/";
-            if (!is_dir($exportDir)) {
-                mkdir($exportDir);
-            }
-
-            $fileName = 'Export_bam_cfg.sql.gz';
-            $file = $exportDir . $fileName;
-
-            $mysql_base = 'centreon';
-            $mysql_data_table = 'mod_bam mod_bam_poller_relations mod_bam_boolean mod_bam_kpi mod_bam_impacts';
-            $dump = $mysql_base . ' ' . $mysql_data_table;
-
-            $cmd = '`mysqldump -u ' . user
-                . ' -h ' . db
-                . ' -p ' . password . $dump
-                . ' > ' . $file . '`;';
-
-        }
-        exec($cmd);
-    }
-*/
-
 
 }
