@@ -33,10 +33,11 @@
  *
  */
 
-namespace CentreonPollerDisplayCentral\ConfigGenerate\central;
+namespace CentreonPollerDisplayCentral\ConfigGenerate\Centreon;
+
 use CentreonPollerDisplayCentral\ConfigGenerate\Object;
 
-class Acl extends Object
+class NagiosCfg extends Object
 {
     /**
      * @var \CentreonDB
@@ -60,7 +61,7 @@ class Acl extends Object
      */
     public function __construct($db)
     {
-        $this->table = 'acl_resources';
+        $this->table = 'cfg_nagios';
         $this->columns = array('*');
         $this->db = $db;
     }
