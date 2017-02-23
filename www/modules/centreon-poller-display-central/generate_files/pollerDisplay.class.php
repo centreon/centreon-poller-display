@@ -33,6 +33,9 @@ class PollerDisplay extends AbstractObject
 
         if($polerDisplays){
 
+
+
+
             $stmt = $this->backend_instance->db->prepare("SELECT ba_id 
                                                     FROM mod_bam_poller_relations 
                                                     WHERE poller_id = :pollerId");

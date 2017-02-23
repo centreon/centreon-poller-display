@@ -62,16 +62,8 @@ class Hostgroup extends Object
     public function __construct($db)
     {
         $this->table = 'hostgroup';
+        $this->columns = array('*');
         $this->db = $db;
-    }
-
-    /**
-     *
-     * @return \CentreonPollerDisplayCentral\PollerDisplay
-     */
-    public function newPollerDisplay()
-    {
-        return new PollerDisplay($this->db);
     }
 
 }

@@ -62,16 +62,9 @@ class HostRelation extends Object
     public function __construct($db)
     {
         $this->table = 'ns_host_relation';
+        $this->columns = array('*');
         $this->db = $db;
     }
 
-    /**
-     *
-     * @return \CentreonPollerDisplayCentral\PollerDisplay
-     */
-    public function newPollerDisplay()
-    {
-        return new PollerDisplay($this->db);
-    }
 
 }

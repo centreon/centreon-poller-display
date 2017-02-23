@@ -62,16 +62,9 @@ class HostgroupRelation extends Object
     public function __construct($db)
     {
         $this->table = 'hostgroup_relation';
+        $this->columns = array('*');
         $this->db = $db;
     }
 
-    /**
-     *
-     * @return \CentreonPollerDisplayCentral\PollerDisplay
-     */
-    public function newPollerDisplay()
-    {
-        return new PollerDisplay($this->db);
-    }
 
 }

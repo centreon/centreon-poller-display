@@ -62,16 +62,8 @@ class NagiosCfg extends Object
     public function __construct($db)
     {
         $this->table = 'cfg_nagios';
+        $this->columns = array('*');
         $this->db = $db;
-    }
-
-    /**
-     *
-     * @return \CentreonPollerDisplayCentral\PollerDisplay
-     */
-    public function newPollerDisplay()
-    {
-        return new PollerDisplay($this->db);
     }
 
 }

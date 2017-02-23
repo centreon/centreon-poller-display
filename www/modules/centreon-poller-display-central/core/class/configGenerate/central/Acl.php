@@ -61,17 +61,8 @@ class Acl extends Object
     public function __construct($db)
     {
         $this->table = 'acl_resources';
+        $this->columns = array('*');
         $this->db = $db;
     }
-
-    /**
-     *
-     * @return \CentreonPollerDisplayCentral\PollerDisplay
-     */
-    public function newPollerDisplay()
-    {
-        return new PollerDisplay($this->db);
-    }
-
 
 }

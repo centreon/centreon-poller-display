@@ -10,17 +10,17 @@
  * For more informations : contact@centreon.com
  *
  */
-require_once dirname(__FILE__) . '/../../core/class/config-generate/central/Acl.php';
-require_once dirname(__FILE__) . '/../../core/class/config-generate/central/Host.php';
-require_once dirname(__FILE__) . '/../../core/class/config-generate/central/Hostgroup.php';
-require_once dirname(__FILE__) . '/../../core/class/config-generate/central/HostgroupRelation.php';
-require_once dirname(__FILE__) . '/../../core/class/config-generate/central/HostInformation.php';
-require_once dirname(__FILE__) . '/../../core/class/config-generate/central/HostRelation.php';
-require_once dirname(__FILE__) . '/../../core/class/config-generate/central/HostServiceRelation.php';
-require_once dirname(__FILE__) . '/../../core/class/config-generate/central/NagiosCfg.php';
-require_once dirname(__FILE__) . '/../../core/class/config-generate/central/NagiosServer.php';
-require_once dirname(__FILE__) . '/../../core/class/config-generate/central/Service.php';
-require_once dirname(__FILE__) . '/../../core/class/config-generate/central/ServiceInformation.php';
+use \CentreonPollerDisplayCentral\ConfigGenerate\Bam\Acl;
+use \CentreonPollerDisplayCentral\ConfigGenerate\Bam\Host;
+use \CentreonPollerDisplayCentral\ConfigGenerate\Bam\Hostgroup;
+use \CentreonPollerDisplayCentral\ConfigGenerate\Bam\HostgroupRelation;
+use \CentreonPollerDisplayCentral\ConfigGenerate\Bam\HostInformation;
+use \CentreonPollerDisplayCentral\ConfigGenerate\Bam\HostRelation;
+use \CentreonPollerDisplayCentral\ConfigGenerate\Bam\HostServiceRelation;
+use \CentreonPollerDisplayCentral\ConfigGenerate\Bam\NagiosCfg;
+use \CentreonPollerDisplayCentral\ConfigGenerate\Bam\NagiosServer;
+use \CentreonPollerDisplayCentral\ConfigGenerate\Bam\Service;
+use \CentreonPollerDisplayCentral\ConfigGenerate\Bam\ServiceInformation;
 
 
 class ExportCentral extends AbstractObject
@@ -29,34 +29,29 @@ class ExportCentral extends AbstractObject
     {
 
         $oAcl = new Acl();
-        $o = new Host();
-        $oAcl = new Acl();
-        $oAcl = new Acl();
-        $oAcl = new Acl();
-        $oAcl = new Acl();
-
-
-
+        $oHost = new Host();
+        $oHostgroup = new Hostgroup();
+        $oHostgroupRelation = new HostgroupRelation();
+        $oHostInformation = new HostInformation();
+        $oHostRelation = new HostRelation();
+        $oHostServiceRelation = new HostRelation();
+        $oNagiosCfg = new NagiosCfg();
+        $oNagiosServer = new NagiosServer();
+        $oService = new Service();
+        $oServiceInformation = new ServiceInformation();
 
         $contentFile = '';
         $contentFile .=  $oAcl->generateSql();
-        $contentFile .=  $oAcl->generateSql();
-        $contentFile .=  $oAcl->generateSql();
-        $contentFile .=  $oAcl->generateSql();
-        $contentFile .=  $oAcl->generateSql();
-        $contentFile .=  $oAcl->generateSql();
-        $contentFile .=  $oAcl->generateSql();
-
-        $contentFile .= Host::getInstance()->generateSql();
-        $contentFile .= Hostgroup::getInstance()->generateSql();
-        $contentFile .= HostgroupRelation::getInstance()->generateSql();
-        $contentFile .= HostInformation::getInstance()->generateSql();
-        $contentFile .= HostRelation::getInstance()->generateSql();
-        $contentFile .= HostServiceRelation::getInstance()->generateSql();
-        $contentFile .= NagiosCfg::getInstance()->generateSql();
-        $contentFile .= NagiosServer::getInstance()->generateSql();
-        $contentFile .= Service::getInstance()->generateSql();
-        $contentFile .= ServiceInformation::getInstance()->generateSql();
+        $contentFile .=  $oHost->generateSql();
+        $contentFile .=  $oHostgroup->generateSql();
+        $contentFile .=  $oHostgroupRelation->generateSql();
+        $contentFile .=  $oHostInformation->generateSql();
+        $contentFile .=  $oHostRelation->generateSql();
+        $contentFile .=  $oHostServiceRelation->generateSql();
+        $contentFile .=  $oNagiosCfg->generateSql();
+        $contentFile .=  $oNagiosServer->generateSql();
+        $contentFile .=  $oService->generateSql();
+        $contentFile .=  $oServiceInformation->generateSql();
 
         return $contentFile;
     }

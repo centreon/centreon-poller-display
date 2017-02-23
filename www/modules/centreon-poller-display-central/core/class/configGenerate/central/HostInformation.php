@@ -62,16 +62,9 @@ class HostInformation extends Object
     public function __construct($db)
     {
         $this->table = 'extended_host_information';
+        $this->columns = array('*');
         $this->db = $db;
     }
 
-    /**
-     *
-     * @return \CentreonPollerDisplayCentral\PollerDisplay
-     */
-    public function newPollerDisplay()
-    {
-        return new PollerDisplay($this->db);
-    }
 
 }
