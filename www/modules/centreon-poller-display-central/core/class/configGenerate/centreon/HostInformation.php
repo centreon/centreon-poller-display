@@ -33,11 +33,11 @@
  *
  */
 
-namespace CentreonPollerDisplayCentral\ConfigGenerate\central;
+namespace CentreonPollerDisplayCentral\ConfigGenerate\Centreon;
 
 use CentreonPollerDisplayCentral\ConfigGenerate\Object;
 
-class Hostgroup extends Object
+class HostInformation extends Object
 {
     /**
      * @var \CentreonDB
@@ -61,7 +61,7 @@ class Hostgroup extends Object
      */
     public function __construct($db)
     {
-        $this->table = 'hostgroup';
+        $this->table = 'extended_host_information';
         $this->db = $db;
     }
 

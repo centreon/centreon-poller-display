@@ -33,11 +33,11 @@
  *
  */
 
-namespace CentreonPollerDisplayCentral\ConfigGenerate\central;
+namespace CentreonPollerDisplayCentral\ConfigGenerate\Centreon;
 
 use CentreonPollerDisplayCentral\ConfigGenerate\Object;
 
-class Host extends Object
+class HostServiceRelation extends Object
 {
     /**
      * @var \CentreonDB
@@ -61,7 +61,7 @@ class Host extends Object
      */
     public function __construct($db)
     {
-        $this->table = 'host';
+        $this->table = 'host_service_relation';
         $this->db = $db;
     }
 

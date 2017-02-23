@@ -41,7 +41,7 @@ class PollerDisplay extends AbstractObject
         $baObj = new Ba($this->backend_instance->db);
         $sql = $baObj->generateSql();
 
-        var_dump($this->backend_instance->getPath());
+        var_dump($sql);
 
         $stmt = $this->backend_instance->db->prepare("SELECT id 
                                                     FROM mod_poller_display_server_relations 

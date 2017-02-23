@@ -33,11 +33,11 @@
  *
  */
 
-namespace CentreonPollerDisplayCentral\ConfigGenerate\central;
+namespace CentreonPollerDisplayCentral\ConfigGenerate\Centreon;
 
 use CentreonPollerDisplayCentral\ConfigGenerate\Object;
 
-class HostServiceRelation extends Object
+class NagiosCfg extends Object
 {
     /**
      * @var \CentreonDB
@@ -61,7 +61,7 @@ class HostServiceRelation extends Object
      */
     public function __construct($db)
     {
-        $this->table = 'host_service_relation';
+        $this->table = 'cfg_nagios';
         $this->db = $db;
     }
 

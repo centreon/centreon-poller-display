@@ -33,10 +33,11 @@
  *
  */
 
-namespace CentreonPollerDisplayCentral\ConfigGenerate\central;
+namespace CentreonPollerDisplayCentral\ConfigGenerate\Centreon;
+
 use CentreonPollerDisplayCentral\ConfigGenerate\Object;
 
-class Acl extends Object
+class Hostgroup extends Object
 {
     /**
      * @var \CentreonDB
@@ -60,7 +61,7 @@ class Acl extends Object
      */
     public function __construct($db)
     {
-        $this->table = 'acl_resources';
+        $this->table = 'hostgroup';
         $this->db = $db;
     }
 
@@ -72,6 +73,5 @@ class Acl extends Object
     {
         return new PollerDisplay($this->db);
     }
-
 
 }
