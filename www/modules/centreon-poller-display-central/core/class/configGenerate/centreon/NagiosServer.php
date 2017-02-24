@@ -51,4 +51,21 @@ class NagiosServer extends Object
      */
     protected $columns = array('*');
 
+
+    protected function getList()
+    {
+        $list = array();
+
+        $query = 'SELECT ' . implode(',', $this->columns) . ' '
+            . 'FROM ' . $this->table . ' '
+            . 'WHERE id = '.$this->pollerId;
+        $result = $this->db->query($query);
+
+        while ($row = $result->fetch(\PDO::FETCH_ASSOC)) {
+            $list[] = $row;
+        }
+
+        return $list;
+    }
+
 }

@@ -46,6 +46,8 @@ use \CentreonPollerDisplayCentral\ConfigGenerate\Centreon\NagiosCfg;
 use \CentreonPollerDisplayCentral\ConfigGenerate\Centreon\NagiosServer;
 use \CentreonPollerDisplayCentral\ConfigGenerate\Centreon\Service;
 use \CentreonPollerDisplayCentral\ConfigGenerate\Centreon\ServiceInformation;
+use \CentreonPollerDisplayCentral\ConfigGenerate\Centreon\Servicegroup;
+use \CentreonPollerDisplayCentral\ConfigGenerate\Centreon\ServicegroupRelation;
 
 class Centreon extends \AbstractObject
 {
@@ -53,32 +55,46 @@ class Centreon extends \AbstractObject
     protected $broker = true;
     protected $generate_filename = 'centreon-poller-display.sql';
 
-    public function generateObjects()
+    public function generateObjects($poller_id)
     {
-        $oAcl = new Acl($this->backend_instance->db);
-        $oHost = new Host($this->backend_instance->db);
-        $oHostgroup = new Hostgroup($this->backend_instance->db);
-        $oHostgroupRelation = new HostgroupRelation($this->backend_instance->db);
-        $oHostInformation = new HostInformation($this->backend_instance->db);
-        $oHostRelation = new HostRelation($this->backend_instance->db);
-        $oHostServiceRelation = new HostServiceRelation($this->backend_instance->db);
-        $oNagiosCfg = new NagiosCfg($this->backend_instance->db);
-        $oNagiosServer = new NagiosServer($this->backend_instance->db);
-        $oService = new Service($this->backend_instance->db);
-        $oServiceInformation = new ServiceInformation($this->backend_instance->db);
+        $oAcl = new Acl($this->backend_instance->db,$poller_id);
+        $oHost = new Host($this->backend_instance->db,$poller_id);
+        $oHostgroup = new Hostgroup($this->backend_instance->db,$poller_id);
+        $oHostgroupRelation = new HostgroupRelation($this->backend_instance->db,$poller_id);
+        $oHostInformation = new HostInformation($this->backend_instance->db,$poller_id);
+        $oHostRelation = new HostRelation($this->backend_instance->db,$poller_id);
+        $oHostServiceRelation = new HostServiceRelation($this->backend_instance->db,$poller_id);
+        $oNagiosCfg = new NagiosCfg($this->backend_instance->db,$poller_id);
+        $oNagiosServer = new NagiosServer($this->backend_instance->db,$poller_id);
+        $oService = new Service($this->backend_instance->db,$poller_id);
+        $oServiceInformation = new ServiceInformation($this->backend_instance->db,$poller_id);
+        $oServicegroup = new Servicegroup($this->backend_instance->db,$poller_id);
+        $oServicegroupRelation = new ServicegroupRelation($this->backend_instance->db,$poller_id);
+
 
         $sql = '';
-        $sql .=  $oAcl->generateSql(). "\n";
-        $sql .=  $oHost->generateSql(). "\n";
-        $sql .=  $oHostgroup->generateSql(). "\n";
-        $sql .=  $oHostgroupRelation->generateSql(). "\n";
-        $sql .=  $oHostInformation->generateSql(). "\n";
-        $sql .=  $oHostRelation->generateSql(). "\n";
-        $sql .=  $oHostServiceRelation->generateSql(). "\n";
-        $sql .=  $oNagiosCfg->generateSql(). "\n";
-        $sql .=  $oNagiosServer->generateSql(). "\n";
-        $sql .=  $oService->generateSql(). "\n";
-        $sql .=  $oServiceInformation->generateSql(). "\n";
+     /*
+        $sql .=  $oNagiosServer->generateSql(). "\n\n";
+        $sql .=  $oHostRelation->generateSql(). "\n\n";
+        $sql .=  $oHost->generateSql(). "\n\n";
+        $sql .=  $oHostgroupRelation->generateSql(). "\n\n";
+        $sql .=  $oHostgroup->generateSql(). "\n\n";
+        $sql .=  $oHostInformation->generateSql(). "\n\n";
+        $sql .=  $oHostServiceRelation->generateSql(). "\n\n";
+        $sql .=  $oService->generateSql(). "\n\n";
+
+    */
+
+
+ //       $sql .=  $oServicegroupRelation->generateSql(). "\n\n";
+  //      $sql .=  $oServicegroup->generateSql(). "\n\n";
+
+ //       $sql .=  $oServiceInformation->generateSql(). "\n";
+
+ //        $sql .=  $oAcl->generateSql(). "\n";
+//        $sql .=  $oNagiosCfg->generateSql(). "\n\n";
+
+
 
         $this->createFile($this->backend_instance->getPath());
         fwrite($this->fp, $sql);

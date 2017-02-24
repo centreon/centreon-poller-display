@@ -52,4 +52,40 @@ class Hostgroup extends Object
     );
 
 
+
+    public function getList()
+    {
+        $hostRelation = new HostGroupRelation($this->db, $this->pollerId);
+        $hostGroups = $hostRelation->getList();
+
+        $errors = array_filter($hostGroups);
+        if (empty($errors)) {
+            return '';
+        }
+
+        $clauseQuery = ' WHERE hg_id IN (';
+        $hostGroupArray = array();
+        foreach ($hostGroups as $hostGroup) {
+            array_push($hostGroupArray, $hostGroup['hostgroup_hg_id']);
+        }
+
+        $hostGroupunique = array_unique($hostGroupArray);
+        $clauseQuery .= implode(',', $hostGroupunique);
+        $clauseQuery .= ')';
+
+        $list = array();
+        $query = 'SELECT ' . implode(',', $this->columns) . ' '
+            . 'FROM ' . $this->table . $clauseQuery;
+
+        $result = $this->db->query($query);
+        while ($row = $result->fetch(\PDO::FETCH_ASSOC)) {
+            $list[] = $row;
+        }
+
+        return $list;
+    }
+
+
+
+
 }

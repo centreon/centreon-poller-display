@@ -51,4 +51,65 @@ class HostServiceRelation extends Object
      */
     protected $columns = array('*');
 
+
+    public function getList()
+    {
+        $hostRelation = new HostRelation($this->db, $this->pollerId);
+        $hosts = $hostRelation->getList();
+
+        $hostRelation = new HostGroupRelation($this->db, $this->pollerId);
+        $hostGroups = $hostRelation->getList();
+
+        $hErrors = array_filter($hosts);
+        $ghErrors = array_filter($hostGroups);
+
+        if (empty($hErrors) && empty($ghErrors)) {
+            return '';
+        }
+
+
+        $first = true;
+        $clauseQuery = ' WHERE ';
+
+        if (!empty($hErrors)){
+            $clauseQuery .= '(host_host_id IN (';
+            foreach ($hosts as $host) {
+                if (!$first) {
+                    $clauseQuery .= ',';
+                }
+                $clauseQuery .= $host['host_host_id'];
+                $first = false;
+            }
+            $clauseQuery .= '))';
+        }
+
+        if (!empty($ghErrors)){
+
+            if (!$first) {
+                $clauseQuery .= ' OR ';
+            }
+
+            $clauseQuery .= '(hostgroup_hg_id IN (';
+            $hostGroupArray = array();
+            foreach ($hostGroups as $hostGroup) {
+                array_push($hostGroupArray, $hostGroup['hostgroup_hg_id']);
+            }
+            $hostGroupunique = array_unique($hostGroupArray);
+            $clauseQuery .= implode(',', $hostGroupunique);
+            $clauseQuery .= '))';
+        }
+
+
+        $list = array();
+        $query = 'SELECT ' . implode(',', $this->columns) . ' '
+            . 'FROM ' . $this->table . $clauseQuery;
+
+        $result = $this->db->query($query);
+        while ($row = $result->fetch(\PDO::FETCH_ASSOC)) {
+            $list[] = $row;
+        }
+
+        return $list;
+    }
+
 }

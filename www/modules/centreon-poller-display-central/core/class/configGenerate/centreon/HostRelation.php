@@ -51,4 +51,20 @@ class HostRelation extends Object
      */
     protected $columns = array('*');
 
+    protected function getList()
+    {
+        $list = array();
+
+        $query = 'SELECT ' . implode(',', $this->columns) . ' '
+            . 'FROM ' . $this->table . ' '
+            . 'WHERE nagios_server_id = '.$this->pollerId;
+
+        $result = $this->db->query($query);
+
+        while ($row = $result->fetch(\PDO::FETCH_ASSOC)) {
+            $list[] = $row;
+        }
+
+        return $list;
+    }
 }

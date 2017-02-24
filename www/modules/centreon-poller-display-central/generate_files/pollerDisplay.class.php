@@ -25,8 +25,10 @@ class PollerDisplay extends \AbstractObject
     public function generateFromPollerId($poller_id, $localhost)
     {
 
-        Bam::getInstance()->generateobjects();
-        Centreon::getInstance()->generateobjects();
+        $this->poller_id = $poller_id;
+
+       // Bam::getInstance()->generateobjects();
+        Centreon::getInstance()->generateobjects($poller_id);
 
 
 

@@ -43,6 +43,7 @@ namespace CentreonPollerDisplayCentral\ConfigGenerate;
 abstract class Object
 {
     protected $db = null;
+    protected $pollerId = null;
     protected $table = null;
     protected $columns = null;
 
@@ -50,9 +51,10 @@ abstract class Object
      * Factory constructor.
      * @param $db \CentreonDB
      */
-    public function __construct($db)
+    public function __construct($db, $pollerId)
     {
         $this->db = $db;
+        $this->pollerId = $pollerId;
     }
 
 
@@ -83,7 +85,8 @@ abstract class Object
 
         $objects = $this->getList();
 
-        if (!count($objects)) {
+        $errors = array_filter($objects);
+        if (empty($errors)) {
             return '';
         }
 

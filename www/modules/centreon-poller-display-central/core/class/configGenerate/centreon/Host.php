@@ -49,7 +49,41 @@ class Host extends Object
      * columns wanted
      */
     protected $columns = array(
-        'host_id',
-        'host_name'
+        '*'
     );
+
+
+    public function getList()
+    {
+        $hostRelation = new HostRelation($this->db, $this->pollerId);
+        $hosts = $hostRelation->getList();
+
+        $errors = array_filter($hosts);
+        if (empty($errors)) {
+            return '';
+        }
+
+        $first = true;
+        $clauseQuery = ' WHERE host_id IN (';
+        foreach ($hosts as $host) {
+            if (!$first) {
+                $clauseQuery .= ',';
+            }
+            $clauseQuery .= $host['host_host_id'];
+            $first = false;
+        }
+        $clauseQuery .= ')';
+
+        $list = array();
+        $query = 'SELECT ' . implode(',', $this->columns) . ' '
+            . 'FROM ' . $this->table . $clauseQuery;
+
+        $result = $this->db->query($query);
+        while ($row = $result->fetch(\PDO::FETCH_ASSOC)) {
+            $list[] = $row;
+        }
+
+        return $list;
+    }
+
 }
