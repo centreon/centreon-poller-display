@@ -20,6 +20,7 @@ class PollerDisplay extends \AbstractObject
 {
     protected $engine = false;
     protected $broker = true;
+    protected $generate_filename = 'bam-poller-display.sql';
 
     public function generateFromPollerId($poller_id, $localhost)
     {

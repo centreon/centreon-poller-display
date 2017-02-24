@@ -80,15 +80,20 @@ abstract class Object
 
     protected function generateInsertQuery()
     {
-        $insertQuery = 'INSERT INTO ' . $this->table . ' '
-            . '(' . implode(',', $this->columns) . ') '
-            . 'VALUES ';
 
         $objects = $this->getList();
 
         if (!count($objects)) {
             return '';
         }
+
+        if (implode(',', $this->columns) == '*') {
+            $this->columns = array_keys($objects[0]);
+        }
+
+        $insertQuery = 'INSERT INTO ' . $this->table . ' '
+            . '(' . implode(',', $this->columns) . ') '
+            . 'VALUES ';
 
         $first = true;
         foreach ($objects as $object) {
