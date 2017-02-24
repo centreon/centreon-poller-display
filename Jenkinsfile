@@ -23,7 +23,7 @@ try {
             [$class: 'FailedThreshold', failureThreshold: '0'],
             [$class: 'SkippedThreshold', failureThreshold: '0']
           ],
-          tools: [[$class: 'PHPUnitJunitHudsonTestType', pattern: 'ut_centos6.xml']]
+          tools: [[$class: 'PHPUnitJunitHudsonTestType', pattern: 'ut.xml']]
         ])
       }
     },
@@ -37,7 +37,7 @@ try {
             [$class: 'FailedThreshold', failureThreshold: '0'],
             [$class: 'SkippedThreshold', failureThreshold: '0']
           ],
-          tools: [[$class: 'PHPUnitJunitHudsonTestType', pattern: 'ut_centos7.xml']]
+          tools: [[$class: 'PHPUnitJunitHudsonTestType', pattern: 'ut.xml']]
         ])
         step([
           $class: 'CloverPublisher',
@@ -105,7 +105,7 @@ try {
             [$class: 'FailedThreshold', failureThreshold: '0'],
             [$class: 'SkippedThreshold', failureThreshold: '0']
           ],
-          tools: [[$class: 'JUnitType', pattern: 'xunit-reports-centos6/**/*.xml']]
+          tools: [[$class: 'JUnitType', pattern: 'xunit-reports/**/*.xml']]
         ])
         archiveArtifacts allowEmptyArchive: true, artifacts: 'acceptance-logs/*.txt, acceptance-logs/*.png'
       }
@@ -120,7 +120,7 @@ try {
             [$class: 'FailedThreshold', failureThreshold: '0'],
             [$class: 'SkippedThreshold', failureThreshold: '0']
           ],
-          tools: [[$class: 'JUnitType', pattern: 'xunit-reports-centos7/**/*.xml']]
+          tools: [[$class: 'JUnitType', pattern: 'xunit-reports/**/*.xml']]
         ])
         archiveArtifacts allowEmptyArchive: true, artifacts: 'acceptance-logs/*.txt, acceptance-logs/*.png'
       }
