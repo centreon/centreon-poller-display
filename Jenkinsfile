@@ -23,7 +23,7 @@ try {
             [$class: 'FailedThreshold', failureThreshold: '0'],
             [$class: 'SkippedThreshold', failureThreshold: '0']
           ],
-          tools: [[$class: 'PHPUnitJunitHudsonTestType', pattern: 'ut.xml']]
+          tools: [[$class: 'PHPUnitJunitHudsonTestType', pattern: 'ut_centos6.xml']]
         ])
       }
     },
@@ -37,7 +37,7 @@ try {
             [$class: 'FailedThreshold', failureThreshold: '0'],
             [$class: 'SkippedThreshold', failureThreshold: '0']
           ],
-          tools: [[$class: 'PHPUnitJunitHudsonTestType', pattern: 'ut.xml']]
+          tools: [[$class: 'PHPUnitJunitHudsonTestType', pattern: 'ut_centos7.xml']]
         ])
         step([
           $class: 'CloverPublisher',
@@ -81,30 +81,12 @@ try {
       node {
         sh 'cd /opt/centreon-build && git pull && cd -'
         sh '/opt/centreon-build/jobs/poller-display/mon-poller-display-bundle.sh centos6'
-        step([
-          $class: 'XUnitBuilder',
-          thresholds: [
-            [$class: 'FailedThreshold', failureThreshold: '0'],
-            [$class: 'SkippedThreshold', failureThreshold: '0']
-          ],
-          tools: [[$class: 'JUnitType', pattern: 'xunit-reports/**/*.xml']]
-        ])
-        archiveArtifacts allowEmptyArchive: true, artifacts: 'acceptance-logs/*.txt, acceptance-logs/*.png'
       }
     },
     'centos7': {
       node {
         sh 'cd /opt/centreon-build && git pull && cd -'
         sh '/opt/centreon-build/jobs/poller-display/mon-poller-display-bundle.sh centos7'
-        step([
-          $class: 'XUnitBuilder',
-          thresholds: [
-            [$class: 'FailedThreshold', failureThreshold: '0'],
-            [$class: 'SkippedThreshold', failureThreshold: '0']
-          ],
-          tools: [[$class: 'JUnitType', pattern: 'xunit-reports/**/*.xml']]
-        ])
-        archiveArtifacts allowEmptyArchive: true, artifacts: 'acceptance-logs/*.txt, acceptance-logs/*.png'
       }
     }
     if ((currentBuild.result ?: 'SUCCESS') != 'SUCCESS') {
@@ -117,12 +99,30 @@ try {
       node {
         sh 'cd /opt/centreon-build && git pull && cd -'
         sh '/opt/centreon-build/jobs/poller-display/mon-poller-display-acceptance.sh centos6'
+        step([
+          $class: 'XUnitBuilder',
+          thresholds: [
+            [$class: 'FailedThreshold', failureThreshold: '0'],
+            [$class: 'SkippedThreshold', failureThreshold: '0']
+          ],
+          tools: [[$class: 'JUnitType', pattern: 'xunit-reports-centos6/**/*.xml']]
+        ])
+        archiveArtifacts allowEmptyArchive: true, artifacts: 'acceptance-logs/*.txt, acceptance-logs/*.png'
       }
     },
     'centos7': {
       node {
         sh 'cd /opt/centreon-build && git pull && cd -'
         sh '/opt/centreon-build/jobs/poller-display/mon-poller-display-acceptance.sh centos7'
+        step([
+          $class: 'XUnitBuilder',
+          thresholds: [
+            [$class: 'FailedThreshold', failureThreshold: '0'],
+            [$class: 'SkippedThreshold', failureThreshold: '0']
+          ],
+          tools: [[$class: 'JUnitType', pattern: 'xunit-reports-centos7/**/*.xml']]
+        ])
+        archiveArtifacts allowEmptyArchive: true, artifacts: 'acceptance-logs/*.txt, acceptance-logs/*.png'
       }
     }
     if ((currentBuild.result ?: 'SUCCESS') != 'SUCCESS') {
