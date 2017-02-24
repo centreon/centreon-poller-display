@@ -35,12 +35,13 @@
 
 namespace CentreonPollerDisplayCentral\ConfigGenerate\Bam;
 
+use \CentreonPollerDisplayCentral\ConfigGenerate\Object;
 /**
  * User: kduret
  * Date: 23/02/2017
  * Time: 09:19
  */
-class Impacts
+class Impacts extends Object
 {
     protected $table = 'mod_bam_impacts';
     protected $columns = array(

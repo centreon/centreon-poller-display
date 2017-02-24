@@ -35,12 +35,13 @@
 
 namespace CentreonPollerDisplayCentral\ConfigGenerate\Bam;
 
+use \CentreonPollerDisplayCentral\ConfigGenerate\Object;
 /**
  * User: kduret
  * Date: 23/02/2017
  * Time: 09:19
  */
-class Kpi
+class Kpi extends Object
 {
     protected $table = 'mod_bam_kpi';
     protected $columns = array(

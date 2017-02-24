@@ -13,7 +13,6 @@
 
 require_once dirname(__FILE__) . '/../centreon-poller-display-central.conf.php';
 
-
 use \CentreonPollerDisplayCentral\ConfigGenerate\Bam;
 use \CentreonPollerDisplayCentral\ConfigGenerate\Centreon;
 
@@ -21,13 +20,16 @@ class PollerDisplay extends \AbstractObject
 {
     protected $engine = false;
     protected $broker = true;
-    protected $generate_filename = 'bam-poller-display.sql';
 
     public function generateFromPollerId($poller_id, $localhost)
     {
 
         Bam::getInstance()->generateobjects();
         Centreon::getInstance()->generateobjects();
+
+
+
+
 
         /*
         $stmt = $this->backend_instance->db->prepare("SELECT id 

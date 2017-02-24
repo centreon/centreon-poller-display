@@ -36,6 +36,10 @@
 namespace CentreonPollerDisplayCentral\ConfigGenerate;
 
 use \CentreonPollerDisplayCentral\ConfigGenerate\Bam\Ba;
+use \CentreonPollerDisplayCentral\ConfigGenerate\Bam\Boolean;
+use \CentreonPollerDisplayCentral\ConfigGenerate\Bam\Impacts;
+use \CentreonPollerDisplayCentral\ConfigGenerate\Bam\Kpi;
+use \CentreonPollerDisplayCentral\ConfigGenerate\Bam\PollerRelations;
 
 /**
  * User: kduret
@@ -50,13 +54,21 @@ class Bam extends \AbstractObject
 
     public function generateObjects()
     {
-        $baObj = new Ba($this->backend_instance->db);
-        $sql = $baObj->generateSql();
+        $oBa = new Ba($this->backend_instance->db);
+        $oBoolean = new Boolean($this->backend_instance->db);
+        $oImpacts = new Impacts($this->backend_instance->db);
+        $oKpi = new Kpi($this->backend_instance->db);
+        $oPollerRelations = new PollerRelations($this->backend_instance->db);
+
+        $sql = '';
+        $sql .=  $oBa->generateSql(). "\n";
+        $sql .=  $oBoolean->generateSql(). "\n";
+        $sql .=  $oImpacts->generateSql(). "\n";
+        $sql .=  $oKpi->generateSql(). "\n";
+        $sql .=  $oPollerRelations->generateSql(). "\n";
 
         $this->createFile($this->backend_instance->getPath());
-
         fwrite($this->fp, $sql);
-
         $this->close_file();
     }
 }

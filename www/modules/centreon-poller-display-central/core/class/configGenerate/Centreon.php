@@ -35,17 +35,17 @@
 
 namespace CentreonPollerDisplayCentral\ConfigGenerate;
 
-use \CentreonPollerDisplayCentral\ConfigGenerate\Bam\Acl;
-use \CentreonPollerDisplayCentral\ConfigGenerate\Bam\Host;
-use \CentreonPollerDisplayCentral\ConfigGenerate\Bam\Hostgroup;
-use \CentreonPollerDisplayCentral\ConfigGenerate\Bam\HostgroupRelation;
-use \CentreonPollerDisplayCentral\ConfigGenerate\Bam\HostInformation;
-use \CentreonPollerDisplayCentral\ConfigGenerate\Bam\HostRelation;
-use \CentreonPollerDisplayCentral\ConfigGenerate\Bam\HostServiceRelation;
-use \CentreonPollerDisplayCentral\ConfigGenerate\Bam\NagiosCfg;
-use \CentreonPollerDisplayCentral\ConfigGenerate\Bam\NagiosServer;
-use \CentreonPollerDisplayCentral\ConfigGenerate\Bam\Service;
-use \CentreonPollerDisplayCentral\ConfigGenerate\Bam\ServiceInformation;
+use \CentreonPollerDisplayCentral\ConfigGenerate\Centreon\Acl;
+use \CentreonPollerDisplayCentral\ConfigGenerate\Centreon\Host;
+use \CentreonPollerDisplayCentral\ConfigGenerate\Centreon\Hostgroup;
+use \CentreonPollerDisplayCentral\ConfigGenerate\Centreon\HostgroupRelation;
+use \CentreonPollerDisplayCentral\ConfigGenerate\Centreon\HostInformation;
+use \CentreonPollerDisplayCentral\ConfigGenerate\Centreon\HostRelation;
+use \CentreonPollerDisplayCentral\ConfigGenerate\Centreon\HostServiceRelation;
+use \CentreonPollerDisplayCentral\ConfigGenerate\Centreon\NagiosCfg;
+use \CentreonPollerDisplayCentral\ConfigGenerate\Centreon\NagiosServer;
+use \CentreonPollerDisplayCentral\ConfigGenerate\Centreon\Service;
+use \CentreonPollerDisplayCentral\ConfigGenerate\Centreon\ServiceInformation;
 
 class Centreon extends \AbstractObject
 {
@@ -61,7 +61,7 @@ class Centreon extends \AbstractObject
         $oHostgroupRelation = new HostgroupRelation($this->backend_instance->db);
         $oHostInformation = new HostInformation($this->backend_instance->db);
         $oHostRelation = new HostRelation($this->backend_instance->db);
-        $oHostServiceRelation = new HostRelation($this->backend_instance->db);
+        $oHostServiceRelation = new HostServiceRelation($this->backend_instance->db);
         $oNagiosCfg = new NagiosCfg($this->backend_instance->db);
         $oNagiosServer = new NagiosServer($this->backend_instance->db);
         $oService = new Service($this->backend_instance->db);

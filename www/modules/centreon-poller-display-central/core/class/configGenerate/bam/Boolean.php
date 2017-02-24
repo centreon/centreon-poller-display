@@ -35,12 +35,13 @@
 
 namespace CentreonPollerDisplayCentral\ConfigGenerate\Bam;
 
+use \CentreonPollerDisplayCentral\ConfigGenerate\Object;
 /**
  * User: kduret
  * Date: 23/02/2017
  * Time: 09:19
  */
-class Boolean
+class Boolean extends Object
 {
     protected $table = 'mod_bam_boolean';
     protected $columns = array(
