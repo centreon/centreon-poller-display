@@ -46,7 +46,7 @@ class CentreonPollerDisplayCentral_ServiceInformation extends PHPUnit_Framework_
     {
 
         $expectedResult = 'TRUNCATE extended_service_information;
-INSERT INTO extended_service_information (esi_id,service_service_id) VALUES (1,1);';
+INSERT INTO `extended_service_information` (`esi_id`,`service_service_id`) VALUES (\'1\',\'1\');';
 
         self::$db->addResultSet(
             'SELECT * FROM ns_host_relation WHERE nagios_server_id = 1',

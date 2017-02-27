@@ -46,7 +46,7 @@ class CentreonPollerDisplayCentral_Servicegroup extends PHPUnit_Framework_TestCa
     {
 
         $expectedResult = 'TRUNCATE servicegroup;
-INSERT INTO servicegroup (sg_id,sg_name) VALUES (1,servicegroup);';
+INSERT INTO `servicegroup` (`sg_id`,`sg_name`) VALUES (\'1\',\'servicegroup\');';
 
         self::$db->addResultSet(
             'SELECT * FROM ns_host_relation WHERE nagios_server_id = 1',

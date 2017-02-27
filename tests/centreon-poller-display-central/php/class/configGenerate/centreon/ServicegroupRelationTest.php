@@ -46,7 +46,8 @@ class CentreonPollerDisplayCentral_ServicegroupRelation extends PHPUnit_Framewor
     {
 
         $expectedResult = 'TRUNCATE servicegroup_relation;
-INSERT INTO servicegroup_relation (sgr_id,host_host_id,service_service_id,servicegroup_sg_id) VALUES (1,1,1,1);';
+INSERT INTO `servicegroup_relation` (`sgr_id`,`host_host_id`,`service_service_id`,`servicegroup_sg_id`) ' .
+            'VALUES (\'1\',\'1\',\'1\',\'1\');';
 
         self::$db->addResultSet(
             'SELECT * FROM ns_host_relation WHERE nagios_server_id = 1',

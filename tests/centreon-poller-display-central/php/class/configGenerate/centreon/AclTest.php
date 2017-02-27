@@ -46,7 +46,7 @@ class CentreonPollerDisplayCentral_Acl extends PHPUnit_Framework_TestCase
     {
 
         $expectedResult = 'TRUNCATE acl_resources;
-INSERT INTO acl_resources (id,name) VALUES (1,central),(2,central2);';
+INSERT INTO `acl_resources` (`id`,`name`) VALUES (\'1\',\'central\'),(\'2\',\'central2\');';
 
         self::$db->addResultSet(
             'SELECT * FROM acl_resources ',

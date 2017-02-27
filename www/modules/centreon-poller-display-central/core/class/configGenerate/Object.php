@@ -94,8 +94,8 @@ abstract class Object
             $this->columns = array_keys($objects[0]);
         }
 
-        $insertQuery = 'INSERT INTO ' . $this->table . ' '
-            . '(' . implode(',', $this->columns) . ') '
+        $insertQuery = 'INSERT INTO `' . $this->table . '` '
+            . '(`' . implode('`,`', $this->columns) . '`) '
             . 'VALUES ';
 
         $first = true;
@@ -103,10 +103,18 @@ abstract class Object
             if (!$first) {
                 $insertQuery .= ',';
             }
-            $insertQuery .= '(' . implode(',', array_values($object)) . ')';
+            $insertQuery .= '(';
+            foreach ($object AS $value) {
+                if (isset($value)) {
+                    $insertQuery .= '\'' . $value . '\',';
+                } else {
+                    $insertQuery .= ',';
+                }
+            }
+            $insertQuery = substr($insertQuery, 0, -1);
+            $insertQuery .= ')';
             $first = false;
         }
-
         $insertQuery .= ';';
 
         return $insertQuery;

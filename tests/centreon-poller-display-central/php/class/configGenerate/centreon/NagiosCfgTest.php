@@ -45,7 +45,7 @@ class CentreonPollerDisplayCentral_NagiosCfg extends PHPUnit_Framework_TestCase
     {
 
         $expectedResult = 'TRUNCATE cfg_nagios;
-INSERT INTO cfg_nagios (nagios_id,nagios_name,nagios_server_id) VALUES (1,Centreon Engine,1);';
+INSERT INTO `cfg_nagios` (`nagios_id`,`nagios_name`,`nagios_server_id`) VALUES (\'1\',\'Centreon Engine\',\'1\');';
 
         self::$db->addResultSet(
             'SELECT * FROM cfg_nagios WHERE nagios_server_id = 1',

@@ -46,7 +46,7 @@ class CentreonPollerDisplayCentral_Host extends PHPUnit_Framework_TestCase
     {
 
         $expectedResult = 'TRUNCATE host;
-INSERT INTO host (host_id,name) VALUES (1,host),(2,host2);';
+INSERT INTO `host` (`host_id`,`name`) VALUES (\'1\',\'host\'),(\'2\',\'host2\');';
 
         self::$db->addResultSet(
             'SELECT * FROM ns_host_relation WHERE nagios_server_id = 1',

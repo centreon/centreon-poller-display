@@ -45,7 +45,7 @@ class CentreonPollerDisplayCentral_NagiosServer extends PHPUnit_Framework_TestCa
     {
 
         $expectedResult = 'TRUNCATE nagios_server;
-INSERT INTO nagios_server (id,name) VALUES (1,central);';
+INSERT INTO `nagios_server` (`id`,`name`) VALUES (\'1\',\'central\');';
 
         self::$db->addResultSet(
             'SELECT * FROM nagios_server WHERE id = 1',

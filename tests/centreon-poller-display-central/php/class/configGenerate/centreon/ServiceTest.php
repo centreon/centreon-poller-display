@@ -46,7 +46,7 @@ class CentreonPollerDisplayCentral_Service extends PHPUnit_Framework_TestCase
     {
 
         $expectedResult = 'TRUNCATE service;
-INSERT INTO service (service_id,service_activate) VALUES (1,1);';
+INSERT INTO `service` (`service_id`,`service_activate`) VALUES (\'1\',\'1\');';
 
         self::$db->addResultSet(
             'SELECT * FROM ns_host_relation WHERE nagios_server_id = 1',

@@ -46,7 +46,7 @@ class CentreonPollerDisplayCentral_Hostgroup extends PHPUnit_Framework_TestCase
     {
 
         $expectedResult = 'TRUNCATE hostgroup;
-INSERT INTO hostgroup (hg_id,hg_name) VALUES (10,hg1),(20,hg2);';
+INSERT INTO `hostgroup` (`hg_id`,`hg_name`) VALUES (\'10\',\'hg1\'),(\'20\',\'hg2\');';
 
         self::$db->addResultSet(
             'SELECT * FROM ns_host_relation WHERE nagios_server_id = 1',
