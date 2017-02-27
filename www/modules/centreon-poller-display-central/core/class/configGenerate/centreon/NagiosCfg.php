@@ -57,7 +57,7 @@ class NagiosCfg extends Object
 
         $query = 'SELECT ' . implode(',', $this->columns) . ' '
             . 'FROM ' . $this->table . ' '
-            . 'WHERE nagios_server_id = '.$this->pollerId;
+            . 'WHERE nagios_server_id = ' . $this->pollerId;
 
         $result = $this->db->query($query);
 

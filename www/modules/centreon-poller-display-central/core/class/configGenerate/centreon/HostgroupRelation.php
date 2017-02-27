@@ -84,7 +84,4 @@ class HostgroupRelation extends Object
 
         return $list;
     }
-
-
-
 }

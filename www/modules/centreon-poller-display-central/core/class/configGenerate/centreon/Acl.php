@@ -52,5 +52,4 @@ class Acl extends Object
     protected $columns = array(
         '*'
     );
-
 }

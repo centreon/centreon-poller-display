@@ -51,8 +51,6 @@ class HostInformation extends Object
      */
     protected $columns = array('*');
 
-
-
     public function getList()
     {
         $hostRelation = new HostRelation($this->db, $this->pollerId);
@@ -85,6 +83,4 @@ class HostInformation extends Object
 
         return $list;
     }
-
-
 }

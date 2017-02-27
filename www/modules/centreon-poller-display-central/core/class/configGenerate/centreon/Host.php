@@ -53,7 +53,6 @@ class Host extends Object
         '*'
     );
 
-
     public function getList()
     {
         $hostRelation = new HostRelation($this->db, $this->pollerId);
@@ -86,5 +85,4 @@ class Host extends Object
 
         return $list;
     }
-
 }

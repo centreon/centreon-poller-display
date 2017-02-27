@@ -58,7 +58,7 @@ class NagiosServer extends Object
 
         $query = 'SELECT ' . implode(',', $this->columns) . ' '
             . 'FROM ' . $this->table . ' '
-            . 'WHERE id = '.$this->pollerId;
+            . 'WHERE id = ' . $this->pollerId;
         $result = $this->db->query($query);
 
         while ($row = $result->fetch(\PDO::FETCH_ASSOC)) {
@@ -67,5 +67,4 @@ class NagiosServer extends Object
 
         return $list;
     }
-
 }

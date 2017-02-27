@@ -76,7 +76,6 @@ INSERT INTO `extended_host_information` (`ehi_id`,`host_host_id`) VALUES (\'1\',
             )
         );
 
-
         $sql = self::$hostInfo->generateSql();
         $this->assertEquals($sql, $expectedResult);
     }

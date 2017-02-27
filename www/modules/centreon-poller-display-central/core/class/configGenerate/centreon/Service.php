@@ -49,7 +49,7 @@ class Service extends Object
      * @var array
      * columns wanted
      */
-    protected $columns= array('*');
+    protected $columns = array('*');
 
 
     public function getList()
@@ -85,5 +85,4 @@ class Service extends Object
 
         return $list;
     }
-
 }

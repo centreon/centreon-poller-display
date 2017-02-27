@@ -34,6 +34,7 @@
  */
 
 namespace CentreonPollerDisplayCentral\ConfigGenerate\Centreon;
+
 use CentreonPollerDisplayCentral\ConfigGenerate\Object;
 use CentreonPollerDisplayCentral\ConfigGenerate\Centreon\HostgroupRelation;
 
@@ -51,8 +52,6 @@ class Hostgroup extends Object
     protected $columns = array(
         '*'
     );
-
-
 
     public function getList()
     {
@@ -85,8 +84,4 @@ class Hostgroup extends Object
 
         return $list;
     }
-
-
-
-
 }

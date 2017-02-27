@@ -52,7 +52,4 @@ class AclRelation extends Object
     protected $columns = array(
         '*'
     );
-
-
-
 }

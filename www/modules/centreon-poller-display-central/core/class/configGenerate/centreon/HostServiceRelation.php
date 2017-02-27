@@ -73,7 +73,7 @@ class HostServiceRelation extends Object
         $first = true;
         $clauseQuery = ' WHERE ';
 
-        if (!empty($hErrors)){
+        if (!empty($hErrors)) {
             $clauseQuery .= '(host_host_id IN (';
             foreach ($hosts as $host) {
                 if (!$first) {
@@ -84,13 +84,10 @@ class HostServiceRelation extends Object
             }
             $clauseQuery .= '))';
         }
-
-        if (!empty($ghErrors)){
-
+        if (!empty($ghErrors)) {
             if (!$first) {
                 $clauseQuery .= ' OR ';
             }
-
             $clauseQuery .= '(hostgroup_hg_id IN (';
             $hostGroupArray = array();
             foreach ($hostGroups as $hostGroup) {
@@ -100,8 +97,6 @@ class HostServiceRelation extends Object
             $clauseQuery .= implode(',', $hostGroupunique);
             $clauseQuery .= '))';
         }
-
-
         $list = array();
         $query = 'SELECT ' . implode(',', $this->columns) . ' '
             . 'FROM ' . $this->table . $clauseQuery;
@@ -113,5 +108,4 @@ class HostServiceRelation extends Object
 
         return $list;
     }
-
 }
