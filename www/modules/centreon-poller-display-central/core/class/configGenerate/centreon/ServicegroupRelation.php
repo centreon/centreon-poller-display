@@ -36,6 +36,7 @@
 namespace CentreonPollerDisplayCentral\ConfigGenerate\Centreon;
 
 use CentreonPollerDisplayCentral\ConfigGenerate\Object;
+use CentreonPollerDisplayCentral\ConfigGenerate\Centreon\HostServiceRelation;
 
 class ServicegroupRelation extends Object
 {
@@ -50,4 +51,38 @@ class ServicegroupRelation extends Object
      */
     protected $columns= array('*');
 
+
+    public function getList()
+    {
+        $servicesRelation = new HostServiceRelation($this->db, $this->pollerId);
+        $services = $servicesRelation->getList();
+
+        $errors = array_filter($services);
+        if (empty($errors)) {
+            return '';
+        }
+
+        $first = true;
+        $clauseQuery = ' WHERE service_service_id IN (';
+        foreach ($services as $service) {
+            if (!$first) {
+                $clauseQuery .= ',';
+            }
+            $clauseQuery .= $service['service_service_id'];
+            $first = false;
+        }
+        $clauseQuery .= ')';
+
+        $list = array();
+        $query = 'SELECT ' . implode(',', $this->columns) . ' '
+            . 'FROM ' . $this->table . $clauseQuery;
+
+        $result = $this->db->query($query);
+
+        while ($row = $result->fetch(\PDO::FETCH_ASSOC)) {
+            $list[] = $row;
+        }
+
+        return $list;
+    }
 }

@@ -70,6 +70,7 @@ class Centreon extends \AbstractObject
         $oServiceInformation = new ServiceInformation($this->backend_instance->db,$poller_id);
         $oServicegroup = new Servicegroup($this->backend_instance->db,$poller_id);
         $oServicegroupRelation = new ServicegroupRelation($this->backend_instance->db,$poller_id);
+        $oAclRelation = new AclRelation($this->backend_instance->db,$poller_id);
 
 
         $sql = '';
@@ -82,17 +83,20 @@ class Centreon extends \AbstractObject
         $sql .=  $oHostInformation->generateSql(). "\n\n";
         $sql .=  $oHostServiceRelation->generateSql(). "\n\n";
         $sql .=  $oService->generateSql(). "\n\n";
+        $sql .=  $oServicegroupRelation->generateSql(). "\n\n";
+        $sql .=  $oServicegroup->generateSql(). "\n\n";
+        $sql .=  $oServiceInformation->generateSql(). "\n";
+        $sql .=  $oNagiosCfg->generateSql(). "\n\n";
+        $sql .=  $oAcl->generateSql(). "\n";
+
+
+
+
 
     */
 
 
- //       $sql .=  $oServicegroupRelation->generateSql(). "\n\n";
-  //      $sql .=  $oServicegroup->generateSql(). "\n\n";
-
- //       $sql .=  $oServiceInformation->generateSql(). "\n";
-
- //        $sql .=  $oAcl->generateSql(). "\n";
-//        $sql .=  $oNagiosCfg->generateSql(). "\n\n";
+        $sql .=  $oAclRelation->generateSql(). "\n";
 
 
 

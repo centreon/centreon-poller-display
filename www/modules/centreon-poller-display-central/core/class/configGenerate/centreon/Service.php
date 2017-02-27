@@ -36,6 +36,7 @@
 namespace CentreonPollerDisplayCentral\ConfigGenerate\Centreon;
 
 use CentreonPollerDisplayCentral\ConfigGenerate\Object;
+use CentreonPollerDisplayCentral\ConfigGenerate\Centreon\HostServiceRelation;
 
 class Service extends Object
 {
