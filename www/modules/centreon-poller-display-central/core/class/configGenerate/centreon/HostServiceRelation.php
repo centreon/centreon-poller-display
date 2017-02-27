@@ -37,7 +37,7 @@ namespace CentreonPollerDisplayCentral\ConfigGenerate\Centreon;
 
 use CentreonPollerDisplayCentral\ConfigGenerate\Object;
 use CentreonPollerDisplayCentral\ConfigGenerate\Centreon\HostRelation;
-use CentreonPollerDisplayCentral\ConfigGenerate\Centreon\HostGroupRelation;
+use CentreonPollerDisplayCentral\ConfigGenerate\Centreon\HostgroupRelation;
 
 class HostServiceRelation extends Object
 {
@@ -59,8 +59,8 @@ class HostServiceRelation extends Object
         $hostRelation = new HostRelation($this->db, $this->pollerId);
         $hosts = $hostRelation->getList();
 
-        $hostRelation = new HostGroupRelation($this->db, $this->pollerId);
-        $hostGroups = $hostRelation->getList();
+        $hostGroupRelation = new HostgroupRelation($this->db, $this->pollerId);
+        $hostGroups = $hostGroupRelation->getList();
 
         $hErrors = array_filter($hosts);
         $ghErrors = array_filter($hostGroups);
