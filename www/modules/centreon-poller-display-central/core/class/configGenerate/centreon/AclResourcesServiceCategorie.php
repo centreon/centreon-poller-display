@@ -36,14 +36,15 @@
 namespace CentreonPollerDisplayCentral\ConfigGenerate\Centreon;
 
 use CentreonPollerDisplayCentral\ConfigGenerate\Object;
+use CentreonPollerDisplayCentral\ConfigGenerate\Centreon\ServiceCategories;
 
-class Acl extends Object
+class AclResourcesServiceCategorie extends Object
 {
 
     /**
      * @var table
      */
-    protected $table = 'acl_resources';
+    protected $table = 'acl_resources_sc_relations';
 
     /**
      * @var array
@@ -52,4 +53,38 @@ class Acl extends Object
     protected $columns = array(
         '*'
     );
+
+    public function getList()
+    {
+        $servicesCate = new ServiceCategories($this->db, $this->pollerId);
+        $serviceRelations = $servicesCate->getList();
+
+        $errors = array_filter($serviceRelations);
+        if (empty($errors)) {
+            return '';
+        }
+
+        $first = true;
+        $clauseQuery = ' WHERE sc_id IN (';
+        foreach ($serviceRelations as $serviceRelation) {
+            if (!$first) {
+                $clauseQuery .= ',';
+            }
+            $clauseQuery .= $serviceRelation['sc_id'];
+            $first = false;
+        }
+        $clauseQuery .= ')';
+
+        $list = array();
+        $query = 'SELECT ' . implode(',', $this->columns) . ' '
+            . 'FROM ' . $this->table . $clauseQuery;
+
+        $result = $this->db->query($query);
+
+        while ($row = $result->fetch(\PDO::FETCH_ASSOC)) {
+            $list[] = $row;
+        }
+
+        return $list;
+    }
 }

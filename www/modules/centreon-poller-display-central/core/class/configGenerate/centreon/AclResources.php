@@ -37,7 +37,7 @@ namespace CentreonPollerDisplayCentral\ConfigGenerate\Centreon;
 
 use CentreonPollerDisplayCentral\ConfigGenerate\Object;
 
-class AclRelation extends Object
+class AclResources extends Object
 {
 
     /**

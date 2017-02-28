@@ -35,7 +35,7 @@
 
 namespace CentreonPollerDisplayCentral\ConfigGenerate;
 
-use \CentreonPollerDisplayCentral\ConfigGenerate\Centreon\Acl;
+use \CentreonPollerDisplayCentral\ConfigGenerate\Centreon\AclResources;
 use \CentreonPollerDisplayCentral\ConfigGenerate\Centreon\Host;
 use \CentreonPollerDisplayCentral\ConfigGenerate\Centreon\Hostgroup;
 use \CentreonPollerDisplayCentral\ConfigGenerate\Centreon\HostgroupRelation;
@@ -57,7 +57,7 @@ class Centreon extends \AbstractObject
 
     public function generateObjects($poller_id)
     {
-        $oAcl = new Acl($this->backend_instance->db,$poller_id);
+        $oAclResources = new AclResources($this->backend_instance->db,$poller_id);
         $oHost = new Host($this->backend_instance->db,$poller_id);
         $oHostgroup = new Hostgroup($this->backend_instance->db,$poller_id);
         $oHostgroupRelation = new HostgroupRelation($this->backend_instance->db,$poller_id);
@@ -87,7 +87,7 @@ class Centreon extends \AbstractObject
         $sql .=  $oServicegroup->generateSql(). "\n\n";
         $sql .=  $oServiceInformation->generateSql(). "\n";
         $sql .=  $oNagiosCfg->generateSql(). "\n\n";
-        $sql .=  $oAcl->generateSql(). "\n";
+        $sql .=  $oAclResources->generateSql(). "\n";
 
 
 

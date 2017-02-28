@@ -25,46 +25,32 @@ class PollerDisplay extends \AbstractObject
     public function generateFromPollerId($poller_id, $localhost)
     {
 
-        $this->poller_id = $poller_id;
-
-       // Bam::getInstance()->generateobjects();
+        Bam::getInstance()->generateobjects($poller_id);
         Centreon::getInstance()->generateobjects($poller_id);
 
 
-
-
-
         /*
+        $this->poller_id = $poller_id;
+
         $stmt = $this->backend_instance->db->prepare("SELECT id 
                                                     FROM mod_poller_display_server_relations 
                                                     WHERE nagios_server_id = :pollerId");
         $stmt->bindParam(':pollerId', $poller_id, PDO::PARAM_INT);
         $stmt->execute();
 
-        if($stmt->fetch()){
-
-            $contentCentreon = new Centreon($this->backend_instance->db);
-            $this->generateFile($pollerConfigPath,$this->generate_filename,$contentCentreon);
+        if ($stmt->fetch()) {
+            Centreon::getInstance()->generateobjects($poller_id);
 
             $stmt = $this->backend_instance->db->prepare("SELECT ba_id 
                                                     FROM mod_bam_poller_relations
                                                     WHERE poller_id = :pollerId");
             $stmt->bindParam(':pollerId', $poller_id, PDO::PARAM_INT);
             $stmt->execute();
-            while ($data = $stmt->fetch()){
-                $bamDisplays = $data['ba_id'];
-            }
 
-            if($bamDisplays){
-
-                $baObj = new Ba($this->backend_instance->db);
-                $baObj->generateSql();
-
+            if ($stmt->fetch()) {
+                Bam::getInstance()->generateobjects($poller_id);
             }
         }
         */
     }
-
 }
-
-
