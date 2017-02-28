@@ -16,7 +16,7 @@
  */
 
 use \Centreon\Test\Mock\CentreonDB;
-use \CentreonPollerDisplayCentral\ConfigGenerate\Centreon\Hostgroup;
+use \CentreonPollerDisplayCentral\ConfigGenerate\Centreon\ServiceCategories;
 
 
 /**
@@ -24,17 +24,17 @@ use \CentreonPollerDisplayCentral\ConfigGenerate\Centreon\Hostgroup;
  * @version 1.0.0
  * @author Centreon
  */
-class CentreonPollerDisplayCentral_Hostgroup extends PHPUnit_Framework_TestCase
+class CentreonPollerDisplayCentral_ServiceCategories extends PHPUnit_Framework_TestCase
 {
     protected static $db;
     protected static $pollerDisplay;
-    protected static $hostGroup;
+    protected static $service;
 
     public function setUp()
     {
         self::$db = new CentreonDB();
         self::$pollerDisplay = 1;
-        self::$hostGroup = new Hostgroup(self::$db, self::$pollerDisplay);
+        self::$service = new ServiceCategories(self::$db, self::$pollerDisplay);
     }
 
     public function tearDown()
@@ -45,8 +45,8 @@ class CentreonPollerDisplayCentral_Hostgroup extends PHPUnit_Framework_TestCase
     public function testGenerateSql()
     {
 
-        $expectedResult = 'TRUNCATE hostgroup;
-INSERT INTO `hostgroup` (`hg_id`,`hg_name`) VALUES (\'10\',\'hg1\'),(\'20\',\'hg2\');';
+        $expectedResult = 'TRUNCATE service_categories;
+INSERT INTO `service_categories` (`sc_id`,`sc_name`) VALUES (\'3\',\'Ping\');';
 
         self::$db->addResultSet(
             'SELECT * FROM ns_host_relation WHERE nagios_server_id = 1',
@@ -67,33 +67,47 @@ INSERT INTO `hostgroup` (`hg_id`,`hg_name`) VALUES (\'10\',\'hg1\'),(\'20\',\'hg
             array(
                 array(
                     'hgr_id' => '1',
-                    'hostgroup_hg_id' => '10',
+                    'hostgroup_hg_id' => '1',
                     'host_host_id' => '1'
-                ),
-                array(
-                    'hgr_id' => '2',
-                    'hostgroup_hg_id' => '20',
-                    'host_host_id' => '2'
                 )
             )
         );
 
         self::$db->addResultSet(
-            'SELECT * FROM hostgroup WHERE hg_id IN (10,20)',
+            'SELECT * FROM host_service_relation WHERE (host_host_id IN (1,2)) OR (hostgroup_hg_id IN (1))',
             array(
                 array(
-                    'hg_id' => '10',
-                    'hg_name' => 'hg1'
-                ),
-                array(
-                    'hg_id' => '20',
-                    'hg_name' => 'hg2'
+                    'hsr_id' => '1',
+                    'hostgroup_hg_id' => null,
+                    'host_host_id' => '1',
+                    'servicegroup_sg_id' => null,
+                    'service_service_id' => '1'
                 )
             )
         );
 
+        self::$db->addResultSet(
+            'SELECT * FROM service_categories_relation WHERE service_service_id IN (1)',
+            array(
+                array(
+                    'src_id' => '12',
+                    'service_service_id' => '1',
+                    'sc_id' => '3'
+                )
+            )
+        );
 
-        $sql = self::$hostGroup->generateSql();
+        self::$db->addResultSet(
+            'SELECT * FROM service_categories WHERE sc_id IN (3)',
+            array(
+                array(
+                    'sc_id' => '3',
+                    'sc_name' => 'Ping'
+                )
+            )
+        );
+
+        $sql = self::$service->generateSql();
         $this->assertEquals($sql, $expectedResult);
     }
 }

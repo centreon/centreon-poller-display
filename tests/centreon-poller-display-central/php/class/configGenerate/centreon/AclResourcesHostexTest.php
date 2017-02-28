@@ -16,7 +16,7 @@
  */
 
 use \Centreon\Test\Mock\CentreonDB;
-use \CentreonPollerDisplayCentral\ConfigGenerate\Centreon\Hostgroup;
+use \CentreonPollerDisplayCentral\ConfigGenerate\Centreon\AclResourcesHostex;
 
 
 /**
@@ -24,17 +24,17 @@ use \CentreonPollerDisplayCentral\ConfigGenerate\Centreon\Hostgroup;
  * @version 1.0.0
  * @author Centreon
  */
-class CentreonPollerDisplayCentral_Hostgroup extends PHPUnit_Framework_TestCase
+class CentreonPollerDisplayCentral_AclResourcesHostex extends PHPUnit_Framework_TestCase
 {
     protected static $db;
     protected static $pollerDisplay;
-    protected static $hostGroup;
+    protected static $acl;
 
     public function setUp()
     {
         self::$db = new CentreonDB();
         self::$pollerDisplay = 1;
-        self::$hostGroup = new Hostgroup(self::$db, self::$pollerDisplay);
+        self::$acl = new AclResourcesHostex(self::$db, self::$pollerDisplay);
     }
 
     public function tearDown()
@@ -45,8 +45,8 @@ class CentreonPollerDisplayCentral_Hostgroup extends PHPUnit_Framework_TestCase
     public function testGenerateSql()
     {
 
-        $expectedResult = 'TRUNCATE hostgroup;
-INSERT INTO `hostgroup` (`hg_id`,`hg_name`) VALUES (\'10\',\'hg1\'),(\'20\',\'hg2\');';
+        $expectedResult = 'TRUNCATE acl_resources_hostex_relations;
+INSERT INTO `acl_resources_hostex_relations` (`arhe_id`,`host_host_id`,`acl_res_id`) VALUES (\'1\',\'1\',\'12\');';
 
         self::$db->addResultSet(
             'SELECT * FROM ns_host_relation WHERE nagios_server_id = 1',
@@ -62,38 +62,20 @@ INSERT INTO `hostgroup` (`hg_id`,`hg_name`) VALUES (\'10\',\'hg1\'),(\'20\',\'hg
             )
         );
 
-        self::$db->addResultSet(
-            'SELECT * FROM hostgroup_relation WHERE host_host_id IN (1,2)',
-            array(
-                array(
-                    'hgr_id' => '1',
-                    'hostgroup_hg_id' => '10',
-                    'host_host_id' => '1'
-                ),
-                array(
-                    'hgr_id' => '2',
-                    'hostgroup_hg_id' => '20',
-                    'host_host_id' => '2'
-                )
-            )
-        );
 
         self::$db->addResultSet(
-            'SELECT * FROM hostgroup WHERE hg_id IN (10,20)',
+            'SELECT * FROM acl_resources_hostex_relations WHERE host_host_id IN (1,2)',
             array(
                 array(
-                    'hg_id' => '10',
-                    'hg_name' => 'hg1'
-                ),
-                array(
-                    'hg_id' => '20',
-                    'hg_name' => 'hg2'
+                    'arhe_id' => '1',
+                    'host_host_id' => '1',
+                    'acl_res_id' => '12'
                 )
             )
         );
 
 
-        $sql = self::$hostGroup->generateSql();
+        $sql = self::$acl->generateSql();
         $this->assertEquals($sql, $expectedResult);
     }
 }

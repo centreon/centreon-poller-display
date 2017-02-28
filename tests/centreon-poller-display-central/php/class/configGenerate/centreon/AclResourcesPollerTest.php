@@ -16,7 +16,7 @@
  */
 
 use \Centreon\Test\Mock\CentreonDB;
-use \CentreonPollerDisplayCentral\ConfigGenerate\Centreon\Acl;
+use \CentreonPollerDisplayCentral\ConfigGenerate\Centreon\AclResourcesPoller;
 
 
 /**
@@ -24,7 +24,7 @@ use \CentreonPollerDisplayCentral\ConfigGenerate\Centreon\Acl;
  * @version 1.0.0
  * @author Centreon
  */
-class CentreonPollerDisplayCentral_Acl extends PHPUnit_Framework_TestCase
+class CentreonPollerDisplayCentral_AclResourcesPoller extends PHPUnit_Framework_TestCase
 {
     protected static $db;
     protected static $pollerDisplay;
@@ -34,7 +34,7 @@ class CentreonPollerDisplayCentral_Acl extends PHPUnit_Framework_TestCase
     {
         self::$db = new CentreonDB();
         self::$pollerDisplay = 1;
-        self::$acl = new Acl(self::$db, self::$pollerDisplay);
+        self::$acl = new AclResourcesPoller(self::$db, self::$pollerDisplay);
     }
 
     public function tearDown()
@@ -45,19 +45,22 @@ class CentreonPollerDisplayCentral_Acl extends PHPUnit_Framework_TestCase
     public function testGenerateSql()
     {
 
-        $expectedResult = 'TRUNCATE acl_resources;
-INSERT INTO `acl_resources` (`id`,`name`) VALUES (\'1\',\'central\'),(\'2\',\'central2\');';
+        $expectedResult = 'TRUNCATE acl_resources_poller_relations;
+INSERT INTO `acl_resources_poller_relations` (`arpr_id`,`poller_id`,`acl_res_id`) ' .
+            'VALUES (\'1\',\'1\',\'1\'),(\'2\',\'1\',\'23\');';
 
         self::$db->addResultSet(
-            'SELECT * FROM acl_resources ',
+            'SELECT * FROM acl_resources_poller_relations WHERE poller_id = 1',
             array(
                 array(
-                    'id' => '1',
-                    'name' => 'central'
+                    'arpr_id' => '1',
+                    'poller_id' => '1',
+                    'acl_res_id' => '1'
                 ),
                 array(
-                    'id' => '2',
-                    'name' => 'central2'
+                    'arpr_id' => '2',
+                    'poller_id' => '1',
+                    'acl_res_id' => '23'
                 )
             )
         );
