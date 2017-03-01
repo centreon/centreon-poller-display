@@ -45,7 +45,8 @@ class CentreonPollerDisplayCentral_MetaContact extends PHPUnit_Framework_TestCas
     public function testGenerateSql()
     {
 
-        $expectedResult = 'TRUNCATE meta_contacts;
+        $expectedResult = 'DELETE FROM meta_contacts;
+TRUNCATE meta_contacts;
 INSERT INTO `meta_contacts` (`meta_id`,`contact_id`) VALUES (\'5\',\'17\');';
 
         self::$db->addResultSet(

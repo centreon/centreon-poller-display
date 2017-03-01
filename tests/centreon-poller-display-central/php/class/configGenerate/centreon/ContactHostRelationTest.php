@@ -45,7 +45,8 @@ class CentreonPollerDisplayCentral_ContactHostRelation extends PHPUnit_Framework
     public function testGenerateSql()
     {
 
-        $expectedResult = 'TRUNCATE contact_host_relation;
+        $expectedResult = 'DELETE FROM contact_host_relation;
+TRUNCATE contact_host_relation;
 INSERT INTO `contact_host_relation` (`host_host_id`,`contact_id`) VALUES (\'1\',\'2\'),(\'2\',\'6\');';
 
         self::$db->addResultSet(

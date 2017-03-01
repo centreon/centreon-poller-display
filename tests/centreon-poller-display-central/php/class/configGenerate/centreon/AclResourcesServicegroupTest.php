@@ -45,7 +45,8 @@ class CentreonPollerDisplayCentral_AclResourcesServicegroup extends PHPUnit_Fram
     public function testGenerateSql()
     {
 
-        $expectedResult = 'TRUNCATE acl_resources_sg_relations;
+        $expectedResult = 'DELETE FROM acl_resources_sg_relations;
+TRUNCATE acl_resources_sg_relations;
 INSERT INTO `acl_resources_sg_relations` (`sg_id`,`acl_res_id`) VALUES (\'2\',\'1\');';
 
         self::$db->addResultSet(

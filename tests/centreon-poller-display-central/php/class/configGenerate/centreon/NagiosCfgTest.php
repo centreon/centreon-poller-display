@@ -44,7 +44,8 @@ class CentreonPollerDisplayCentral_NagiosCfg extends PHPUnit_Framework_TestCase
     public function testGenerateSql()
     {
 
-        $expectedResult = 'TRUNCATE cfg_nagios;
+        $expectedResult = 'DELETE FROM cfg_nagios;
+TRUNCATE cfg_nagios;
 INSERT INTO `cfg_nagios` (`nagios_id`,`nagios_name`,`nagios_server_id`) VALUES (\'1\',\'Centreon Engine\',\'1\');';
 
         self::$db->addResultSet(

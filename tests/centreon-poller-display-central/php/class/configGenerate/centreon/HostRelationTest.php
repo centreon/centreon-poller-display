@@ -45,7 +45,8 @@ class CentreonPollerDisplayCentral_HostRelation extends PHPUnit_Framework_TestCa
     public function testGenerateSql()
     {
 
-        $expectedResult = 'TRUNCATE ns_host_relation;
+        $expectedResult = 'DELETE FROM ns_host_relation;
+TRUNCATE ns_host_relation;
 INSERT INTO `ns_host_relation` (`nagios_server_id`,`host_host_id`) VALUES (\'1\',\'1\'),(\'1\',\'2\');';
 
         self::$db->addResultSet(

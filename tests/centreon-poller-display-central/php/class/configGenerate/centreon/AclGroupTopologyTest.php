@@ -45,7 +45,8 @@ class CentreonPollerDisplayCentral_AclGroupTopology extends PHPUnit_Framework_Te
     public function testGenerateSql()
     {
 
-        $expectedResult = 'TRUNCATE acl_group_topology_relations;
+        $expectedResult = 'DELETE FROM acl_group_topology_relations;
+TRUNCATE acl_group_topology_relations;
 INSERT INTO `acl_group_topology_relations` (`acl_group_id`,`acl_topology_id`) VALUES (\'1\',\'12\'),(\'14\',\'20\');';
 
         self::$db->addResultSet(

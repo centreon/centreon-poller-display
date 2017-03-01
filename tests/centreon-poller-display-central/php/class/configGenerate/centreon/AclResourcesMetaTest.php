@@ -45,7 +45,8 @@ class CentreonPollerDisplayCentral_AclResourcesMeta extends PHPUnit_Framework_Te
     public function testGenerateSql()
     {
 
-        $expectedResult = 'TRUNCATE acl_resources_meta_relations;
+        $expectedResult = 'DELETE FROM acl_resources_meta_relations;
+TRUNCATE acl_resources_meta_relations;
 INSERT INTO `acl_resources_meta_relations` (`meta_id`,`acl_res_id`) VALUES (\'5\',\'1\');';
 
         self::$db->addResultSet(

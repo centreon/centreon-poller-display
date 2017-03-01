@@ -45,7 +45,8 @@ class CentreonPollerDisplayCentral_ContactServiceRelation extends PHPUnit_Framew
     public function testGenerateSql()
     {
 
-        $expectedResult = 'TRUNCATE contact_service_relation;
+        $expectedResult = 'DELETE FROM contact_service_relation;
+TRUNCATE contact_service_relation;
 INSERT INTO `contact_service_relation` (`csr_id`,`service_service_id`,`contact_id`) ' .
             'VALUES (\'1\',\'10\',\'1\'),(\'2\',\'20\',\'2\');';
 

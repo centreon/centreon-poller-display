@@ -45,7 +45,8 @@ class CentreonPollerDisplayCentral_AclResourcesHost extends PHPUnit_Framework_Te
     public function testGenerateSql()
     {
 
-        $expectedResult = 'TRUNCATE acl_resources_host_relations;
+        $expectedResult = 'DELETE FROM acl_resources_host_relations;
+TRUNCATE acl_resources_host_relations;
 INSERT INTO `acl_resources_host_relations` (`arhr_id`,`host_host_id`,`acl_res_id`) ' .
             'VALUES (\'1\',\'1\',\'10\'),(\'2\',\'2\',\'20\');';
 

@@ -45,7 +45,8 @@ class CentreonPollerDisplayCentral_ContactgroupHostgroupRelation extends PHPUnit
     public function testGenerateSql()
     {
 
-        $expectedResult = 'TRUNCATE contactgroup_hostgroup_relation;
+        $expectedResult = 'DELETE FROM contactgroup_hostgroup_relation;
+TRUNCATE contactgroup_hostgroup_relation;
 INSERT INTO `contactgroup_hostgroup_relation` (`contactgroup_cg_id`,`hostgroup_hg_id`) VALUES (\'4\',\'10\');';
 
         self::$db->addResultSet(

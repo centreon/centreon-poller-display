@@ -45,7 +45,8 @@ class CentreonPollerDisplayCentral_HostCategoriesRelation extends PHPUnit_Framew
     public function testGenerateSql()
     {
 
-        $expectedResult = 'TRUNCATE hostcategories_relation;
+        $expectedResult = 'DELETE FROM hostcategories_relation;
+TRUNCATE hostcategories_relation;
 INSERT INTO `hostcategories_relation` (`hcr_id`,`hostcategories_hc_id`,`host_host_id`) ' .
             'VALUES (\'1\',\'15\',\'1\'),(\'2\',\'20\',\'2\');';
 

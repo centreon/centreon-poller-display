@@ -45,7 +45,8 @@ class CentreonPollerDisplayCentral_AclActionRules extends PHPUnit_Framework_Test
     public function testGenerateSql()
     {
 
-        $expectedResult = 'TRUNCATE acl_actions_rules;
+        $expectedResult = 'DELETE FROM acl_actions_rules;
+TRUNCATE acl_actions_rules;
 INSERT INTO `acl_actions_rules` (`acl_action_rule_id`,`acl_action_name`) VALUES (\'2\',\'poller\'),(\'6\',\'stat\');';
 
         self::$db->addResultSet(

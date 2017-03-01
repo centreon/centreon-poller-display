@@ -45,7 +45,8 @@ class CentreonPollerDisplayCentral_MetaServiceRelation extends PHPUnit_Framework
     public function testGenerateSql()
     {
 
-        $expectedResult = 'TRUNCATE meta_service_relation;
+        $expectedResult = 'DELETE FROM meta_service_relation;
+TRUNCATE meta_service_relation;
 INSERT INTO `meta_service_relation` (`msr_id`,`meta_id`,`host_id`) VALUES (\'1\',\'1\',\'1\'),(\'2\',\'5\',\'2\');';
 
         self::$db->addResultSet(

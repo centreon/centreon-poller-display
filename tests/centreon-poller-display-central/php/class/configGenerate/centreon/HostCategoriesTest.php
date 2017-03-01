@@ -45,7 +45,8 @@ class CentreonPollerDisplayCentral_HostCategories extends PHPUnit_Framework_Test
     public function testGenerateSql()
     {
 
-        $expectedResult = 'TRUNCATE hostcategories;
+        $expectedResult = 'DELETE FROM hostcategories;
+TRUNCATE hostcategories;
 INSERT INTO `hostcategories` (`hc_id`,`hc_name`) VALUES (\'15\',\'cate1\'),(\'20\',\'cate20\');';
 
         self::$db->addResultSet(

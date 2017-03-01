@@ -45,7 +45,8 @@ class CentreonPollerDisplayCentral_AclResourcesHostCategorie extends PHPUnit_Fra
     public function testGenerateSql()
     {
 
-        $expectedResult = 'TRUNCATE acl_resources_hc_relations;
+        $expectedResult = 'DELETE FROM acl_resources_hc_relations;
+TRUNCATE acl_resources_hc_relations;
 INSERT INTO `acl_resources_hc_relations` (`arhcr_id`,`hc_id`) VALUES (\'1\',\'15\'),(\'2\',\'20\');';
 
         self::$db->addResultSet(

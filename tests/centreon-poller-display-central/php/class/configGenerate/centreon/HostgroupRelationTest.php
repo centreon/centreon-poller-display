@@ -45,7 +45,8 @@ class CentreonPollerDisplayCentral_HostgroupRelation extends PHPUnit_Framework_T
     public function testGenerateSql()
     {
 
-        $expectedResult = 'TRUNCATE hostgroup_relation;
+        $expectedResult = 'DELETE FROM hostgroup_relation;
+TRUNCATE hostgroup_relation;
 INSERT INTO `hostgroup_relation` (`hgr_id`,`hostgroup_hg_id`,`host_host_id`) ' .
             'VALUES (\'1\',\'10\',\'1\'),(\'2\',\'20\',\'2\');';
 

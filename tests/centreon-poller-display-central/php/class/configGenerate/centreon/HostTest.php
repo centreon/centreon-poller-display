@@ -45,7 +45,8 @@ class CentreonPollerDisplayCentral_Host extends PHPUnit_Framework_TestCase
     public function testGenerateSql()
     {
 
-        $expectedResult = 'TRUNCATE host;
+        $expectedResult = 'DELETE FROM host;
+TRUNCATE host;
 INSERT INTO `host` (`host_id`,`name`) VALUES (\'1\',\'host\'),(\'2\',\'host2\');';
 
         self::$db->addResultSet(

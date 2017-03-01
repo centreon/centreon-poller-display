@@ -45,7 +45,8 @@ class CentreonPollerDisplayCentral_MetaContactgroup extends PHPUnit_Framework_Te
     public function testGenerateSql()
     {
 
-        $expectedResult = 'TRUNCATE meta_contactgroup_relation;
+        $expectedResult = 'DELETE FROM meta_contactgroup_relation;
+TRUNCATE meta_contactgroup_relation;
 INSERT INTO `meta_contactgroup_relation` (`meta_id`,`cg_cg_id`) VALUES (\'5\',\'17\'),(\'2\',\'20\');';
 
         self::$db->addResultSet(

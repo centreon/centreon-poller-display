@@ -45,7 +45,8 @@ class CentreonPollerDisplayCentral_ServicegroupRelation extends PHPUnit_Framewor
     public function testGenerateSql()
     {
 
-        $expectedResult = 'TRUNCATE servicegroup_relation;
+        $expectedResult = 'DELETE FROM servicegroup_relation;
+TRUNCATE servicegroup_relation;
 INSERT INTO `servicegroup_relation` (`sgr_id`,`host_host_id`,`service_service_id`,`servicegroup_sg_id`) ' .
             'VALUES (\'1\',\'1\',\'1\',\'1\');';
 

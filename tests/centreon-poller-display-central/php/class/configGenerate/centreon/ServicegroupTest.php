@@ -45,7 +45,8 @@ class CentreonPollerDisplayCentral_Servicegroup extends PHPUnit_Framework_TestCa
     public function testGenerateSql()
     {
 
-        $expectedResult = 'TRUNCATE servicegroup;
+        $expectedResult = 'DELETE FROM servicegroup;
+TRUNCATE servicegroup;
 INSERT INTO `servicegroup` (`sg_id`,`sg_name`) VALUES (\'1\',\'servicegroup\');';
 
         self::$db->addResultSet(

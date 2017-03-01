@@ -33,109 +33,53 @@
  *
  */
 
-namespace CentreonPollerDisplayCentral\ConfigGenerate;
+namespace CentreonPollerDisplayCentral\ConfigGenerate\Centreon;
 
-/**
- * User: kduret
- * Date: 23/02/2017
- * Time: 09:19
- */
-abstract class Object
+use CentreonPollerDisplayCentral\ConfigGenerate\Object;
+use CentreonPollerDisplayCentral\ConfigGenerate\Centreon\AclGroups;
+
+class AclResourcesGroupRelation extends Object
 {
-    protected $db = null;
-    protected $pollerId = null;
-    protected $table = null;
-    protected $columns = null;
 
     /**
-     * Factory constructor.
-     * @param $db \CentreonDB
+     * @var table
      */
-    public function __construct($db, $pollerId)
+    protected $table = 'acl_res_group_relations';
+
+    /**
+     * @var array
+     * columns wanted
+     */
+    protected $columns = array(
+        '*'
+    );
+
+    public function getList()
     {
-        $this->db = $db;
-        $this->pollerId = $pollerId;
-    }
+        $aclRelation = new AclGroups($this->db, $this->pollerId);
+        $acls = $aclRelation->getList();
 
-
-    public function generateSql()
-    {
-        if (is_null($this->table) || is_null($this->columns)) {
-            return null;
-        }
-
-        $deleteQuery = $this->generateDeleteQuery();
-
-        $truncateQuery = $this->generateTruncateQuery();
-
-        $insertQuery = $this->generateInsertQuery();
-
-        $finalQuery = $deleteQuery . "\n" . $truncateQuery . "\n" . $insertQuery;
-
-
-        return $finalQuery;
-    }
-
-    protected function generateTruncateQuery()
-    {
-        $query = 'TRUNCATE ' . $this->table . ';';
-        return $query;
-    }
-
-    protected function generateDeleteQuery()
-    {
-        $query = 'DELETE FROM ' . $this->table . ';';
-        return $query;
-    }
-
-    protected function generateInsertQuery()
-    {
-
-        $objects = $this->getList();
-
-        $errors = array_filter($objects);
+        $errors = array_filter($acls);
         if (empty($errors)) {
             return '';
         }
 
-        if (implode(',', $this->columns) == '*') {
-            $this->columns = array_keys($objects[0]);
-        }
-
-        $insertQuery = 'INSERT INTO `' . $this->table . '` '
-            . '(`' . implode('`,`', $this->columns) . '`) '
-            . 'VALUES ';
-
         $first = true;
-        foreach ($objects as $object) {
+        $clauseQuery = ' WHERE acl_group_id IN (';
+        foreach ($acls as $acl) {
             if (!$first) {
-                $insertQuery .= ',';
+                $clauseQuery .= ',';
             }
-            $insertQuery .= '(';
-            foreach ($object AS $value) {
-                if (isset($value)) {
-                    $insertQuery .= '\'' . $value . '\',';
-                } else {
-                    $insertQuery .= ',';
-                }
-            }
-            $insertQuery = substr($insertQuery, 0, -1);
-            $insertQuery .= ')';
+            $clauseQuery .= $acl['acl_group_id'];
             $first = false;
         }
-        $insertQuery .= ';';
+        $clauseQuery .= ')';
 
-        return $insertQuery;
-    }
-
-    protected function getList()
-    {
         $list = array();
-
         $query = 'SELECT ' . implode(',', $this->columns) . ' '
-            . 'FROM ' . $this->table . ' ';
-        $result = $this->db->query($query);
+            . 'FROM ' . $this->table . $clauseQuery;
 
+        $result = $this->db->query($query);
         while ($row = $result->fetch(\PDO::FETCH_ASSOC)) {
             $list[] = $row;
         }

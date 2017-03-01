@@ -16,7 +16,7 @@
  */
 
 use \Centreon\Test\Mock\CentreonDB;
-use \CentreonPollerDisplayCentral\ConfigGenerate\Centreon\Contact;
+use \CentreonPollerDisplayCentral\ConfigGenerate\Centreon\AclResourcesGroupRelation;
 
 
 /**
@@ -24,17 +24,17 @@ use \CentreonPollerDisplayCentral\ConfigGenerate\Centreon\Contact;
  * @version 1.0.0
  * @author Centreon
  */
-class CentreonPollerDisplayCentral_Contact extends PHPUnit_Framework_TestCase
+class CentreonPollerDisplayCentral_AclResourcesGroupRelation extends PHPUnit_Framework_TestCase
 {
     protected static $db;
     protected static $pollerDisplay;
-    protected static $contact;
+    protected static $acl;
 
     public function setUp()
     {
         self::$db = new CentreonDB();
         self::$pollerDisplay = 1;
-        self::$contact = new Contact(self::$db, self::$pollerDisplay);
+        self::$acl = new AclResourcesGroupRelation(self::$db, self::$pollerDisplay);
     }
 
     public function tearDown()
@@ -45,9 +45,9 @@ class CentreonPollerDisplayCentral_Contact extends PHPUnit_Framework_TestCase
     public function testGenerateSql()
     {
 
-        $expectedResult = 'DELETE FROM contact;
-TRUNCATE contact;
-INSERT INTO `contact` (`contact_id`,`contact_name`) VALUES (\'1\',\'toto\'),(\'6\',\'tata\');';
+        $expectedResult = 'DELETE FROM acl_res_group_relations;
+TRUNCATE acl_res_group_relations;
+INSERT INTO `acl_res_group_relations` (`acl_group_id`,`acl_res_id`) VALUES (\'1\',\'2\'),(\'1\',\'5\');';
 
         self::$db->addResultSet(
             'SELECT * FROM ns_host_relation WHERE nagios_server_id = 1',
@@ -143,7 +143,83 @@ INSERT INTO `contact` (`contact_id`,`contact_name`) VALUES (\'1\',\'toto\'),(\'6
             )
         );
 
-        $sql = self::$contact->generateSql();
+        self::$db->addResultSet(
+            'SELECT * FROM contactgroup_contact_relation WHERE contact_contact_id IN (1,6)',
+            array(
+                array(
+                    'contact_contact_id' => '1',
+                    'contactgroup_cg_id' => '3'
+                ),
+                array(
+                    'contact_contact_id' => '6',
+                    'contactgroup_cg_id' => '4'
+                )
+            )
+        );
+
+        self::$db->addResultSet(
+            'SELECT * FROM contactgroup WHERE cg_id IN (3,4)',
+            array(
+                array(
+                    'cg_id' => '4',
+                    'cg_name' => 'group'
+                )
+            )
+        );
+
+        self::$db->addResultSet(
+            'SELECT * FROM acl_group_contactgroups_relations WHERE cg_cg_id IN (4)',
+            array(
+                array(
+                    'cg_cg_id' => '4',
+                    'acl_group_id' => '1'
+                )
+            )
+        );
+
+        self::$db->addResultSet(
+            'SELECT * FROM acl_group_contacts_relations WHERE contact_contact_id IN (1,6)',
+            array(
+                array(
+                    'contact_contact_id' => '1',
+                    'acl_group_id' => '14'
+                ),
+                array(
+                    'contact_contact_id' => '6',
+                    'acl_group_id' => '14'
+                )
+            )
+        );
+
+        self::$db->addResultSet(
+            'SELECT * FROM acl_groups WHERE acl_group_id IN (1,14)',
+            array(
+                array(
+                    'acl_group_id' => '1',
+                    'acl_group_name' => 'guest'
+                ),
+                array(
+                    'acl_group_id' => '14',
+                    'acl_group_name' => 'toto'
+                )
+            )
+        );
+
+        self::$db->addResultSet(
+            'SELECT * FROM acl_res_group_relations WHERE acl_group_id IN (1,14)',
+            array(
+                array(
+                    'acl_group_id' => '1',
+                    'acl_res_id' => '2'
+                ),
+                array(
+                    'acl_group_id' => '1',
+                    'acl_res_id' => '5'
+                )
+            )
+        );
+
+        $sql = self::$acl->generateSql();
         $this->assertEquals($sql, $expectedResult);
     }
 }

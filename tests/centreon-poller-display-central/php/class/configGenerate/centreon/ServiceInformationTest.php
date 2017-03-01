@@ -45,7 +45,8 @@ class CentreonPollerDisplayCentral_ServiceInformation extends PHPUnit_Framework_
     public function testGenerateSql()
     {
 
-        $expectedResult = 'TRUNCATE extended_service_information;
+        $expectedResult = 'DELETE FROM extended_service_information;
+TRUNCATE extended_service_information;
 INSERT INTO `extended_service_information` (`esi_id`,`service_service_id`) VALUES (\'1\',\'1\');';
 
         self::$db->addResultSet(

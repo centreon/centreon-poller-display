@@ -45,7 +45,8 @@ class CentreonPollerDisplayCentral_ServiceCategories extends PHPUnit_Framework_T
     public function testGenerateSql()
     {
 
-        $expectedResult = 'TRUNCATE service_categories;
+        $expectedResult = 'DELETE FROM service_categories;
+TRUNCATE service_categories;
 INSERT INTO `service_categories` (`sc_id`,`sc_name`) VALUES (\'3\',\'Ping\');';
 
         self::$db->addResultSet(

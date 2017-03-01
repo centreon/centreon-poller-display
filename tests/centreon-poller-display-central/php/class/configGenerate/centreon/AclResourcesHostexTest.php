@@ -45,7 +45,8 @@ class CentreonPollerDisplayCentral_AclResourcesHostex extends PHPUnit_Framework_
     public function testGenerateSql()
     {
 
-        $expectedResult = 'TRUNCATE acl_resources_hostex_relations;
+        $expectedResult = 'DELETE FROM acl_resources_hostex_relations;
+TRUNCATE acl_resources_hostex_relations;
 INSERT INTO `acl_resources_hostex_relations` (`arhe_id`,`host_host_id`,`acl_res_id`) VALUES (\'1\',\'1\',\'12\');';
 
         self::$db->addResultSet(

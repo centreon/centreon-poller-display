@@ -45,7 +45,8 @@ class CentreonPollerDisplayCentral_AclGroupContactsRelation extends PHPUnit_Fram
     public function testGenerateSql()
     {
 
-        $expectedResult = 'TRUNCATE acl_group_contacts_relations;
+        $expectedResult = 'DELETE FROM acl_group_contacts_relations;
+TRUNCATE acl_group_contacts_relations;
 INSERT INTO `acl_group_contacts_relations` (`cg_cg_id`,`acl_group_id`) VALUES (\'4\',\'1\');';
 
         self::$db->addResultSet(

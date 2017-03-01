@@ -45,7 +45,8 @@ class CentreonPollerDisplayCentral_MetaService extends PHPUnit_Framework_TestCas
     public function testGenerateSql()
     {
 
-        $expectedResult = 'TRUNCATE meta_service;
+        $expectedResult = 'DELETE FROM meta_service;
+TRUNCATE meta_service;
 INSERT INTO `meta_service` (`meta_id`,`meta_name`) VALUES (\'5\',\'meta1\');';
 
         self::$db->addResultSet(

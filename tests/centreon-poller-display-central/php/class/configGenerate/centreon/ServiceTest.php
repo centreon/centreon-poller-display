@@ -45,7 +45,8 @@ class CentreonPollerDisplayCentral_Service extends PHPUnit_Framework_TestCase
     public function testGenerateSql()
     {
 
-        $expectedResult = 'TRUNCATE service;
+        $expectedResult = 'DELETE FROM service;
+TRUNCATE service;
 INSERT INTO `service` (`service_id`,`service_activate`) VALUES (\'1\',\'1\');';
 
         self::$db->addResultSet(

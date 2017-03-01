@@ -45,7 +45,8 @@ class CentreonPollerDisplayCentral_HostInformation extends PHPUnit_Framework_Tes
     public function testGenerateSql()
     {
 
-        $expectedResult = 'TRUNCATE extended_host_information;
+        $expectedResult = 'DELETE FROM extended_host_information;
+TRUNCATE extended_host_information;
 INSERT INTO `extended_host_information` (`ehi_id`,`host_host_id`) VALUES (\'1\',\'1\'),(\'2\',\'2\');';
 
         self::$db->addResultSet(

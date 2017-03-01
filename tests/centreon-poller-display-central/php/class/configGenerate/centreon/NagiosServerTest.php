@@ -44,7 +44,8 @@ class CentreonPollerDisplayCentral_NagiosServer extends PHPUnit_Framework_TestCa
     public function testGenerateSql()
     {
 
-        $expectedResult = 'TRUNCATE nagios_server;
+        $expectedResult = 'DELETE FROM nagios_server;
+TRUNCATE nagios_server;
 INSERT INTO `nagios_server` (`id`,`name`) VALUES (\'1\',\'central\');';
 
         self::$db->addResultSet(

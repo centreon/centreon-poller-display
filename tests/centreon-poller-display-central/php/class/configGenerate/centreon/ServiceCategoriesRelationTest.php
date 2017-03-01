@@ -45,7 +45,8 @@ class CentreonPollerDisplayCentral_ServiceCategoriesRelation extends PHPUnit_Fra
     public function testGenerateSql()
     {
 
-        $expectedResult = 'TRUNCATE service_categories_relation;
+        $expectedResult = 'DELETE FROM service_categories_relation;
+TRUNCATE service_categories_relation;
 INSERT INTO `service_categories_relation` (`src_id`,`service_service_id`,`sc_id`) VALUES (\'12\',\'1\',\'3\');';
 
         self::$db->addResultSet(

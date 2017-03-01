@@ -45,7 +45,8 @@ class CentreonPollerDisplayCentral_AclGroups extends PHPUnit_Framework_TestCase
     public function testGenerateSql()
     {
 
-        $expectedResult = 'TRUNCATE acl_groups;
+        $expectedResult = 'DELETE FROM acl_groups;
+TRUNCATE acl_groups;
 INSERT INTO `acl_groups` (`acl_group_id`,`acl_group_name`) VALUES (\'1\',\'guest\'),(\'14\',\'toto\');';
 
         self::$db->addResultSet(

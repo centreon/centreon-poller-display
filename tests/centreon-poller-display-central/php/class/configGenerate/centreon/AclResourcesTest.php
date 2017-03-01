@@ -45,7 +45,8 @@ class CentreonPollerDisplayCentral_AclResources extends PHPUnit_Framework_TestCa
     public function testGenerateSql()
     {
 
-        $expectedResult = 'TRUNCATE acl_resources;
+        $expectedResult = 'DELETE FROM acl_resources;
+TRUNCATE acl_resources;
 INSERT INTO `acl_resources` (`id`,`name`) VALUES (\'1\',\'central\'),(\'2\',\'central2\');';
 
         self::$db->addResultSet(

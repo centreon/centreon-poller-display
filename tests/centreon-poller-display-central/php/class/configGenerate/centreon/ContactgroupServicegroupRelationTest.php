@@ -45,7 +45,8 @@ class CentreonPollerDisplayCentral_ContactgroupServicegroupRelation extends PHPU
     public function testGenerateSql()
     {
 
-        $expectedResult = 'TRUNCATE contactgroup_servicegroup_relation;
+        $expectedResult = 'DELETE FROM contactgroup_servicegroup_relation;
+TRUNCATE contactgroup_servicegroup_relation;
 INSERT INTO `contactgroup_servicegroup_relation` (`servicegroup_sg_id`,`contactgroup_cg_id`) VALUES (\'1\',\'42\');';
 
         self::$db->addResultSet(

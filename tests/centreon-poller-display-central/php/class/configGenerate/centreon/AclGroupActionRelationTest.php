@@ -45,7 +45,8 @@ class CentreonPollerDisplayCentral_AclGroupActionRelation extends PHPUnit_Framew
     public function testGenerateSql()
     {
 
-        $expectedResult = 'TRUNCATE acl_group_actions_relations;
+        $expectedResult = 'DELETE FROM acl_group_actions_relations;
+TRUNCATE acl_group_actions_relations;
 INSERT INTO `acl_group_actions_relations` (`acl_group_id`,`acl_action_id`) VALUES (\'1\',\'2\'),(\'14\',\'6\');';
 
         self::$db->addResultSet(

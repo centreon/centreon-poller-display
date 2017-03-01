@@ -45,7 +45,8 @@ class CentreonPollerDisplayCentral_Hostgroup extends PHPUnit_Framework_TestCase
     public function testGenerateSql()
     {
 
-        $expectedResult = 'TRUNCATE hostgroup;
+        $expectedResult = 'DELETE FROM hostgroup;
+TRUNCATE hostgroup;
 INSERT INTO `hostgroup` (`hg_id`,`hg_name`) VALUES (\'10\',\'hg1\'),(\'20\',\'hg2\');';
 
         self::$db->addResultSet(
