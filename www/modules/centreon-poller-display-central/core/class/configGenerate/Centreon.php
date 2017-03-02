@@ -93,199 +93,208 @@ class Centreon extends \AbstractObject
     {
         $db = $this->backend_instance->db;
 
-        $oAclActions = new AclActions($db,$poller_id);
-        $oAclActionsRules = new AclActionsRules($db,$poller_id);
-        $oAclGroupActionsRelation = new AclGroupActionsRelation($db,$poller_id);
-        $oAclGroupContactgroupsRelation = new AclGroupContactgroupsRelation($db,$poller_id);
-        $oAclGroupContactsRelation = new AclGroupContactsRelation($db,$poller_id);
-        $oAclGroupTopology = new AclGroupTopology($db,$poller_id);
-        $oAclGroups = new AclGroups($db,$poller_id);
-        $oAclResources = new AclResources($db,$poller_id);
-        $oAclResourcesGroupRelation = new AclResourcesGroupRelation($db,$poller_id);
-        $oAclResourcesHost = new AclResourcesHost($db,$poller_id);
-        $oAclResourcesHostCategorie = new AclResourcesHostCategorie($db,$poller_id);
-        $oAclResourcesHostex = new AclResourcesHostex($db,$poller_id);
-        $oAclResourcesHostgroup = new AclResourcesHostgroup($db,$poller_id);
-        $oAclResourcesMeta = new AclResourcesMeta($db,$poller_id);
-        $oAclResourcesPoller = new AclResourcesPoller($db,$poller_id);
-        $oAclResourcesService = new AclResourcesService($db,$poller_id);
-        $oAclResourcesServiceCategorie = new AclResourcesServiceCategorie($db,$poller_id);
-        $oAclResourcesServicegroup = new AclResourcesServicegroup($db,$poller_id);
-        $oContact = new Contact($db,$poller_id);
-        $oContactHostRelation = new ContactHostRelation($db,$poller_id);
-        $oContactServiceRelation = new ContactServiceRelation($db,$poller_id);
-        $oContactgroup = new Contactgroup($db,$poller_id);
-        $oContactgroupContactRelation = new ContactgroupContactRelation($db,$poller_id);
-        $oContactgroupHostRelation = new ContactgroupHostRelation($db,$poller_id);
-        $oContactgroupHostgroupRelation = new ContactgroupHostgroupRelation($db,$poller_id);
-        $oContactgroupServiceRelation = new ContactgroupServiceRelation($db,$poller_id);
-        $oContactgroupServicegroupRelation = new ContactgroupServicegroupRelation($db,$poller_id);
-        $oHost = new Host($db,$poller_id);
-        $oHostCategories = new HostCategories($db,$poller_id);
-        $oHostCategoriesRelation = new HostCategoriesRelation($db,$poller_id);
-        $oHostInformation = new HostInformation($db,$poller_id);
-        $oHostRelation = new HostRelation($db,$poller_id);
-        $oHostServiceRelation = new HostServiceRelation($db,$poller_id);
-        $oHostgroup = new Hostgroup($db,$poller_id);
-        $oHostgroupRelation = new HostgroupRelation($db,$poller_id);
-        $oMetaContact = new MetaContact($db,$poller_id);
-        $oMetaContactgroup = new MetaContactgroup($db,$poller_id);
-        $oMetaService = new MetaService($db,$poller_id);
-        $oMetaServiceRelation = new MetaServiceRelation($db,$poller_id);
-        $oNagiosCfg = new NagiosCfg($db,$poller_id);
-        $oNagiosServer = new NagiosServer($db,$poller_id);
-        $oService = new Service($db,$poller_id);
-        $oServiceCategories = new ServiceCategories($db,$poller_id);
-        $oServiceCategoriesRelation = new ServiceCategoriesRelation($db,$poller_id);
-        $oServiceInformation = new ServiceInformation($db,$poller_id);
-        $oServicegroup = new Servicegroup($db,$poller_id);
-        $oServicegroupRelation = new ServicegroupRelation($db,$poller_id);
+        $oAclActions = new AclActions($db, $poller_id);
+        $oAclActionsRules = new AclActionsRules($db, $poller_id);
+        $oAclGroupActionsRelation = new AclGroupActionsRelation($db, $poller_id);
+        $oAclGroupContactgroupsRelation = new AclGroupContactgroupsRelation($db, $poller_id);
+        $oAclGroupContactsRelation = new AclGroupContactsRelation($db, $poller_id);
+        $oAclGroupTopology = new AclGroupTopology($db, $poller_id);
+        $oAclGroups = new AclGroups($db, $poller_id);
+        $oAclResources = new AclResources($db, $poller_id);
+        $oAclResourcesGroupRelation = new AclResourcesGroupRelation($db, $poller_id);
+        $oAclResourcesHost = new AclResourcesHost($db, $poller_id);
+        $oAclResourcesHostCategorie = new AclResourcesHostCategorie($db, $poller_id);
+        $oAclResourcesHostex = new AclResourcesHostex($db, $poller_id);
+        $oAclResourcesHostgroup = new AclResourcesHostgroup($db, $poller_id);
+        $oAclResourcesMeta = new AclResourcesMeta($db, $poller_id);
+        $oAclResourcesPoller = new AclResourcesPoller($db, $poller_id);
+        $oAclResourcesService = new AclResourcesService($db, $poller_id);
+        $oAclResourcesServiceCategorie = new AclResourcesServiceCategorie($db, $poller_id);
+        $oAclResourcesServicegroup = new AclResourcesServicegroup($db, $poller_id);
+        $oContact = new Contact($db, $poller_id);
+        $oContactHostRelation = new ContactHostRelation($db, $poller_id);
+        $oContactServiceRelation = new ContactServiceRelation($db, $poller_id);
+        $oContactgroup = new Contactgroup($db, $poller_id);
+        $oContactgroupContactRelation = new ContactgroupContactRelation($db, $poller_id);
+        $oContactgroupHostRelation = new ContactgroupHostRelation($db, $poller_id);
+        $oContactgroupHostgroupRelation = new ContactgroupHostgroupRelation($db, $poller_id);
+        $oContactgroupServiceRelation = new ContactgroupServiceRelation($db, $poller_id);
+        $oContactgroupServicegroupRelation = new ContactgroupServicegroupRelation($db, $poller_id);
+        $oHost = new Host($db, $poller_id);
+        $oHostCategories = new HostCategories($db, $poller_id);
+        $oHostCategoriesRelation = new HostCategoriesRelation($db, $poller_id);
+        $oHostInformation = new HostInformation($db, $poller_id);
+        $oHostRelation = new HostRelation($db, $poller_id);
+        $oHostServiceRelation = new HostServiceRelation($db, $poller_id);
+        $oHostgroup = new Hostgroup($db, $poller_id);
+        $oHostgroupRelation = new HostgroupRelation($db, $poller_id);
+        $oMetaContact = new MetaContact($db, $poller_id);
+        $oMetaContactgroup = new MetaContactgroup($db, $poller_id);
+        $oMetaService = new MetaService($db, $poller_id);
+        $oMetaServiceRelation = new MetaServiceRelation($db, $poller_id);
+        $oNagiosCfg = new NagiosCfg($db, $poller_id);
+        $oNagiosServer = new NagiosServer($db, $poller_id);
+        $oService = new Service($db, $poller_id);
+        $oServiceCategories = new ServiceCategories($db, $poller_id);
+        $oServiceCategoriesRelation = new ServiceCategoriesRelation($db, $poller_id);
+        $oServiceInformation = new ServiceInformation($db, $poller_id);
+        $oServicegroup = new Servicegroup($db, $poller_id);
+        $oServicegroupRelation = new ServicegroupRelation($db, $poller_id);
 
         $sql = '';
+        $sql .= $this->setForeignKey(0). "\n\n";
+
         $nagiosServerList = $oNagiosServer->getList();
-        $sql .= $oNagiosServer->generateSql($nagiosServerList). "\n\n";
+        $sql .= $oNagiosServer->generateSql($nagiosServerList) . "\n\n";
 
         $nagiosCfgList = $oNagiosCfg->getList();
-        $sql .= $oNagiosCfg->generateSql($nagiosCfgList). "\n\n";
+        $sql .= $oNagiosCfg->generateSql($nagiosCfgList) . "\n\n";
 
         $aclResourcesPollerList = $oAclResourcesPoller->getList();
-        $sql .= $oAclResourcesPoller->generateSql($aclResourcesPollerList). "\n\n";
+        $sql .= $oAclResourcesPoller->generateSql($aclResourcesPollerList) . "\n\n";
 
         $hostRelationList = $oHostRelation->getList();
-        $sql .= $oHostRelation->generateSql($hostRelationList). "\n\n";
+        $sql .= $oHostRelation->generateSql($hostRelationList) . "\n\n";
 
         $hostList = $oHost->getList($hostRelationList);
-        $sql .= $oHost->generateSql($hostList). "\n\n";
+        $sql .= $oHost->generateSql($hostList) . "\n\n";
 
         $hostInformationList = $oHostInformation->getList($hostRelationList);
-        $sql .= $oHostInformation->generateSql($hostInformationList). "\n\n";
+        $sql .= $oHostInformation->generateSql($hostInformationList) . "\n\n";
 
         $hostgroupRelationList = $oHostgroupRelation->getList($hostRelationList);
-        $sql .= $oHostgroupRelation->generateSql($hostgroupRelationList). "\n\n";
+        $sql .= $oHostgroupRelation->generateSql($hostgroupRelationList) . "\n\n";
 
         $hostgroupList = $oHostgroup->getList($hostgroupRelationList);
-        $sql .= $oHostgroup->generateSql($hostgroupList). "\n\n";
+        $sql .= $oHostgroup->generateSql($hostgroupList) . "\n\n";
 
         $hostCategoriesRelationList = $oHostCategoriesRelation->getList($hostRelationList);
-        $sql .= $oHostCategoriesRelation->generateSql($hostCategoriesRelationList). "\n\n";
+        $sql .= $oHostCategoriesRelation->generateSql($hostCategoriesRelationList) . "\n\n";
 
         $hostCategoriesList = $oHostCategories->getList($hostCategoriesRelationList);
-        $sql .= $oHostCategories->generateSql($hostCategoriesList). "\n\n";
+        $sql .= $oHostCategories->generateSql($hostCategoriesList) . "\n\n";
 
-        $serviceRelationList = $oHostServiceRelation->getList($hostRelationList,$hostgroupRelationList);
-        $sql .= $oHostServiceRelation->generateSql($serviceRelationList). "\n\n";
+        $serviceRelationList = $oHostServiceRelation->getList($hostRelationList, $hostgroupRelationList);
+        $sql .= $oHostServiceRelation->generateSql($serviceRelationList) . "\n\n";
 
         $serviceList = $oService->getList($serviceRelationList);
-        $sql .= $oService->generateSql($serviceList). "\n\n";
+        $sql .= $oService->generateSql($serviceList) . "\n\n";
 
         $serviceInformationList = $oServiceInformation->getList($serviceRelationList);
-        $sql .= $oServiceInformation->generateSql($serviceInformationList). "\n\n";
+        $sql .= $oServiceInformation->generateSql($serviceInformationList) . "\n\n";
 
         $servicegroupRelationList = $oServicegroupRelation->getList($serviceRelationList);
-        $sql .= $oServicegroupRelation->generateSql($servicegroupRelationList). "\n\n";
+        $sql .= $oServicegroupRelation->generateSql($servicegroupRelationList) . "\n\n";
 
         $servicegroupList = $oServicegroup->getList($servicegroupRelationList);
-        $sql .= $oServicegroup->generateSql($servicegroupList). "\n\n";
+        $sql .= $oServicegroup->generateSql($servicegroupList) . "\n\n";
 
         $serviceCategoriesRelationList = $oServiceCategoriesRelation->getList($serviceRelationList);
-        $sql .= $oServiceCategoriesRelation->generateSql($serviceCategoriesRelationList). "\n\n";
+        $sql .= $oServiceCategoriesRelation->generateSql($serviceCategoriesRelationList) . "\n\n";
 
         $serviceCategoriesList = $oServiceCategories->getList($serviceCategoriesRelationList);
-        $sql .= $oServiceCategories->generateSql($serviceCategoriesList). "\n\n";
+        $sql .= $oServiceCategories->generateSql($serviceCategoriesList) . "\n\n";
 
         $metaServiceRelationList = $oMetaServiceRelation->getList($hostRelationList);
-        $sql .= $oMetaServiceRelation->generateSql($metaServiceRelationList). "\n\n";
+        $sql .= $oMetaServiceRelation->generateSql($metaServiceRelationList) . "\n\n";
 
         $metaServiceList = $oMetaService->getList($metaServiceRelationList);
-        $sql .= $oMetaService->generateSql($metaServiceList). "\n\n";
+        $sql .= $oMetaService->generateSql($metaServiceList) . "\n\n";
 
         $metaContactList = $oMetaContact->getList($metaServiceRelationList);
-        $sql .= $oMetaContact->generateSql($metaContactList). "\n\n";
+        $sql .= $oMetaContact->generateSql($metaContactList) . "\n\n";
 
         $metaContactgroupList = $oMetaContactgroup->getList($metaServiceRelationList);
-        $sql .= $oMetaContactgroup->generateSql($metaContactgroupList). "\n\n";
+        $sql .= $oMetaContactgroup->generateSql($metaContactgroupList) . "\n\n";
 
         $contactHostRelationList = $oContactHostRelation->getList($hostRelationList);
-        $sql .= $oContactHostRelation->generateSql($contactHostRelationList). "\n\n";
+        $sql .= $oContactHostRelation->generateSql($contactHostRelationList) . "\n\n";
 
         $contactServiceRelationList = $oContactServiceRelation->getList($serviceRelationList);
-        $sql .= $oContactServiceRelation->generateSql($contactServiceRelationList). "\n\n";
+        $sql .= $oContactServiceRelation->generateSql($contactServiceRelationList) . "\n\n";
 
-        $contactList = $oContact->getList($contactHostRelationList,$contactServiceRelationList);
-        $sql .= $oContact->generateSql($contactList). "\n\n";
+        $contactList = $oContact->getList($contactHostRelationList, $contactServiceRelationList);
+        $sql .= $oContact->generateSql($contactList) . "\n\n";
 
         $ContactgroupRelationList = $oContactgroupContactRelation->getList($contactList);
-        $sql .= $oContactgroupContactRelation->generateSql($ContactgroupRelationList). "\n\n";
+        $sql .= $oContactgroupContactRelation->generateSql($ContactgroupRelationList) . "\n\n";
 
         $ContactgroupList = $oContactgroup->getList($ContactgroupRelationList);
-        $sql .= $oContactgroup->generateSql($ContactgroupList). "\n\n";
+        $sql .= $oContactgroup->generateSql($ContactgroupList) . "\n\n";
 
         $contactgroupHostRelationList = $oContactgroupHostRelation->getList($hostRelationList);
-        $sql .= $oContactgroupHostRelation->generateSql($contactgroupHostRelationList). "\n\n";
+        $sql .= $oContactgroupHostRelation->generateSql($contactgroupHostRelationList) . "\n\n";
 
         $contactgroupHostgroupRelationList = $oContactgroupHostgroupRelation->getList($hostgroupRelationList);
-        $sql .= $oContactgroupHostgroupRelation->generateSql($contactgroupHostgroupRelationList). "\n\n";
+        $sql .= $oContactgroupHostgroupRelation->generateSql($contactgroupHostgroupRelationList) . "\n\n";
 
         $contactgroupServiceRelationList = $oContactgroupServiceRelation->getList($serviceRelationList);
-        $sql .= $oContactgroupServiceRelation->generateSql($contactgroupServiceRelationList). "\n\n";
+        $sql .= $oContactgroupServiceRelation->generateSql($contactgroupServiceRelationList) . "\n\n";
 
         $contactgroupServicegroupRelationList = $oContactgroupServicegroupRelation->getList($servicegroupRelationList);
-        $sql .= $oContactgroupServicegroupRelation->generateSql($contactgroupServicegroupRelationList). "\n\n";
+        $sql .= $oContactgroupServicegroupRelation->generateSql($contactgroupServicegroupRelationList) . "\n\n";
 
         $aclResourcesHostList = $oAclResourcesHost->getList($hostRelationList);
-        $sql .= $oAclResourcesHost->generateSql($aclResourcesHostList). "\n\n";
+        $sql .= $oAclResourcesHost->generateSql($aclResourcesHostList) . "\n\n";
 
         $aclResourcesHostCategorieList = $oAclResourcesHostCategorie->getList($hostCategoriesList);
-        $sql .= $oAclResourcesHostCategorie->generateSql($aclResourcesHostCategorieList). "\n\n";
+        $sql .= $oAclResourcesHostCategorie->generateSql($aclResourcesHostCategorieList) . "\n\n";
 
         $aclResourcesHostexList = $oAclResourcesHostex->getList($hostRelationList);
-        $sql .= $oAclResourcesHostex->generateSql($aclResourcesHostexList). "\n\n";
+        $sql .= $oAclResourcesHostex->generateSql($aclResourcesHostexList) . "\n\n";
 
         $aclResourcesHostgroupList = $oAclResourcesHostgroup->getList($hostgroupList);
-        $sql .= $oAclResourcesHostgroup->generateSql($aclResourcesHostgroupList). "\n\n";
+        $sql .= $oAclResourcesHostgroup->generateSql($aclResourcesHostgroupList) . "\n\n";
 
         $aclResourcesServiceList = $oAclResourcesService->getList($serviceRelationList);
-        $sql .= $oAclResourcesService->generateSql($aclResourcesServiceList). "\n\n";
+        $sql .= $oAclResourcesService->generateSql($aclResourcesServiceList) . "\n\n";
 
         $aclResourcesServiceCategorieList = $oAclResourcesServiceCategorie->getList($serviceCategoriesList);
-        $sql .= $oAclResourcesServiceCategorie->generateSql($aclResourcesServiceCategorieList). "\n\n";
+        $sql .= $oAclResourcesServiceCategorie->generateSql($aclResourcesServiceCategorieList) . "\n\n";
 
         $aclResourcesServicegroupList = $oAclResourcesServicegroup->getList($servicegroupList);
-        $sql .= $oAclResourcesServicegroup->generateSql($aclResourcesServicegroupList). "\n\n";
+        $sql .= $oAclResourcesServicegroup->generateSql($aclResourcesServicegroupList) . "\n\n";
 
         $aclResourcesMetaList = $oAclResourcesMeta->getList($metaServiceRelationList);
-        $sql .= $oAclResourcesMeta->generateSql($aclResourcesMetaList). "\n\n";
+        $sql .= $oAclResourcesMeta->generateSql($aclResourcesMetaList) . "\n\n";
 
         $aclGroupContactsRelationList = $oAclGroupContactsRelation->getList($contactList);
-        $sql .= $oAclGroupContactsRelation->generateSql($aclGroupContactsRelationList). "\n\n";
+        $sql .= $oAclGroupContactsRelation->generateSql($aclGroupContactsRelationList) . "\n\n";
 
         $aclGroupContactgroupsRelationList = $oAclGroupContactgroupsRelation->getList($ContactgroupList);
-        $sql .= $oAclGroupContactgroupsRelation->generateSql($aclGroupContactgroupsRelationList). "\n\n";
+        $sql .= $oAclGroupContactgroupsRelation->generateSql($aclGroupContactgroupsRelationList) . "\n\n";
 
-        $aclGroupsList = $oAclGroups->getList($aclGroupContactsRelationList,$aclGroupContactgroupsRelationList);
-        $sql .= $oAclGroups->generateSql($aclGroupsList). "\n\n";
+        $aclGroupsList = $oAclGroups->getList($aclGroupContactsRelationList, $aclGroupContactgroupsRelationList);
+        $sql .= $oAclGroups->generateSql($aclGroupsList) . "\n\n";
 
         $aclGroupTopologyList = $oAclGroupTopology->getList($aclGroupsList);
-        $sql .= $oAclGroupTopology->generateSql($aclGroupTopologyList). "\n\n";
+        $sql .= $oAclGroupTopology->generateSql($aclGroupTopologyList) . "\n\n";
 
         $aclGroupActionsRelationList = $oAclGroupActionsRelation->getList($aclGroupsList);
-        $sql .= $oAclGroupActionsRelation->generateSql($aclGroupActionsRelationList). "\n\n";
+        $sql .= $oAclGroupActionsRelation->generateSql($aclGroupActionsRelationList) . "\n\n";
 
         $aclActionsList = $oAclActions->getList($aclGroupActionsRelationList);
-        $sql .= $oAclActions->generateSql($aclActionsList). "\n\n";
+        $sql .= $oAclActions->generateSql($aclActionsList) . "\n\n";
 
         $aclActionsRulesList = $oAclActionsRules->getList($aclGroupActionsRelationList);
-        $sql .= $oAclActionsRules->generateSql($aclActionsRulesList). "\n\n";
+        $sql .= $oAclActionsRules->generateSql($aclActionsRulesList) . "\n\n";
 
         $aclResourcesGroupRelationList = $oAclResourcesGroupRelation->getList($aclGroupsList);
-        $sql .= $oAclResourcesGroupRelation->generateSql($aclResourcesGroupRelationList). "\n\n";
+        $sql .= $oAclResourcesGroupRelation->generateSql($aclResourcesGroupRelationList) . "\n\n";
 
         $aclResourcesList = $oAclResources->getList($aclResourcesGroupRelationList);
-        $sql .= $oAclResources->generateSql($aclResourcesList). "\n\n";
+        $sql .= $oAclResources->generateSql($aclResourcesList) . "\n\n";
 
+        $sql .= $this->setForeignKey(1);
 
         $this->createFile($this->backend_instance->getPath());
         fwrite($this->fp, $sql);
         $this->close_file();
     }
+
+    private function setForeignKey($status)
+    {
+        return 'SET FOREIGN_KEY_CHECKS = ' . $status . ';';
+    }
+
 }
