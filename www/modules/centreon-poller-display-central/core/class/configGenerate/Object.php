@@ -42,19 +42,53 @@ namespace CentreonPollerDisplayCentral\ConfigGenerate;
  */
 abstract class Object
 {
+    /**
+     *
+     * @var type 
+     */
     protected $db = null;
+    
+    /**
+     *
+     * @var int 
+     */
     protected $pollerId = null;
+    
+    /**
+     *
+     * @var string 
+     */
     protected $table = null;
+    
+    /**
+     *
+     * @var array 
+     */
     protected $columns = null;
+    
+    /**
+     *
+     * @var string 
+     */
+    protected $primaryKey = null;
+    
+    /**
+     *
+     * @var type 
+     */
+    protected $filteredObjects;
 
     /**
-     * Factory constructor.
-     * @param $db \CentreonDB
+     * 
+     * @param \CentreonDB $db
+     * @param int $pollerId
+     * @param array $filteredObjects
      */
-    public function __construct($db, $pollerId)
+    public function __construct($db, $pollerId, &$filteredObjects = array())
     {
         $this->db = $db;
         $this->pollerId = $pollerId;
+        $this->filteredObjects = $filteredObjects;
     }
 
 
@@ -72,10 +106,13 @@ abstract class Object
 
         $finalQuery = $deleteQuery . "\n" . $truncateQuery . "\n" . $insertQuery;
 
-
         return $finalQuery;
     }
 
+    /**
+     * 
+     * @return string
+     */
     protected function generateTruncateQuery()
     {
         $query = 'TRUNCATE ' . $this->table . ';';
@@ -134,6 +171,11 @@ abstract class Object
 
         $query = 'SELECT ' . implode(',', $this->columns) . ' '
             . 'FROM ' . $this->table . ' ';
+        
+        if ($idList != null) {
+            $query .= " WHERE `$this->primaryKey` IN ($idList) ";
+        }
+        
         $result = $this->db->query($query);
 
         while ($row = $result->fetch(\PDO::FETCH_ASSOC)) {
@@ -141,5 +183,25 @@ abstract class Object
         }
 
         return $list;
+    }
+    
+    /**
+     * 
+     * @param string $object
+     * @param array $values
+     */
+    public function addToFilteredObjects($object, $values)
+    {
+        $this->filteredObjects[$object] = $values;
+    }
+    
+    /**
+     * 
+     * @param string $object
+     * @return array
+     */
+    public function getFromFilteredObjects($object)
+    {
+        return $this->filteredObjects[$object];
     }
 }

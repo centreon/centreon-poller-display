@@ -48,27 +48,57 @@ use \CentreonPollerDisplayCentral\ConfigGenerate\Bam\PollerRelations;
  */
 class Bam extends \AbstractObject
 {
+    /**
+     *
+     * @var boolean 
+     */
     protected $engine = false;
+    
+    /**
+     *
+     * @var boolean 
+     */
     protected $broker = true;
+    
+    /**
+     *
+     * @var string 
+     */
     protected $generate_filename = 'bam-poller-display.sql';
 
-    public function generateObjects()
+    /**
+     * 
+     */
+    public function generateObjects($poller_id)
     {
-        $oBa = new Ba($this->backend_instance->db);
-        $oBoolean = new Boolean($this->backend_instance->db);
-        $oImpacts = new Impacts($this->backend_instance->db);
-        $oKpi = new Kpi($this->backend_instance->db);
-        $oPollerRelations = new PollerRelations($this->backend_instance->db);
+        $sql = '';
+        $filteredObjects = array();
+        
+        // Generate BAM Poller relation
+        $baPollerObj = new BaPollerRelations($this->backend_instance->db, $poller_id, $filteredObjects);
+        $sql .=  $baPollerObj->generateSql(). "\n";
+        
+        // Get BA linked to the poller
+        $baList = $baPollerObj->getLinkedBusinessActivity();
+        
+        // Walk into baList
+
+        // First get BA linked to the current poller
+        /*$oBa = new Ba($this->backend_instance->db, $poller_id);
+        $oBoolean = new Boolean($this->backend_instance->db, $poller_id);
+        $oImpacts = new Impacts($this->backend_instance->db, $poller_id);
+        $oKpi = new Kpi($this->backend_instance->db, $poller_id);
+        $oPollerRelations = new PollerRelations($this->backend_instance->db, $poller_id);
 
         $sql = '';
         $sql .=  $oBa->generateSql(). "\n";
         $sql .=  $oBoolean->generateSql(). "\n";
         $sql .=  $oImpacts->generateSql(). "\n";
         $sql .=  $oKpi->generateSql(). "\n";
-        $sql .=  $oPollerRelations->generateSql(). "\n";
+        $sql .=  $oPollerRelations->generateSql(). "\n"
 
         $this->createFile($this->backend_instance->getPath());
         fwrite($this->fp, $sql);
-        $this->close_file();
+        $this->close_file();;*/
     }
 }

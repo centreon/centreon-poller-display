@@ -41,13 +41,12 @@ class AclResourcesPoller extends Object
 {
 
     /**
-     * @var table
+     * @var string
      */
     protected $table = 'acl_resources_poller_relations';
 
     /**
-     * @var array
-     * columns wanted
+     * @var array columns wanted
      */
     protected $columns = array(
         '*'

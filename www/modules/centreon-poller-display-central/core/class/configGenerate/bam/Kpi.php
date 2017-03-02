@@ -43,7 +43,16 @@ use \CentreonPollerDisplayCentral\ConfigGenerate\Object;
  */
 class Kpi extends Object
 {
+    /**
+     *
+     * @var string 
+     */
     protected $table = 'mod_bam_kpi';
+    
+    /**
+     *
+     * @var array 
+     */
     protected $columns = array(
         '*'
     );

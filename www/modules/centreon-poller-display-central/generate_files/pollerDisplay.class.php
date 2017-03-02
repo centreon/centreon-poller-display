@@ -18,10 +18,29 @@ use \CentreonPollerDisplayCentral\ConfigGenerate\Centreon;
 
 class PollerDisplay extends \AbstractObject
 {
+    /**
+     *
+     * @var boolean 
+     */
     protected $engine = false;
+    
+    /**
+     *
+     * @var boolean 
+     */
     protected $broker = true;
+    
+    /**
+     *
+     * @var string 
+     */
     protected $generate_filename = 'bam-poller-display.sql';
 
+    /**
+     * 
+     * @param int $poller_id
+     * @param string $localhost
+     */
     public function generateFromPollerId($poller_id, $localhost)
     {
         $this->poller_id = $poller_id;
@@ -34,9 +53,11 @@ class PollerDisplay extends \AbstractObject
         if ($stmt->fetch()) {
             Centreon::getInstance()->generateobjects($poller_id);
 
-            $stmt = $this->backend_instance->db->prepare("SELECT ba_id 
-                                                    FROM mod_bam_poller_relations
-                                                    WHERE poller_id = :pollerId");
+            $stmt = $this->backend_instance->db->prepare(
+                'SELECT ba_id 
+                FROM mod_bam_poller_relations
+                WHERE poller_id = :pollerId'
+            );
             $stmt->bindParam(':pollerId', $poller_id, PDO::PARAM_INT);
             $stmt->execute();
 

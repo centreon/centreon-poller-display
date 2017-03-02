@@ -85,10 +85,28 @@ use \CentreonPollerDisplayCentral\ConfigGenerate\Centreon\ServicegroupRelation;
 
 class Centreon extends \AbstractObject
 {
+    /**
+     *
+     * @var boolean 
+     */
     protected $engine = false;
+    
+    /**
+     *
+     * @var boolean 
+     */
     protected $broker = true;
+    
+    /**
+     *
+     * @var string 
+     */
     protected $generate_filename = 'centreon-poller-display.sql';
 
+    /**
+     * 
+     * @param int $poller_id
+     */
     public function generateObjects($poller_id)
     {
         $db = $this->backend_instance->db;

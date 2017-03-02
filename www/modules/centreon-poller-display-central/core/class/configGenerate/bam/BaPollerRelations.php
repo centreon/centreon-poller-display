@@ -41,11 +41,48 @@ use \CentreonPollerDisplayCentral\ConfigGenerate\Object;
  * Date: 23/02/2017
  * Time: 09:19
  */
-class PollerRelations extends Object
+class BaPollerRelations extends Object
 {
+    /**
+     *
+     * @var string 
+     */
     protected $table = 'mod_bam_poller_relations';
+    
+    /**
+     *
+     * @var array 
+     */
     protected $columns = array(
         '*'
     );
+    
+    /**
+     * 
+     * @param type $db
+     * @param type $pollerId
+     * @param type $filteredObjects
+     */
+    public function __construct($db, $pollerId, &$filteredObjects = array())
+    {
+        parent::__construct($db, $pollerId, $filteredObjects);
+    }
 
+
+    /**
+     * 
+     * @return array
+     */
+    public function getLinkedBusinessActivity()
+    {
+        $queryGetlinkedBa = "SELECT ba_id FROM mod_bam_poller_relations WHERE poller_id = $this->pollerId";
+        $resGetLinkedBa = $this->db->query($queryGetlinkedBa);
+        
+        $baList = array();
+        while ($row = $resGetLinkedBa->fetch()) {
+            $baList[] = $row['ba_id'];
+        }
+        
+        return $baList;
+    }
 }

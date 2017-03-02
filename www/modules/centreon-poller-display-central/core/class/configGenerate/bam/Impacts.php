@@ -43,7 +43,16 @@ use \CentreonPollerDisplayCentral\ConfigGenerate\Object;
  */
 class Impacts extends Object
 {
+    /**
+     *
+     * @var string 
+     */
     protected $table = 'mod_bam_impacts';
+    
+    /**
+     *
+     * @var array 
+     */
     protected $columns = array(
         '*'
     );

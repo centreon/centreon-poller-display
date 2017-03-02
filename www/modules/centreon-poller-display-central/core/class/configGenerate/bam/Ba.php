@@ -44,8 +44,38 @@ use \CentreonPollerDisplayCentral\ConfigGenerate\Object;
  */
 class Ba extends Object
 {
+    /**
+     *
+     * @var string 
+     */
     protected $table = 'mod_bam';
+    
+    /**
+     *
+     * @var array 
+     */
     protected $columns = array(
-        'ba_id'
+        '*'
     );
+    
+    /**
+     *
+     * @var string 
+     */
+    protected $primaryKey = 'ba_id';
+    
+    /**
+     * 
+     * @param type $baIdList
+     */
+    public function getBaList($baIdList = array())
+    {
+        $comparison = '';
+        if (count($baIdList) > 1) {
+            $comparison = ' WHERE `' . $this->primaryKey . '` IN (' . implode(',', $baIdList) . ')';
+        }
+        
+        $queryGetBaList = 'SELECT * FROM ' . $this->table . $comparison;
+        
+    }
 }

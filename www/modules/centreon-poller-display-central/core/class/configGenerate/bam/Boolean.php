@@ -43,7 +43,16 @@ use \CentreonPollerDisplayCentral\ConfigGenerate\Object;
  */
 class Boolean extends Object
 {
+    /**
+     *
+     * @var string 
+     */
     protected $table = 'mod_bam_boolean';
+    
+    /**
+     *
+     * @var array 
+     */
     protected $columns = array(
         '*'
     );

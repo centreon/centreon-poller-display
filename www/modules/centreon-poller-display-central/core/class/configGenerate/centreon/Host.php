@@ -40,13 +40,12 @@ use CentreonPollerDisplayCentral\ConfigGenerate\Object;
 class Host extends Object
 {
     /**
-     * @var table
+     * @var string
      */
     protected $table = 'host';
 
     /**
-     * @var array
-     * columns wanted
+     * @var array columns wanted
      */
     protected $columns = array(
         '*'
