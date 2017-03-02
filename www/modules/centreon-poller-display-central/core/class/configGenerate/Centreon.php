@@ -296,5 +296,4 @@ class Centreon extends \AbstractObject
     {
         return 'SET FOREIGN_KEY_CHECKS = ' . $status . ';';
     }
-
 }

@@ -112,7 +112,7 @@ abstract class Object
                 $insertQuery .= ',';
             }
             $insertQuery .= '(';
-            foreach ($object AS $value) {
+            foreach ($object as $value) {
                 if (isset($value)) {
                     $insertQuery .= '\'' . $value . '\',';
                 } else {
