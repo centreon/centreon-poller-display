@@ -29,12 +29,35 @@ class CentreonPollerDisplayCentral_ContactHostRelation extends PHPUnit_Framework
     protected static $db;
     protected static $pollerDisplay;
     protected static $contact;
+    protected static $objectListIn;
+    protected static $objectListOut;
+
 
     public function setUp()
     {
         self::$db = new CentreonDB();
         self::$pollerDisplay = 1;
         self::$contact = new ContactHostRelation(self::$db, self::$pollerDisplay);
+        self::$objectListIn = array(
+            array(
+                'nagios_server_id' => '1',
+                'host_host_id' => '1'
+            ),
+            array(
+                'nagios_server_id' => '1',
+                'host_host_id' => '2'
+            )
+        );
+        self::$objectListOut = array(
+            array(
+                'host_host_id' => '1',
+                'contact_id' => '2'
+            ),
+            array(
+                'host_host_id' => '2',
+                'contact_id' => '6'
+            )
+        );
     }
 
     public function tearDown()
@@ -42,27 +65,8 @@ class CentreonPollerDisplayCentral_ContactHostRelation extends PHPUnit_Framework
         self::$db = null;
     }
 
-    public function testGenerateSql()
+    public function testGetList()
     {
-
-        $expectedResult = 'DELETE FROM contact_host_relation;
-TRUNCATE contact_host_relation;
-INSERT INTO `contact_host_relation` (`host_host_id`,`contact_id`) VALUES (\'1\',\'2\'),(\'2\',\'6\');';
-
-        self::$db->addResultSet(
-            'SELECT * FROM ns_host_relation WHERE nagios_server_id = 1',
-            array(
-                array(
-                    'nagios_server_id' => '1',
-                    'host_host_id' => '1'
-                ),
-                array(
-                    'nagios_server_id' => '1',
-                    'host_host_id' => '2'
-                )
-            )
-        );
-
         self::$db->addResultSet(
             'SELECT * FROM contact_host_relation WHERE host_host_id IN (1,2)',
             array(
@@ -77,7 +81,18 @@ INSERT INTO `contact_host_relation` (`host_host_id`,`contact_id`) VALUES (\'1\',
             )
         );
 
-        $sql = self::$contact->generateSql();
+        $sql = self::$contact->getList(self::$objectListIn);
+        $this->assertEquals($sql, self::$objectListOut);
+    }
+
+    public function testGenerateSql()
+    {
+
+        $expectedResult = 'DELETE FROM contact_host_relation;
+TRUNCATE contact_host_relation;
+INSERT INTO `contact_host_relation` (`host_host_id`,`contact_id`) VALUES (\'1\',\'2\'),(\'2\',\'6\');';
+
+        $sql = self::$contact->generateSql(self::$objectListOut);
         $this->assertEquals($sql, $expectedResult);
     }
 }

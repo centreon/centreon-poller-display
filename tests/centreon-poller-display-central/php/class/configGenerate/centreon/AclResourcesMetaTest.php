@@ -29,12 +29,32 @@ class CentreonPollerDisplayCentral_AclResourcesMeta extends PHPUnit_Framework_Te
     protected static $db;
     protected static $pollerDisplay;
     protected static $acl;
+    protected static $objectListIn;
+    protected static $objectListOut;
 
     public function setUp()
     {
         self::$db = new CentreonDB();
         self::$pollerDisplay = 1;
         self::$acl = new AclResourcesMeta(self::$db, self::$pollerDisplay);
+        self::$objectListIn = array(
+            array(
+                'msr_id' => '1',
+                'meta_id' => '1',
+                'host_id' => '1'
+            ),
+            array(
+                'msr_id' => '2',
+                'meta_id' => '5',
+                'host_id' => '2'
+            )
+        );
+        self::$objectListOut = array(
+            array(
+                'meta_id' => '5',
+                'acl_res_id' => '1'
+            )
+        );
     }
 
     public function tearDown()
@@ -42,43 +62,8 @@ class CentreonPollerDisplayCentral_AclResourcesMeta extends PHPUnit_Framework_Te
         self::$db = null;
     }
 
-    public function testGenerateSql()
+    public function testGetList()
     {
-
-        $expectedResult = 'DELETE FROM acl_resources_meta_relations;
-TRUNCATE acl_resources_meta_relations;
-INSERT INTO `acl_resources_meta_relations` (`meta_id`,`acl_res_id`) VALUES (\'5\',\'1\');';
-
-        self::$db->addResultSet(
-            'SELECT * FROM ns_host_relation WHERE nagios_server_id = 1',
-            array(
-                array(
-                    'nagios_server_id' => '1',
-                    'host_host_id' => '1'
-                ),
-                array(
-                    'nagios_server_id' => '1',
-                    'host_host_id' => '2'
-                )
-            )
-        );
-
-        self::$db->addResultSet(
-            'SELECT * FROM meta_service_relation WHERE host_id IN (1,2)',
-            array(
-                array(
-                    'msr_id' => '1',
-                    'meta_id' => '1',
-                    'host_id' => '1'
-                ),
-                array(
-                    'msr_id' => '2',
-                    'meta_id' => '5',
-                    'host_id' => '2'
-                )
-            )
-        );
-
         self::$db->addResultSet(
             'SELECT * FROM acl_resources_meta_relations WHERE meta_id IN (1,5)',
             array(
@@ -89,7 +74,18 @@ INSERT INTO `acl_resources_meta_relations` (`meta_id`,`acl_res_id`) VALUES (\'5\
             )
         );
 
-        $sql = self::$acl->generateSql();
+        $sql = self::$acl->getList(self::$objectListIn);
+        $this->assertEquals($sql, self::$objectListOut);
+    }
+
+    public function testGenerateSql()
+    {
+
+        $expectedResult = 'DELETE FROM acl_resources_meta_relations;
+TRUNCATE acl_resources_meta_relations;
+INSERT INTO `acl_resources_meta_relations` (`meta_id`,`acl_res_id`) VALUES (\'5\',\'1\');';
+
+        $sql = self::$acl->generateSql(self::$objectListOut);
         $this->assertEquals($sql, $expectedResult);
     }
 }

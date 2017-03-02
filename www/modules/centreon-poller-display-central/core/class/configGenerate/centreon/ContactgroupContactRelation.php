@@ -36,7 +36,6 @@
 namespace CentreonPollerDisplayCentral\ConfigGenerate\Centreon;
 
 use CentreonPollerDisplayCentral\ConfigGenerate\Object;
-use CentreonPollerDisplayCentral\ConfigGenerate\Centreon\Contact;
 
 class ContactgroupContactRelation extends Object
 {
@@ -53,11 +52,10 @@ class ContactgroupContactRelation extends Object
         '*'
     );
 
-    public function getList()
+    public function getList($clauseObject = null)
     {
-        $contactRelation = new Contact($this->db, $this->pollerId);
-        $contacts = $contactRelation->getList();
 
+        $contacts = $clauseObject;
         $errors = array_filter($contacts);
         if (empty($errors)) {
             return '';

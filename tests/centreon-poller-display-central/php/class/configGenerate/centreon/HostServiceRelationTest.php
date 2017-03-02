@@ -29,12 +29,46 @@ class CentreonPollerDisplayCentral_HostServiceRelation extends PHPUnit_Framework
     protected static $db;
     protected static $pollerDisplay;
     protected static $hostServiceRelation;
+    protected static $objectListInH;
+    protected static $objectListInHg;
+    protected static $objectListOut;
 
     public function setUp()
     {
         self::$db = new CentreonDB();
         self::$pollerDisplay = 1;
         self::$hostServiceRelation = new HostServiceRelation(self::$db, self::$pollerDisplay);
+        self::$objectListInH = array(
+            array(
+                'nagios_server_id' => '1',
+                'host_host_id' => '1'
+            ),
+            array(
+                'nagios_server_id' => '1',
+                'host_host_id' => '2'
+            )
+        );
+        self::$objectListInHg = array(
+            array(
+                'hgr_id' => '1',
+                'hostgroup_hg_id' => '10',
+                'host_host_id' => '1'
+            ),
+            array(
+                'hgr_id' => '2',
+                'hostgroup_hg_id' => '20',
+                'host_host_id' => '2'
+            )
+        );
+        self::$objectListOut = array(
+            array(
+                'hsr_id' => '1',
+                'hostgroup_hg_id' => null,
+                'host_host_id' => '1',
+                'servicegroup_sg_id' => null,
+                'service_service_id' => '1'
+            )
+        );
     }
 
     public function tearDown()
@@ -42,44 +76,8 @@ class CentreonPollerDisplayCentral_HostServiceRelation extends PHPUnit_Framework
         self::$db = null;
     }
 
-    public function testGenerateSql()
+    public function testGetList()
     {
-
-        $expectedResult = 'DELETE FROM host_service_relation;
-TRUNCATE host_service_relation;
-INSERT INTO `host_service_relation` (`hsr_id`,`hostgroup_hg_id`,`host_host_id`,`servicegroup_sg_id`,' .
-            '`service_service_id`) VALUES (\'1\',,\'1\',,\'1\');';
-
-        self::$db->addResultSet(
-            'SELECT * FROM ns_host_relation WHERE nagios_server_id = 1',
-            array(
-                array(
-                    'nagios_server_id' => '1',
-                    'host_host_id' => '1'
-                ),
-                array(
-                    'nagios_server_id' => '1',
-                    'host_host_id' => '2'
-                )
-            )
-        );
-
-        self::$db->addResultSet(
-            'SELECT * FROM hostgroup_relation WHERE host_host_id IN (1,2)',
-            array(
-                array(
-                    'hgr_id' => '1',
-                    'hostgroup_hg_id' => '10',
-                    'host_host_id' => '1'
-                ),
-                array(
-                    'hgr_id' => '2',
-                    'hostgroup_hg_id' => '20',
-                    'host_host_id' => '2'
-                )
-            )
-        );
-
         self::$db->addResultSet(
             'SELECT * FROM host_service_relation WHERE (host_host_id IN (1,2)) OR (hostgroup_hg_id IN (10,20))',
             array(
@@ -93,7 +91,19 @@ INSERT INTO `host_service_relation` (`hsr_id`,`hostgroup_hg_id`,`host_host_id`,`
             )
         );
 
-        $sql = self::$hostServiceRelation->generateSql();
+        $sql = self::$hostServiceRelation->getList(self::$objectListInH,self::$objectListInHg);
+        $this->assertEquals($sql, self::$objectListOut);
+    }
+
+    public function testGenerateSql()
+    {
+
+        $expectedResult = 'DELETE FROM host_service_relation;
+TRUNCATE host_service_relation;
+INSERT INTO `host_service_relation` (`hsr_id`,`hostgroup_hg_id`,`host_host_id`,`servicegroup_sg_id`,' .
+            '`service_service_id`) VALUES (\'1\',,\'1\',,\'1\');';
+
+        $sql = self::$hostServiceRelation->generateSql(self::$objectListOut);
         $this->assertEquals($sql, $expectedResult);
     }
 }

@@ -36,7 +36,6 @@
 namespace CentreonPollerDisplayCentral\ConfigGenerate\Centreon;
 
 use CentreonPollerDisplayCentral\ConfigGenerate\Object;
-use CentreonPollerDisplayCentral\ConfigGenerate\Centreon\MetaServiceRelation;
 
 class AclResourcesMeta extends Object
 {
@@ -52,11 +51,10 @@ class AclResourcesMeta extends Object
     protected $columns = array('*');
 
 
-    public function getList()
+    public function getList($clauseObject = null)
     {
-        $metaRelation = new MetaServiceRelation($this->db, $this->pollerId);
-        $metas = $metaRelation->getList();
 
+        $metas = $clauseObject;
         $errors = array_filter($metas);
         if (empty($errors)) {
             return '';

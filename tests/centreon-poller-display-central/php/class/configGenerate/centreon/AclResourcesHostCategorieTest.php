@@ -29,12 +29,34 @@ class CentreonPollerDisplayCentral_AclResourcesHostCategorie extends PHPUnit_Fra
     protected static $db;
     protected static $pollerDisplay;
     protected static $acl;
+    protected static $objectListIn;
+    protected static $objectListOut;
 
     public function setUp()
     {
         self::$db = new CentreonDB();
         self::$pollerDisplay = 1;
         self::$acl = new AclResourcesHostCategorie(self::$db, self::$pollerDisplay);
+        self::$objectListIn = array(
+            array(
+                'hc_id' => '15',
+                'hc_name' => 'cate1'
+            ),
+            array(
+                'hc_id' => '20',
+                'hc_name' => 'cate20'
+            )
+        );
+        self::$objectListOut = array(
+            array(
+                'arhcr_id' => '1',
+                'hc_id' => '15'
+            ),
+            array(
+                'arhcr_id' => '2',
+                'hc_id' => '20'
+            )
+        );
     }
 
     public function tearDown()
@@ -42,57 +64,8 @@ class CentreonPollerDisplayCentral_AclResourcesHostCategorie extends PHPUnit_Fra
         self::$db = null;
     }
 
-    public function testGenerateSql()
+    public function testGetList()
     {
-
-        $expectedResult = 'DELETE FROM acl_resources_hc_relations;
-TRUNCATE acl_resources_hc_relations;
-INSERT INTO `acl_resources_hc_relations` (`arhcr_id`,`hc_id`) VALUES (\'1\',\'15\'),(\'2\',\'20\');';
-
-        self::$db->addResultSet(
-            'SELECT * FROM ns_host_relation WHERE nagios_server_id = 1',
-            array(
-                array(
-                    'nagios_server_id' => '1',
-                    'host_host_id' => '1'
-                ),
-                array(
-                    'nagios_server_id' => '1',
-                    'host_host_id' => '2'
-                )
-            )
-        );
-
-        self::$db->addResultSet(
-            'SELECT * FROM hostcategories_relation WHERE host_host_id IN (1,2)',
-            array(
-                array(
-                    'hcr_id' => '1',
-                    'hostcategories_hc_id' => '15',
-                    'host_host_id' => '1'
-                ),
-                array(
-                    'hcr_id' => '2',
-                    'hostcategories_hc_id' => '20',
-                    'host_host_id' => '2'
-                )
-            )
-        );
-
-        self::$db->addResultSet(
-            'SELECT * FROM hostcategories WHERE hc_id IN (15,20)',
-            array(
-                array(
-                    'hc_id' => '15',
-                    'hc_name' => 'cate1'
-                ),
-                array(
-                    'hc_id' => '20',
-                    'hc_name' => 'cate20'
-                )
-            )
-        );
-
         self::$db->addResultSet(
             'SELECT * FROM acl_resources_hc_relations WHERE hc_id IN (15,20)',
             array(
@@ -107,7 +80,17 @@ INSERT INTO `acl_resources_hc_relations` (`arhcr_id`,`hc_id`) VALUES (\'1\',\'15
             )
         );
 
-        $sql = self::$acl->generateSql();
+        $sql = self::$acl->getList(self::$objectListIn);
+        $this->assertEquals($sql, self::$objectListOut);
+    }
+
+    public function testGenerateSql()
+    {
+        $expectedResult = 'DELETE FROM acl_resources_hc_relations;
+TRUNCATE acl_resources_hc_relations;
+INSERT INTO `acl_resources_hc_relations` (`arhcr_id`,`hc_id`) VALUES (\'1\',\'15\'),(\'2\',\'20\');';
+
+        $sql = self::$acl->generateSql(self::$objectListOut);
         $this->assertEquals($sql, $expectedResult);
     }
 }

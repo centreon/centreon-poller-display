@@ -53,7 +53,7 @@ class AclResourcesPoller extends Object
         '*'
     );
 
-    protected function getList()
+    public function getList($clauseObject = null)
     {
         $list = array();
 

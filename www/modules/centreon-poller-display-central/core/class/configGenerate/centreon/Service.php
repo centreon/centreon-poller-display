@@ -36,7 +36,6 @@
 namespace CentreonPollerDisplayCentral\ConfigGenerate\Centreon;
 
 use CentreonPollerDisplayCentral\ConfigGenerate\Object;
-use CentreonPollerDisplayCentral\ConfigGenerate\Centreon\HostServiceRelation;
 
 class Service extends Object
 {
@@ -52,10 +51,9 @@ class Service extends Object
     protected $columns = array('*');
 
 
-    public function getList()
+    public function getList($clauseObject = null)
     {
-        $servicesRelation = new HostServiceRelation($this->db, $this->pollerId);
-        $services = $servicesRelation->getList();
+        $services = $clauseObject;
 
         $errors = array_filter($services);
         if (empty($errors)) {

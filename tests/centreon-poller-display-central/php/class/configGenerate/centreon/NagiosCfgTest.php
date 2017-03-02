@@ -28,12 +28,20 @@ class CentreonPollerDisplayCentral_NagiosCfg extends PHPUnit_Framework_TestCase
     protected static $db;
     protected static $pollerDisplay;
     protected static $nagiosCfg;
+    protected static $objectList;
 
     public function setUp()
     {
         self::$db = new CentreonDB();
         self::$pollerDisplay = 1;
         self::$nagiosCfg = new NagiosCfg(self::$db, self::$pollerDisplay);
+        self::$objectList = array(
+            array(
+                'nagios_id' => '1',
+                'nagios_name' => 'Centreon Engine',
+                'nagios_server_id' => '1'
+            )
+        );
     }
 
     public function tearDown()
@@ -41,13 +49,8 @@ class CentreonPollerDisplayCentral_NagiosCfg extends PHPUnit_Framework_TestCase
         self::$db = null;
     }
 
-    public function testGenerateSql()
+    public function testGetList()
     {
-
-        $expectedResult = 'DELETE FROM cfg_nagios;
-TRUNCATE cfg_nagios;
-INSERT INTO `cfg_nagios` (`nagios_id`,`nagios_name`,`nagios_server_id`) VALUES (\'1\',\'Centreon Engine\',\'1\');';
-
         self::$db->addResultSet(
             'SELECT * FROM cfg_nagios WHERE nagios_server_id = 1',
             array(
@@ -59,7 +62,18 @@ INSERT INTO `cfg_nagios` (`nagios_id`,`nagios_name`,`nagios_server_id`) VALUES (
             )
         );
 
-        $sql = self::$nagiosCfg->generateSql();
+        $sql = self::$nagiosCfg->getList();
+        $this->assertEquals($sql, self::$objectList);
+    }
+
+    public function testGenerateSql()
+    {
+
+        $expectedResult = 'DELETE FROM cfg_nagios;
+TRUNCATE cfg_nagios;
+INSERT INTO `cfg_nagios` (`nagios_id`,`nagios_name`,`nagios_server_id`) VALUES (\'1\',\'Centreon Engine\',\'1\');';
+
+        $sql = self::$nagiosCfg->generateSql(self::$objectList);
         $this->assertEquals($sql, $expectedResult);
     }
 }

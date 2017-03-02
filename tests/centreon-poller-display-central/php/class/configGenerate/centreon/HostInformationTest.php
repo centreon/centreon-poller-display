@@ -29,12 +29,36 @@ class CentreonPollerDisplayCentral_HostInformation extends PHPUnit_Framework_Tes
     protected static $db;
     protected static $pollerDisplay;
     protected static $hostInfo;
+    protected static $objectListIn;
+    protected static $objectListOut;
 
     public function setUp()
     {
         self::$db = new CentreonDB();
         self::$pollerDisplay = 1;
         self::$hostInfo = new HostInformation(self::$db, self::$pollerDisplay);
+        self::$objectListIn = array(
+
+            array(
+                'nagios_server_id' => '1',
+                'host_host_id' => '1'
+            ),
+            array(
+                'nagios_server_id' => '1',
+                'host_host_id' => '2'
+            )
+
+        );
+        self::$objectListOut = array(
+            array(
+                'ehi_id' => '1',
+                'host_host_id' => '1'
+            ),
+            array(
+                'ehi_id' => '2',
+                'host_host_id' => '2'
+            )
+        );
     }
 
     public function tearDown()
@@ -42,27 +66,8 @@ class CentreonPollerDisplayCentral_HostInformation extends PHPUnit_Framework_Tes
         self::$db = null;
     }
 
-    public function testGenerateSql()
+    public function testGetList()
     {
-
-        $expectedResult = 'DELETE FROM extended_host_information;
-TRUNCATE extended_host_information;
-INSERT INTO `extended_host_information` (`ehi_id`,`host_host_id`) VALUES (\'1\',\'1\'),(\'2\',\'2\');';
-
-        self::$db->addResultSet(
-            'SELECT * FROM ns_host_relation WHERE nagios_server_id = 1',
-            array(
-                array(
-                    'nagios_server_id' => '1',
-                    'host_host_id' => '1'
-                ),
-                array(
-                    'nagios_server_id' => '1',
-                    'host_host_id' => '2'
-                )
-            )
-        );
-
         self::$db->addResultSet(
             'SELECT * FROM extended_host_information WHERE host_host_id IN (1,2)',
             array(
@@ -77,7 +82,17 @@ INSERT INTO `extended_host_information` (`ehi_id`,`host_host_id`) VALUES (\'1\',
             )
         );
 
-        $sql = self::$hostInfo->generateSql();
+        $sql = self::$hostInfo->getList(self::$objectListIn);
+        $this->assertEquals($sql, self::$objectListOut);
+    }
+
+    public function testGenerateSql()
+    {
+        $expectedResult = 'DELETE FROM extended_host_information;
+TRUNCATE extended_host_information;
+INSERT INTO `extended_host_information` (`ehi_id`,`host_host_id`) VALUES (\'1\',\'1\'),(\'2\',\'2\');';
+
+        $sql = self::$hostInfo->generateSql(self::$objectListOut);
         $this->assertEquals($sql, $expectedResult);
     }
 }

@@ -29,12 +29,34 @@ class CentreonPollerDisplayCentral_AclResources extends PHPUnit_Framework_TestCa
     protected static $db;
     protected static $pollerDisplay;
     protected static $acl;
+    protected static $objectListIn;
+    protected static $objectListOut;
 
     public function setUp()
     {
         self::$db = new CentreonDB();
         self::$pollerDisplay = 1;
         self::$acl = new AclResources(self::$db, self::$pollerDisplay);
+        self::$objectListIn = array(
+            array(
+                'acl_group_id' => '1',
+                'acl_res_id' => '2'
+            ),
+            array(
+                'acl_group_id' => '1',
+                'acl_res_id' => '5'
+            )
+        );
+        self::$objectListOut = array(
+            array(
+                'id' => '2',
+                'name' => 'central'
+            ),
+            array(
+                'id' => '5',
+                'name' => 'central2'
+            )
+        );
     }
 
     public function tearDown()
@@ -42,28 +64,34 @@ class CentreonPollerDisplayCentral_AclResources extends PHPUnit_Framework_TestCa
         self::$db = null;
     }
 
-    public function testGenerateSql()
+    public function testGetList()
     {
-
-        $expectedResult = 'DELETE FROM acl_resources;
-TRUNCATE acl_resources;
-INSERT INTO `acl_resources` (`id`,`name`) VALUES (\'1\',\'central\'),(\'2\',\'central2\');';
-
         self::$db->addResultSet(
-            'SELECT * FROM acl_resources ',
+            'SELECT * FROM acl_resources WHERE acl_res_id IN (2,5)',
             array(
                 array(
-                    'id' => '1',
+                    'id' => '2',
                     'name' => 'central'
                 ),
                 array(
-                    'id' => '2',
+                    'id' => '5',
                     'name' => 'central2'
                 )
             )
         );
 
-        $sql = self::$acl->generateSql();
+        $sql = self::$acl->getList(self::$objectListIn);
+        $this->assertEquals($sql, self::$objectListOut);
+    }
+
+    public function testGenerateSql()
+    {
+
+        $expectedResult = 'DELETE FROM acl_resources;
+TRUNCATE acl_resources;
+INSERT INTO `acl_resources` (`id`,`name`) VALUES (\'2\',\'central\'),(\'5\',\'central2\');';
+
+        $sql = self::$acl->generateSql(self::$objectListOut);
         $this->assertEquals($sql, $expectedResult);
     }
 }

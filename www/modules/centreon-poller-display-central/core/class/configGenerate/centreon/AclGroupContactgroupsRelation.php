@@ -36,7 +36,6 @@
 namespace CentreonPollerDisplayCentral\ConfigGenerate\Centreon;
 
 use CentreonPollerDisplayCentral\ConfigGenerate\Object;
-use CentreonPollerDisplayCentral\ConfigGenerate\Centreon\Contactgroup;
 
 class AclGroupContactgroupsRelation extends Object
 {
@@ -54,11 +53,9 @@ class AclGroupContactgroupsRelation extends Object
         '*'
     );
 
-    public function getList()
+    public function getList($clauseObject = null)
     {
-        $contactRelation = new Contactgroup($this->db, $this->pollerId);
-        $contactgroups = $contactRelation->getList();
-
+        $contactgroups = $clauseObject;
         $errors = array_filter($contactgroups);
         if (empty($errors)) {
             return '';

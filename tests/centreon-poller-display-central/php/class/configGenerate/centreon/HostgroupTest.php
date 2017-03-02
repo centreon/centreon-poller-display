@@ -29,12 +29,36 @@ class CentreonPollerDisplayCentral_Hostgroup extends PHPUnit_Framework_TestCase
     protected static $db;
     protected static $pollerDisplay;
     protected static $hostGroup;
+    protected static $objectListIn;
+    protected static $objectListOut;
 
     public function setUp()
     {
         self::$db = new CentreonDB();
         self::$pollerDisplay = 1;
         self::$hostGroup = new Hostgroup(self::$db, self::$pollerDisplay);
+        self::$objectListIn = array(
+            array(
+                'hgr_id' => '1',
+                'hostgroup_hg_id' => '10',
+                'host_host_id' => '1'
+            ),
+            array(
+                'hgr_id' => '2',
+                'hostgroup_hg_id' => '20',
+                'host_host_id' => '2'
+            )
+        );
+        self::$objectListOut = array(
+            array(
+                'hg_id' => '10',
+                'hg_name' => 'hg1'
+            ),
+            array(
+                'hg_id' => '20',
+                'hg_name' => 'hg2'
+            )
+        );
     }
 
     public function tearDown()
@@ -42,43 +66,8 @@ class CentreonPollerDisplayCentral_Hostgroup extends PHPUnit_Framework_TestCase
         self::$db = null;
     }
 
-    public function testGenerateSql()
+    public function testGetList()
     {
-
-        $expectedResult = 'DELETE FROM hostgroup;
-TRUNCATE hostgroup;
-INSERT INTO `hostgroup` (`hg_id`,`hg_name`) VALUES (\'10\',\'hg1\'),(\'20\',\'hg2\');';
-
-        self::$db->addResultSet(
-            'SELECT * FROM ns_host_relation WHERE nagios_server_id = 1',
-            array(
-                array(
-                    'nagios_server_id' => '1',
-                    'host_host_id' => '1'
-                ),
-                array(
-                    'nagios_server_id' => '1',
-                    'host_host_id' => '2'
-                )
-            )
-        );
-
-        self::$db->addResultSet(
-            'SELECT * FROM hostgroup_relation WHERE host_host_id IN (1,2)',
-            array(
-                array(
-                    'hgr_id' => '1',
-                    'hostgroup_hg_id' => '10',
-                    'host_host_id' => '1'
-                ),
-                array(
-                    'hgr_id' => '2',
-                    'hostgroup_hg_id' => '20',
-                    'host_host_id' => '2'
-                )
-            )
-        );
-
         self::$db->addResultSet(
             'SELECT * FROM hostgroup WHERE hg_id IN (10,20)',
             array(
@@ -93,8 +82,18 @@ INSERT INTO `hostgroup` (`hg_id`,`hg_name`) VALUES (\'10\',\'hg1\'),(\'20\',\'hg
             )
         );
 
+        $sql = self::$hostGroup->getList(self::$objectListIn);
+        $this->assertEquals($sql, self::$objectListOut);
+    }
 
-        $sql = self::$hostGroup->generateSql();
+    public function testGenerateSql()
+    {
+
+        $expectedResult = 'DELETE FROM hostgroup;
+TRUNCATE hostgroup;
+INSERT INTO `hostgroup` (`hg_id`,`hg_name`) VALUES (\'10\',\'hg1\'),(\'20\',\'hg2\');';
+
+        $sql = self::$hostGroup->generateSql(self::$objectListOut);
         $this->assertEquals($sql, $expectedResult);
     }
 }

@@ -36,7 +36,6 @@
 namespace CentreonPollerDisplayCentral\ConfigGenerate\Centreon;
 
 use CentreonPollerDisplayCentral\ConfigGenerate\Object;
-use CentreonPollerDisplayCentral\ConfigGenerate\Centreon\ServiceCategoriesRelation;
 
 class ServiceCategories extends Object
 {
@@ -53,11 +52,9 @@ class ServiceCategories extends Object
         '*'
     );
 
-    public function getList()
+    public function getList($clauseObject = null)
     {
-        $serviceRelation = new ServiceCategoriesRelation($this->db, $this->pollerId);
-        $serviceCates = $serviceRelation->getList();
-
+        $serviceCates = $clauseObject;
         $errors = array_filter($serviceCates);
         if (empty($errors)) {
             return '';

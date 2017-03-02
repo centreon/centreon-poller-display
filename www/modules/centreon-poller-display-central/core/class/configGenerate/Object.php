@@ -58,7 +58,7 @@ abstract class Object
     }
 
 
-    public function generateSql()
+    public function generateSql($object = array())
     {
         if (is_null($this->table) || is_null($this->columns)) {
             return null;
@@ -68,7 +68,7 @@ abstract class Object
 
         $truncateQuery = $this->generateTruncateQuery();
 
-        $insertQuery = $this->generateInsertQuery();
+        $insertQuery = $this->generateInsertQuery($object);
 
         $finalQuery = $deleteQuery . "\n" . $truncateQuery . "\n" . $insertQuery;
 
@@ -88,10 +88,10 @@ abstract class Object
         return $query;
     }
 
-    protected function generateInsertQuery()
+    protected function generateInsertQuery($clauseObject)
     {
 
-        $objects = $this->getList();
+        $objects = $clauseObject;
 
         $errors = array_filter($objects);
         if (empty($errors)) {
@@ -128,7 +128,7 @@ abstract class Object
         return $insertQuery;
     }
 
-    protected function getList()
+    protected function getList($clauseObject = null)
     {
         $list = array();
 

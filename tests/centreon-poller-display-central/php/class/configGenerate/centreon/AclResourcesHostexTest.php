@@ -29,12 +29,31 @@ class CentreonPollerDisplayCentral_AclResourcesHostex extends PHPUnit_Framework_
     protected static $db;
     protected static $pollerDisplay;
     protected static $acl;
+    protected static $objectListIn;
+    protected static $objectListOut;
 
     public function setUp()
     {
         self::$db = new CentreonDB();
         self::$pollerDisplay = 1;
         self::$acl = new AclResourcesHostex(self::$db, self::$pollerDisplay);
+        self::$objectListIn = array(
+            array(
+                'nagios_server_id' => '1',
+                'host_host_id' => '1'
+            ),
+            array(
+                'nagios_server_id' => '1',
+                'host_host_id' => '2'
+            )
+        );
+        self::$objectListOut = array(
+            array(
+                'arhe_id' => '1',
+                'host_host_id' => '1',
+                'acl_res_id' => '12'
+            )
+        );
     }
 
     public function tearDown()
@@ -42,28 +61,8 @@ class CentreonPollerDisplayCentral_AclResourcesHostex extends PHPUnit_Framework_
         self::$db = null;
     }
 
-    public function testGenerateSql()
+    public function testGetList()
     {
-
-        $expectedResult = 'DELETE FROM acl_resources_hostex_relations;
-TRUNCATE acl_resources_hostex_relations;
-INSERT INTO `acl_resources_hostex_relations` (`arhe_id`,`host_host_id`,`acl_res_id`) VALUES (\'1\',\'1\',\'12\');';
-
-        self::$db->addResultSet(
-            'SELECT * FROM ns_host_relation WHERE nagios_server_id = 1',
-            array(
-                array(
-                    'nagios_server_id' => '1',
-                    'host_host_id' => '1'
-                ),
-                array(
-                    'nagios_server_id' => '1',
-                    'host_host_id' => '2'
-                )
-            )
-        );
-
-
         self::$db->addResultSet(
             'SELECT * FROM acl_resources_hostex_relations WHERE host_host_id IN (1,2)',
             array(
@@ -75,8 +74,17 @@ INSERT INTO `acl_resources_hostex_relations` (`arhe_id`,`host_host_id`,`acl_res_
             )
         );
 
+        $sql = self::$acl->getList(self::$objectListIn);
+        $this->assertEquals($sql, self::$objectListOut);
+    }
 
-        $sql = self::$acl->generateSql();
+    public function testGenerateSql()
+    {
+        $expectedResult = 'DELETE FROM acl_resources_hostex_relations;
+TRUNCATE acl_resources_hostex_relations;
+INSERT INTO `acl_resources_hostex_relations` (`arhe_id`,`host_host_id`,`acl_res_id`) VALUES (\'1\',\'1\',\'12\');';
+
+        $sql = self::$acl->generateSql(self::$objectListOut);
         $this->assertEquals($sql, $expectedResult);
     }
 }

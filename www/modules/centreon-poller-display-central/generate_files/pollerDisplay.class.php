@@ -25,11 +25,7 @@ class PollerDisplay extends \AbstractObject
     public function generateFromPollerId($poller_id, $localhost)
     {
 
-        Bam::getInstance()->generateobjects($poller_id);
-        Centreon::getInstance()->generateobjects($poller_id);
 
-
-        /*
         $this->poller_id = $poller_id;
 
         $stmt = $this->backend_instance->db->prepare("SELECT id 
@@ -51,6 +47,5 @@ class PollerDisplay extends \AbstractObject
                 Bam::getInstance()->generateobjects($poller_id);
             }
         }
-        */
     }
 }

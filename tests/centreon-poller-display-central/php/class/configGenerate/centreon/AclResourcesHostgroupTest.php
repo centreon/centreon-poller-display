@@ -29,12 +29,26 @@ class CentreonPollerDisplayCentral_AclResourcesHostgroup extends PHPUnit_Framewo
     protected static $db;
     protected static $pollerDisplay;
     protected static $acl;
+    protected static $objectListIn;
+    protected static $objectListOut;
 
     public function setUp()
     {
         self::$db = new CentreonDB();
         self::$pollerDisplay = 1;
         self::$acl = new AclResourcesHostgroup(self::$db, self::$pollerDisplay);
+        self::$objectListIn = array(
+            array(
+                'hg_id' => '4',
+                'hg_name' => 'linux'
+            )
+        );
+        self::$objectListOut = array(
+            array(
+                'hg_hg_id' => '4',
+                'acl_res_id' => '1'
+            )
+        );
     }
 
     public function tearDown()
@@ -42,48 +56,8 @@ class CentreonPollerDisplayCentral_AclResourcesHostgroup extends PHPUnit_Framewo
         self::$db = null;
     }
 
-    public function testGenerateSql()
+    public function testGetList()
     {
-
-        $expectedResult = 'DELETE FROM acl_resources_hg_relations;
-TRUNCATE acl_resources_hg_relations;
-INSERT INTO `acl_resources_hg_relations` (`hg_hg_id`,`acl_res_id`) VALUES (\'4\',\'1\');';
-
-        self::$db->addResultSet(
-            'SELECT * FROM ns_host_relation WHERE nagios_server_id = 1',
-            array(
-                array(
-                    'nagios_server_id' => '1',
-                    'host_host_id' => '1'
-                ),
-                array(
-                    'nagios_server_id' => '1',
-                    'host_host_id' => '2'
-                )
-            )
-        );
-
-        self::$db->addResultSet(
-            'SELECT * FROM hostgroup_relation WHERE host_host_id IN (1,2)',
-            array(
-                array(
-                    'hgr_id' => '1',
-                    'hostgroup_hg_id' => '4',
-                    'host_host_id' => '1'
-                )
-            )
-        );
-
-        self::$db->addResultSet(
-            'SELECT * FROM hostgroup WHERE hg_id IN (4)',
-            array(
-                array(
-                    'hg_id' => '4',
-                    'hg_name' => 'linux'
-                )
-            )
-        );
-
         self::$db->addResultSet(
             'SELECT * FROM acl_resources_hg_relations WHERE hg_hg_id IN (4)',
             array(
@@ -94,7 +68,18 @@ INSERT INTO `acl_resources_hg_relations` (`hg_hg_id`,`acl_res_id`) VALUES (\'4\'
             )
         );
 
-        $sql = self::$acl->generateSql();
+        $sql = self::$acl->getList(self::$objectListIn);
+        $this->assertEquals($sql, self::$objectListOut);
+    }
+
+    public function testGenerateSql()
+    {
+
+        $expectedResult = 'DELETE FROM acl_resources_hg_relations;
+TRUNCATE acl_resources_hg_relations;
+INSERT INTO `acl_resources_hg_relations` (`hg_hg_id`,`acl_res_id`) VALUES (\'4\',\'1\');';
+
+        $sql = self::$acl->generateSql(self::$objectListOut);
         $this->assertEquals($sql, $expectedResult);
     }
 }

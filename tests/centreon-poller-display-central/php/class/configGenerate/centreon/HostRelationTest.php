@@ -29,12 +29,23 @@ class CentreonPollerDisplayCentral_HostRelation extends PHPUnit_Framework_TestCa
     protected static $db;
     protected static $pollerDisplay;
     protected static $hostRelation;
+    protected static $objectList;
 
     public function setUp()
     {
         self::$db = new CentreonDB();
         self::$pollerDisplay = 1;
         self::$hostRelation = new HostRelation(self::$db, self::$pollerDisplay);
+        self::$objectList = array(
+            array(
+                'nagios_server_id' => '1',
+                'host_host_id' => '1'
+            ),
+            array(
+                'nagios_server_id' => '1',
+                'host_host_id' => '2'
+            )
+        );
     }
 
     public function tearDown()
@@ -42,13 +53,8 @@ class CentreonPollerDisplayCentral_HostRelation extends PHPUnit_Framework_TestCa
         self::$db = null;
     }
 
-    public function testGenerateSql()
+    public function testGetList()
     {
-
-        $expectedResult = 'DELETE FROM ns_host_relation;
-TRUNCATE ns_host_relation;
-INSERT INTO `ns_host_relation` (`nagios_server_id`,`host_host_id`) VALUES (\'1\',\'1\'),(\'1\',\'2\');';
-
         self::$db->addResultSet(
             'SELECT * FROM ns_host_relation WHERE nagios_server_id = 1',
             array(
@@ -63,7 +69,17 @@ INSERT INTO `ns_host_relation` (`nagios_server_id`,`host_host_id`) VALUES (\'1\'
             )
         );
 
-        $sql = self::$hostRelation->generateSql();
+        $sql = self::$hostRelation->getList();
+        $this->assertEquals($sql, self::$objectList);
+    }
+
+    public function testGenerateSql()
+    {
+        $expectedResult = 'DELETE FROM ns_host_relation;
+TRUNCATE ns_host_relation;
+INSERT INTO `ns_host_relation` (`nagios_server_id`,`host_host_id`) VALUES (\'1\',\'1\'),(\'1\',\'2\');';
+
+        $sql = self::$hostRelation->generateSql(self::$objectList);
         $this->assertEquals($sql, $expectedResult);
     }
 }

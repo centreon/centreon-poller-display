@@ -29,12 +29,36 @@ class CentreonPollerDisplayCentral_MetaServiceRelation extends PHPUnit_Framework
     protected static $db;
     protected static $pollerDisplay;
     protected static $meta;
+    protected static $objectListIn;
+    protected static $objectListOut;
 
     public function setUp()
     {
         self::$db = new CentreonDB();
         self::$pollerDisplay = 1;
         self::$meta = new MetaServiceRelation(self::$db, self::$pollerDisplay);
+        self::$objectListIn = array(
+            array(
+                'nagios_server_id' => '1',
+                'host_host_id' => '1'
+            ),
+            array(
+                'nagios_server_id' => '1',
+                'host_host_id' => '2'
+            )
+        );
+        self::$objectListOut = array(
+            array(
+                'msr_id' => '1',
+                'meta_id' => '1',
+                'host_id' => '1'
+            ),
+            array(
+                'msr_id' => '2',
+                'meta_id' => '5',
+                'host_id' => '2'
+            )
+        );
     }
 
     public function tearDown()
@@ -42,27 +66,8 @@ class CentreonPollerDisplayCentral_MetaServiceRelation extends PHPUnit_Framework
         self::$db = null;
     }
 
-    public function testGenerateSql()
+    public function testGetList()
     {
-
-        $expectedResult = 'DELETE FROM meta_service_relation;
-TRUNCATE meta_service_relation;
-INSERT INTO `meta_service_relation` (`msr_id`,`meta_id`,`host_id`) VALUES (\'1\',\'1\',\'1\'),(\'2\',\'5\',\'2\');';
-
-        self::$db->addResultSet(
-            'SELECT * FROM ns_host_relation WHERE nagios_server_id = 1',
-            array(
-                array(
-                    'nagios_server_id' => '1',
-                    'host_host_id' => '1'
-                ),
-                array(
-                    'nagios_server_id' => '1',
-                    'host_host_id' => '2'
-                )
-            )
-        );
-
         self::$db->addResultSet(
             'SELECT * FROM meta_service_relation WHERE host_id IN (1,2)',
             array(
@@ -79,7 +84,18 @@ INSERT INTO `meta_service_relation` (`msr_id`,`meta_id`,`host_id`) VALUES (\'1\'
             )
         );
 
-        $sql = self::$meta->generateSql();
+        $sql = self::$meta->getList(self::$objectListIn);
+        $this->assertEquals($sql, self::$objectListOut);
+    }
+
+    public function testGenerateSql()
+    {
+
+        $expectedResult = 'DELETE FROM meta_service_relation;
+TRUNCATE meta_service_relation;
+INSERT INTO `meta_service_relation` (`msr_id`,`meta_id`,`host_id`) VALUES (\'1\',\'1\',\'1\'),(\'2\',\'5\',\'2\');';
+
+        $sql = self::$meta->generateSql(self::$objectListOut);
         $this->assertEquals($sql, $expectedResult);
     }
 }

@@ -29,12 +29,36 @@ class CentreonPollerDisplayCentral_HostCategories extends PHPUnit_Framework_Test
     protected static $db;
     protected static $pollerDisplay;
     protected static $host;
+    protected static $objectListIn;
+    protected static $objectListOut;
 
     public function setUp()
     {
         self::$db = new CentreonDB();
         self::$pollerDisplay = 1;
         self::$host = new HostCategories(self::$db, self::$pollerDisplay);
+        self::$objectListIn = array(
+            array(
+                'hcr_id' => '1',
+                'hostcategories_hc_id' => '15',
+                'host_host_id' => '1'
+            ),
+            array(
+                'hcr_id' => '2',
+                'hostcategories_hc_id' => '20',
+                'host_host_id' => '2'
+            )
+        );
+        self::$objectListOut = array(
+            array(
+                'hc_id' => '15',
+                'hc_name' => 'cate1'
+            ),
+            array(
+                'hc_id' => '20',
+                'hc_name' => 'cate20'
+            )
+        );
     }
 
     public function tearDown()
@@ -42,43 +66,8 @@ class CentreonPollerDisplayCentral_HostCategories extends PHPUnit_Framework_Test
         self::$db = null;
     }
 
-    public function testGenerateSql()
+    public function testGetList()
     {
-
-        $expectedResult = 'DELETE FROM hostcategories;
-TRUNCATE hostcategories;
-INSERT INTO `hostcategories` (`hc_id`,`hc_name`) VALUES (\'15\',\'cate1\'),(\'20\',\'cate20\');';
-
-        self::$db->addResultSet(
-            'SELECT * FROM ns_host_relation WHERE nagios_server_id = 1',
-            array(
-                array(
-                    'nagios_server_id' => '1',
-                    'host_host_id' => '1'
-                ),
-                array(
-                    'nagios_server_id' => '1',
-                    'host_host_id' => '2'
-                )
-            )
-        );
-
-        self::$db->addResultSet(
-            'SELECT * FROM hostcategories_relation WHERE host_host_id IN (1,2)',
-            array(
-                array(
-                    'hcr_id' => '1',
-                    'hostcategories_hc_id' => '15',
-                    'host_host_id' => '1'
-                ),
-                array(
-                    'hcr_id' => '2',
-                    'hostcategories_hc_id' => '20',
-                    'host_host_id' => '2'
-                )
-            )
-        );
-
         self::$db->addResultSet(
             'SELECT * FROM hostcategories WHERE hc_id IN (15,20)',
             array(
@@ -93,8 +82,18 @@ INSERT INTO `hostcategories` (`hc_id`,`hc_name`) VALUES (\'15\',\'cate1\'),(\'20
             )
         );
 
+        $sql = self::$host->getList(self::$objectListIn);
+        $this->assertEquals($sql, self::$objectListOut);
+    }
 
-        $sql = self::$host->generateSql();
+    public function testGenerateSql()
+    {
+
+        $expectedResult = 'DELETE FROM hostcategories;
+TRUNCATE hostcategories;
+INSERT INTO `hostcategories` (`hc_id`,`hc_name`) VALUES (\'15\',\'cate1\'),(\'20\',\'cate20\');';
+
+        $sql = self::$host->generateSql(self::$objectListOut);
         $this->assertEquals($sql, $expectedResult);
     }
 }

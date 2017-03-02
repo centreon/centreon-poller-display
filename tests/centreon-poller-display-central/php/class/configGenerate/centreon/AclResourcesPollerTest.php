@@ -29,12 +29,25 @@ class CentreonPollerDisplayCentral_AclResourcesPoller extends PHPUnit_Framework_
     protected static $db;
     protected static $pollerDisplay;
     protected static $acl;
+    protected static $objectList;
 
     public function setUp()
     {
         self::$db = new CentreonDB();
         self::$pollerDisplay = 1;
         self::$acl = new AclResourcesPoller(self::$db, self::$pollerDisplay);
+        self::$objectList = array(
+            array(
+                'arpr_id' => '1',
+                'poller_id' => '1',
+                'acl_res_id' => '1'
+            ),
+            array(
+                'arpr_id' => '2',
+                'poller_id' => '1',
+                'acl_res_id' => '23'
+            )
+        );
     }
 
     public function tearDown()
@@ -42,14 +55,8 @@ class CentreonPollerDisplayCentral_AclResourcesPoller extends PHPUnit_Framework_
         self::$db = null;
     }
 
-    public function testGenerateSql()
+    public function testGetList()
     {
-
-        $expectedResult = 'DELETE FROM acl_resources_poller_relations;
-TRUNCATE acl_resources_poller_relations;
-INSERT INTO `acl_resources_poller_relations` (`arpr_id`,`poller_id`,`acl_res_id`) ' .
-            'VALUES (\'1\',\'1\',\'1\'),(\'2\',\'1\',\'23\');';
-
         self::$db->addResultSet(
             'SELECT * FROM acl_resources_poller_relations WHERE poller_id = 1',
             array(
@@ -66,7 +73,19 @@ INSERT INTO `acl_resources_poller_relations` (`arpr_id`,`poller_id`,`acl_res_id`
             )
         );
 
-        $sql = self::$acl->generateSql();
+        $sql = self::$acl->getList();
+        $this->assertEquals($sql, self::$objectList);
+    }
+
+    public function testGenerateSql()
+    {
+
+        $expectedResult = 'DELETE FROM acl_resources_poller_relations;
+TRUNCATE acl_resources_poller_relations;
+INSERT INTO `acl_resources_poller_relations` (`arpr_id`,`poller_id`,`acl_res_id`) ' .
+            'VALUES (\'1\',\'1\',\'1\'),(\'2\',\'1\',\'23\');';
+
+        $sql = self::$acl->generateSql(self::$objectList);
         $this->assertEquals($sql, $expectedResult);
     }
 }

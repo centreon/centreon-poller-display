@@ -29,12 +29,34 @@ class CentreonPollerDisplayCentral_Host extends PHPUnit_Framework_TestCase
     protected static $db;
     protected static $pollerDisplay;
     protected static $host;
+    protected static $objectListIn;
+    protected static $objectListOut;
 
     public function setUp()
     {
         self::$db = new CentreonDB();
         self::$pollerDisplay = 1;
         self::$host = new Host(self::$db, self::$pollerDisplay);
+        self::$objectListIn = array(
+            array(
+                'nagios_server_id' => '1',
+                'host_host_id' => '1'
+            ),
+            array(
+                'nagios_server_id' => '1',
+                'host_host_id' => '2'
+            )
+        );
+        self::$objectListOut = array(
+            array(
+                'host_id' => '1',
+                'name' => 'host'
+            ),
+            array(
+                'host_id' => '2',
+                'name' => 'host2'
+            )
+        );
     }
 
     public function tearDown()
@@ -42,27 +64,8 @@ class CentreonPollerDisplayCentral_Host extends PHPUnit_Framework_TestCase
         self::$db = null;
     }
 
-    public function testGenerateSql()
+    public function testGetList()
     {
-
-        $expectedResult = 'DELETE FROM host;
-TRUNCATE host;
-INSERT INTO `host` (`host_id`,`name`) VALUES (\'1\',\'host\'),(\'2\',\'host2\');';
-
-        self::$db->addResultSet(
-            'SELECT * FROM ns_host_relation WHERE nagios_server_id = 1',
-            array(
-                array(
-                    'nagios_server_id' => '1',
-                    'host_host_id' => '1'
-                ),
-                array(
-                    'nagios_server_id' => '1',
-                    'host_host_id' => '2'
-                )
-            )
-        );
-
         self::$db->addResultSet(
             'SELECT * FROM host WHERE host_id IN (1,2)',
             array(
@@ -77,7 +80,17 @@ INSERT INTO `host` (`host_id`,`name`) VALUES (\'1\',\'host\'),(\'2\',\'host2\');
             )
         );
 
-        $sql = self::$host->generateSql();
+        $sql = self::$host->getList(self::$objectListIn);
+        $this->assertEquals($sql, self::$objectListOut);
+    }
+
+    public function testGenerateSql()
+    {
+        $expectedResult = 'DELETE FROM host;
+TRUNCATE host;
+INSERT INTO `host` (`host_id`,`name`) VALUES (\'1\',\'host\'),(\'2\',\'host2\');';
+
+        $sql = self::$host->generateSql(self::$objectListOut);
         $this->assertEquals($sql, $expectedResult);
     }
 }

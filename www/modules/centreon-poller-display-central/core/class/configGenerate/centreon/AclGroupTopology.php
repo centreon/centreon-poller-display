@@ -36,7 +36,6 @@
 namespace CentreonPollerDisplayCentral\ConfigGenerate\Centreon;
 
 use CentreonPollerDisplayCentral\ConfigGenerate\Object;
-use CentreonPollerDisplayCentral\ConfigGenerate\Centreon\AclGroups;
 
 class AclGroupTopology extends Object
 {
@@ -54,11 +53,10 @@ class AclGroupTopology extends Object
         '*'
     );
 
-    public function getList()
+    public function getList($clauseObject = null)
     {
-        $aclRelation = new AclGroups($this->db, $this->pollerId);
-        $aclTopology = $aclRelation->getList();
 
+        $aclTopology = $clauseObject;
         $errors = array_filter($aclTopology);
         if (empty($errors)) {
             return '';

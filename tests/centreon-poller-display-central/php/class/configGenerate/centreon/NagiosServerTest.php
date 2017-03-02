@@ -28,12 +28,20 @@ class CentreonPollerDisplayCentral_NagiosServer extends PHPUnit_Framework_TestCa
     protected static $db;
     protected static $pollerDisplay;
     protected static $nagiosServer;
+    protected static $objectList;
 
     public function setUp()
     {
         self::$db = new CentreonDB();
         self::$pollerDisplay = 1;
         self::$nagiosServer = new NagiosServer(self::$db, self::$pollerDisplay);
+        self::$objectList = array(
+            array(
+                'id' => '1',
+                'name' => 'central'
+            )
+        );
+
     }
 
     public function tearDown()
@@ -41,13 +49,8 @@ class CentreonPollerDisplayCentral_NagiosServer extends PHPUnit_Framework_TestCa
         self::$db = null;
     }
 
-    public function testGenerateSql()
+    public function testGetList()
     {
-
-        $expectedResult = 'DELETE FROM nagios_server;
-TRUNCATE nagios_server;
-INSERT INTO `nagios_server` (`id`,`name`) VALUES (\'1\',\'central\');';
-
         self::$db->addResultSet(
             'SELECT * FROM nagios_server WHERE id = 1',
             array(
@@ -58,7 +61,18 @@ INSERT INTO `nagios_server` (`id`,`name`) VALUES (\'1\',\'central\');';
             )
         );
 
-        $sql = self::$nagiosServer->generateSql();
+        $sql = self::$nagiosServer->getList();
+        $this->assertEquals($sql, self::$objectList);
+    }
+
+    public function testGenerateSql()
+    {
+        $expectedResult = 'DELETE FROM nagios_server;
+TRUNCATE nagios_server;
+INSERT INTO `nagios_server` (`id`,`name`) VALUES (\'1\',\'central\');';
+
+
+        $sql = self::$nagiosServer->generateSql(self::$objectList);
         $this->assertEquals($sql, $expectedResult);
     }
 }

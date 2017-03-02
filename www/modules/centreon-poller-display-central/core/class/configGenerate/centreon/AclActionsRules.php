@@ -36,7 +36,6 @@
 namespace CentreonPollerDisplayCentral\ConfigGenerate\Centreon;
 
 use CentreonPollerDisplayCentral\ConfigGenerate\Object;
-use CentreonPollerDisplayCentral\ConfigGenerate\Centreon\AclGroupActionsRelation;
 
 class AclActionsRules extends Object
 {
@@ -54,11 +53,10 @@ class AclActionsRules extends Object
         '*'
     );
 
-    public function getList()
+    public function getList($clauseObject = null)
     {
 
-        $aclRelation = new AclGroupActionsRelation($this->db, $this->pollerId);
-        $aclGroupAction = $aclRelation->getList();
+        $aclGroupAction = $clauseObject;
         $errors = array_filter($aclGroupAction);
         if (empty($errors)) {
             return '';

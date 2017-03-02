@@ -29,12 +29,36 @@ class CentreonPollerDisplayCentral_HostCategoriesRelation extends PHPUnit_Framew
     protected static $db;
     protected static $pollerDisplay;
     protected static $host;
+    protected static $objectListIn;
+    protected static $objectListOut;
 
     public function setUp()
     {
         self::$db = new CentreonDB();
         self::$pollerDisplay = 1;
         self::$host = new HostCategoriesRelation(self::$db, self::$pollerDisplay);
+        self::$objectListIn = array(
+            array(
+                'nagios_server_id' => '1',
+                'host_host_id' => '1'
+            ),
+            array(
+                'nagios_server_id' => '1',
+                'host_host_id' => '2'
+            )
+        );
+        self::$objectListOut = array(
+            array(
+                'hcr_id' => '1',
+                'hostcategories_hc_id' => '15',
+                'host_host_id' => '1'
+            ),
+            array(
+                'hcr_id' => '2',
+                'hostcategories_hc_id' => '20',
+                'host_host_id' => '2'
+            )
+        );
     }
 
     public function tearDown()
@@ -42,28 +66,8 @@ class CentreonPollerDisplayCentral_HostCategoriesRelation extends PHPUnit_Framew
         self::$db = null;
     }
 
-    public function testGenerateSql()
+    public function testGetList()
     {
-
-        $expectedResult = 'DELETE FROM hostcategories_relation;
-TRUNCATE hostcategories_relation;
-INSERT INTO `hostcategories_relation` (`hcr_id`,`hostcategories_hc_id`,`host_host_id`) ' .
-            'VALUES (\'1\',\'15\',\'1\'),(\'2\',\'20\',\'2\');';
-
-        self::$db->addResultSet(
-            'SELECT * FROM ns_host_relation WHERE nagios_server_id = 1',
-            array(
-                array(
-                    'nagios_server_id' => '1',
-                    'host_host_id' => '1'
-                ),
-                array(
-                    'nagios_server_id' => '1',
-                    'host_host_id' => '2'
-                )
-            )
-        );
-
         self::$db->addResultSet(
             'SELECT * FROM hostcategories_relation WHERE host_host_id IN (1,2)',
             array(
@@ -80,7 +84,18 @@ INSERT INTO `hostcategories_relation` (`hcr_id`,`hostcategories_hc_id`,`host_hos
             )
         );
 
-        $sql = self::$host->generateSql();
+        $sql = self::$host->getList(self::$objectListIn);
+        $this->assertEquals($sql, self::$objectListOut);
+    }
+
+    public function testGenerateSql()
+    {
+        $expectedResult = 'DELETE FROM hostcategories_relation;
+TRUNCATE hostcategories_relation;
+INSERT INTO `hostcategories_relation` (`hcr_id`,`hostcategories_hc_id`,`host_host_id`) ' .
+            'VALUES (\'1\',\'15\',\'1\'),(\'2\',\'20\',\'2\');';
+
+        $sql = self::$host->generateSql(self::$objectListOut);
         $this->assertEquals($sql, $expectedResult);
     }
 }

@@ -52,4 +52,36 @@ class AclResources extends Object
     protected $columns = array(
         '*'
     );
+
+
+    public function getList($clauseObject = null)
+    {
+        $acls = $clauseObject;
+        $errors = array_filter($acls);
+        if (empty($errors)) {
+            return '';
+        }
+
+        $first = true;
+        $clauseQuery = ' WHERE acl_res_id IN (';
+        foreach ($acls as $acl) {
+            if (!$first) {
+                $clauseQuery .= ',';
+            }
+            $clauseQuery .= $acl['acl_res_id'];
+            $first = false;
+        }
+        $clauseQuery .= ')';
+
+        $list = array();
+        $query = 'SELECT ' . implode(',', $this->columns) . ' '
+            . 'FROM ' . $this->table . $clauseQuery;
+
+        $result = $this->db->query($query);
+        while ($row = $result->fetch(\PDO::FETCH_ASSOC)) {
+            $list[] = $row;
+        }
+
+        return $list;
+    }
 }

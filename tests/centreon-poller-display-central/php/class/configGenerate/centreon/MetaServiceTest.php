@@ -29,12 +29,32 @@ class CentreonPollerDisplayCentral_MetaService extends PHPUnit_Framework_TestCas
     protected static $db;
     protected static $pollerDisplay;
     protected static $meta;
+    protected static $objectListIn;
+    protected static $objectListOut;
 
     public function setUp()
     {
         self::$db = new CentreonDB();
         self::$pollerDisplay = 1;
         self::$meta = new MetaService(self::$db, self::$pollerDisplay);
+        self::$objectListIn = array(
+            array(
+                'msr_id' => '1',
+                'meta_id' => '1',
+                'host_id' => '1'
+            ),
+            array(
+                'msr_id' => '2',
+                'meta_id' => '5',
+                'host_id' => '2'
+            )
+        );
+        self::$objectListOut = array(
+            array(
+                'meta_id' => '5',
+                'meta_name' => 'meta1'
+            )
+        );
     }
 
     public function tearDown()
@@ -42,43 +62,8 @@ class CentreonPollerDisplayCentral_MetaService extends PHPUnit_Framework_TestCas
         self::$db = null;
     }
 
-    public function testGenerateSql()
+    public function testGetList()
     {
-
-        $expectedResult = 'DELETE FROM meta_service;
-TRUNCATE meta_service;
-INSERT INTO `meta_service` (`meta_id`,`meta_name`) VALUES (\'5\',\'meta1\');';
-
-        self::$db->addResultSet(
-            'SELECT * FROM ns_host_relation WHERE nagios_server_id = 1',
-            array(
-                array(
-                    'nagios_server_id' => '1',
-                    'host_host_id' => '1'
-                ),
-                array(
-                    'nagios_server_id' => '1',
-                    'host_host_id' => '2'
-                )
-            )
-        );
-
-        self::$db->addResultSet(
-            'SELECT * FROM meta_service_relation WHERE host_id IN (1,2)',
-            array(
-                array(
-                    'msr_id' => '1',
-                    'meta_id' => '1',
-                    'host_id' => '1'
-                ),
-                array(
-                    'msr_id' => '2',
-                    'meta_id' => '5',
-                    'host_id' => '2'
-                )
-            )
-        );
-
         self::$db->addResultSet(
             'SELECT * FROM meta_service WHERE meta_id IN (1,5)',
             array(
@@ -88,8 +73,18 @@ INSERT INTO `meta_service` (`meta_id`,`meta_name`) VALUES (\'5\',\'meta1\');';
                 )
             )
         );
+        $sql = self::$meta->getList(self::$objectListIn);
+        $this->assertEquals($sql, self::$objectListOut);
+    }
 
-        $sql = self::$meta->generateSql();
+    public function testGenerateSql()
+    {
+
+        $expectedResult = 'DELETE FROM meta_service;
+TRUNCATE meta_service;
+INSERT INTO `meta_service` (`meta_id`,`meta_name`) VALUES (\'5\',\'meta1\');';
+
+        $sql = self::$meta->generateSql(self::$objectListOut);
         $this->assertEquals($sql, $expectedResult);
     }
 }

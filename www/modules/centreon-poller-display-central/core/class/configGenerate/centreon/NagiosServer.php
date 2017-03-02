@@ -52,7 +52,7 @@ class NagiosServer extends Object
     protected $columns = array('*');
 
 
-    protected function getList()
+    public function getList($clauseObject = null)
     {
         $list = array();
 

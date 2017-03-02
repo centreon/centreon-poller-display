@@ -36,7 +36,6 @@
 namespace CentreonPollerDisplayCentral\ConfigGenerate\Centreon;
 
 use CentreonPollerDisplayCentral\ConfigGenerate\Object;
-use CentreonPollerDisplayCentral\ConfigGenerate\Centreon\HostCategoriesRelation;
 
 class HostCategories extends Object
 {
@@ -53,11 +52,9 @@ class HostCategories extends Object
         '*'
     );
 
-    public function getList()
+    public function getList($clauseObject = null)
     {
-        $hostRelation = new HostCategoriesRelation($this->db, $this->pollerId);
-        $hostCates = $hostRelation->getList();
-
+        $hostCates = $clauseObject;
         $errors = array_filter($hostCates);
         if (empty($errors)) {
             return '';
