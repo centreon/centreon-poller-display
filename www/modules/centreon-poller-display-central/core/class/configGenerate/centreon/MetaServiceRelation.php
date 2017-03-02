@@ -50,7 +50,6 @@ class MetaServiceRelation extends Object
      */
     protected $columns = array('*');
 
-
     public function getList($clauseObject = null)
     {
         $hosts = $clauseObject;

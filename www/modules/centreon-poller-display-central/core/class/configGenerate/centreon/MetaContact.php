@@ -43,7 +43,7 @@ class MetaContact extends Object
     /**
      * @var table
      */
-    protected $table = 'meta_contacts';
+    protected $table = 'meta_contact';
     /**
      * @var array
      * columns wanted

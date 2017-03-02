@@ -143,145 +143,145 @@ class Centreon extends \AbstractObject
 
         $sql = '';
         $nagiosServerList = $oNagiosServer->getList();
-        $sql .=  $oNagiosServer->generateSql($nagiosServerList). "\n\n";
+        $sql .= $oNagiosServer->generateSql($nagiosServerList). "\n\n";
 
         $nagiosCfgList = $oNagiosCfg->getList();
-        $sql .=  $oNagiosCfg->generateSql($nagiosCfgList). "\n\n";
+        $sql .= $oNagiosCfg->generateSql($nagiosCfgList). "\n\n";
 
         $aclResourcesPollerList = $oAclResourcesPoller->getList();
-        $sql .=  $oAclResourcesPoller->generateSql($aclResourcesPollerList). "\n\n";
+        $sql .= $oAclResourcesPoller->generateSql($aclResourcesPollerList). "\n\n";
 
-        $hostRelationList =  $oHostRelation->getList();
-        $sql .=  $oHostRelation->generateSql($hostRelationList). "\n\n";
+        $hostRelationList = $oHostRelation->getList();
+        $sql .= $oHostRelation->generateSql($hostRelationList). "\n\n";
 
-        $hostList =  $oHost->getList($hostRelationList);
-        $sql .=  $oHost->generateSql($hostList). "\n\n";
+        $hostList = $oHost->getList($hostRelationList);
+        $sql .= $oHost->generateSql($hostList). "\n\n";
 
-        $hostInformationList =  $oHostInformation->getList($hostRelationList);
-        $sql .=  $oHostInformation->generateSql($hostInformationList). "\n\n";
+        $hostInformationList = $oHostInformation->getList($hostRelationList);
+        $sql .= $oHostInformation->generateSql($hostInformationList). "\n\n";
 
-        $hostgroupRelationList =  $oHostgroupRelation->getList($hostRelationList);
-        $sql .=  $oHostgroupRelation->generateSql($hostgroupRelationList). "\n\n";
+        $hostgroupRelationList = $oHostgroupRelation->getList($hostRelationList);
+        $sql .= $oHostgroupRelation->generateSql($hostgroupRelationList). "\n\n";
 
-        $hostgroupList =  $oHostgroup->getList($hostgroupRelationList);
-        $sql .=  $oHostgroup->generateSql($hostgroupList). "\n\n";
+        $hostgroupList = $oHostgroup->getList($hostgroupRelationList);
+        $sql .= $oHostgroup->generateSql($hostgroupList). "\n\n";
 
-        $hostCategoriesRelationList =  $oHostCategoriesRelation->getList($hostRelationList);
-        $sql .=  $oHostCategoriesRelation->generateSql($hostCategoriesRelationList). "\n\n";
+        $hostCategoriesRelationList = $oHostCategoriesRelation->getList($hostRelationList);
+        $sql .= $oHostCategoriesRelation->generateSql($hostCategoriesRelationList). "\n\n";
 
-        $hostCategoriesList =  $oHostCategories->getList($hostCategoriesRelationList);
-        $sql .=  $oHostCategories->generateSql($hostCategoriesList). "\n\n";
+        $hostCategoriesList = $oHostCategories->getList($hostCategoriesRelationList);
+        $sql .= $oHostCategories->generateSql($hostCategoriesList). "\n\n";
 
-        $serviceRelationList =  $oHostServiceRelation->getList($hostRelationList,$hostgroupRelationList);
-        $sql .=  $oHostServiceRelation->generateSql($serviceRelationList). "\n\n";
+        $serviceRelationList = $oHostServiceRelation->getList($hostRelationList,$hostgroupRelationList);
+        $sql .= $oHostServiceRelation->generateSql($serviceRelationList). "\n\n";
 
-        $serviceList =  $oService->getList($serviceRelationList);
-        $sql .=  $oService->generateSql($serviceList). "\n\n";
+        $serviceList = $oService->getList($serviceRelationList);
+        $sql .= $oService->generateSql($serviceList). "\n\n";
 
-        $serviceInformationList =  $oServiceInformation->getList($serviceRelationList);
-        $sql .=  $oServiceInformation->generateSql($serviceInformationList). "\n\n";
+        $serviceInformationList = $oServiceInformation->getList($serviceRelationList);
+        $sql .= $oServiceInformation->generateSql($serviceInformationList). "\n\n";
 
-        $servicegroupRelationList =  $oServicegroupRelation->getList($serviceRelationList);
-        $sql .=  $oServicegroupRelation->generateSql($servicegroupRelationList). "\n\n";
+        $servicegroupRelationList = $oServicegroupRelation->getList($serviceRelationList);
+        $sql .= $oServicegroupRelation->generateSql($servicegroupRelationList). "\n\n";
 
-        $servicegroupList =  $oServicegroup->getList($servicegroupRelationList);
-        $sql .=  $oServicegroup->generateSql($servicegroupList). "\n\n";
+        $servicegroupList = $oServicegroup->getList($servicegroupRelationList);
+        $sql .= $oServicegroup->generateSql($servicegroupList). "\n\n";
 
-        $serviceCategoriesRelationList =  $oServiceCategoriesRelation->getList($serviceRelationList);
-        $sql .=  $oServiceCategoriesRelation->generateSql($serviceCategoriesRelationList). "\n\n";
+        $serviceCategoriesRelationList = $oServiceCategoriesRelation->getList($serviceRelationList);
+        $sql .= $oServiceCategoriesRelation->generateSql($serviceCategoriesRelationList). "\n\n";
 
-        $serviceCategoriesList =  $oServiceCategories->getList($serviceCategoriesRelationList);
-        $sql .=  $oServiceCategories->generateSql($serviceCategoriesList). "\n\n";
+        $serviceCategoriesList = $oServiceCategories->getList($serviceCategoriesRelationList);
+        $sql .= $oServiceCategories->generateSql($serviceCategoriesList). "\n\n";
 
-        $metaServiceRelationList =  $oMetaServiceRelation->getList($serviceRelationList);
-        $sql .=  $oMetaServiceRelation->generateSql($metaServiceRelationList). "\n\n";
+        $metaServiceRelationList = $oMetaServiceRelation->getList($hostRelationList);
+        $sql .= $oMetaServiceRelation->generateSql($metaServiceRelationList). "\n\n";
 
-        $metaServiceList =  $oMetaService->getList($metaServiceRelationList);
-        $sql .=  $oMetaService->generateSql($metaServiceList). "\n\n";
+        $metaServiceList = $oMetaService->getList($metaServiceRelationList);
+        $sql .= $oMetaService->generateSql($metaServiceList). "\n\n";
 
-        $metaContactList =  $oMetaContact->getList($metaServiceRelationList);
-        $sql .=  $oMetaContact->generateSql($metaContactList). "\n\n";
+        $metaContactList = $oMetaContact->getList($metaServiceRelationList);
+        $sql .= $oMetaContact->generateSql($metaContactList). "\n\n";
 
-        $metaContactgroupList =  $oMetaContactgroup->getList($metaServiceRelationList);
-        $sql .=  $oMetaContactgroup->generateSql($metaContactgroupList). "\n\n";
+        $metaContactgroupList = $oMetaContactgroup->getList($metaServiceRelationList);
+        $sql .= $oMetaContactgroup->generateSql($metaContactgroupList). "\n\n";
 
-        $contactHostRelationList =  $oContactHostRelation->getList($hostRelationList);
-        $sql .=  $oContactHostRelation->generateSql($contactHostRelationList). "\n\n";
+        $contactHostRelationList = $oContactHostRelation->getList($hostRelationList);
+        $sql .= $oContactHostRelation->generateSql($contactHostRelationList). "\n\n";
 
-        $contactServiceRelationList =  $oContactServiceRelation->getList($serviceRelationList);
-        $sql .=  $oContactServiceRelation->generateSql($contactServiceRelationList). "\n\n";
+        $contactServiceRelationList = $oContactServiceRelation->getList($serviceRelationList);
+        $sql .= $oContactServiceRelation->generateSql($contactServiceRelationList). "\n\n";
 
-        $contactList =  $oContact->getList($hostRelationList,$serviceRelationList);
-        $sql .=  $oContact->generateSql($contactList). "\n\n";
+        $contactList = $oContact->getList($contactHostRelationList,$contactServiceRelationList);
+        $sql .= $oContact->generateSql($contactList). "\n\n";
 
-        $ContactgroupRelationList =  $oContactgroupContactRelation->getList($contactList);
-        $sql .=  $oContactgroupContactRelation->generateSql($ContactgroupRelationList). "\n\n";
+        $ContactgroupRelationList = $oContactgroupContactRelation->getList($contactList);
+        $sql .= $oContactgroupContactRelation->generateSql($ContactgroupRelationList). "\n\n";
 
-        $ContactgroupList =  $oContactgroup->getList($ContactgroupRelationList);
-        $sql .=  $oContactgroup->generateSql($ContactgroupList). "\n\n";
+        $ContactgroupList = $oContactgroup->getList($ContactgroupRelationList);
+        $sql .= $oContactgroup->generateSql($ContactgroupList). "\n\n";
 
-        $contactgroupHostRelationList =  $oContactgroupHostRelation->getList($hostRelationList);
-        $sql .=  $oContactgroupHostRelation->generateSql($contactgroupHostRelationList). "\n\n";
+        $contactgroupHostRelationList = $oContactgroupHostRelation->getList($hostRelationList);
+        $sql .= $oContactgroupHostRelation->generateSql($contactgroupHostRelationList). "\n\n";
 
-        $contactgroupHostgroupRelationList =  $oContactgroupHostgroupRelation->getList($hostgroupRelationList);
-        $sql .=  $oContactgroupHostgroupRelation->generateSql($contactgroupHostgroupRelationList). "\n\n";
+        $contactgroupHostgroupRelationList = $oContactgroupHostgroupRelation->getList($hostgroupRelationList);
+        $sql .= $oContactgroupHostgroupRelation->generateSql($contactgroupHostgroupRelationList). "\n\n";
 
-        $contactgroupServiceRelationList =  $oContactgroupServiceRelation->getList($serviceRelationList);
-        $sql .=  $oContactgroupServiceRelation->generateSql($contactgroupServiceRelationList). "\n\n";
+        $contactgroupServiceRelationList = $oContactgroupServiceRelation->getList($serviceRelationList);
+        $sql .= $oContactgroupServiceRelation->generateSql($contactgroupServiceRelationList). "\n\n";
 
-        $contactgroupServicegroupRelationList =  $oContactgroupServicegroupRelation->getList($servicegroupRelationList);
-        $sql .=  $oContactgroupServicegroupRelation->generateSql($contactgroupServicegroupRelationList). "\n\n";
+        $contactgroupServicegroupRelationList = $oContactgroupServicegroupRelation->getList($servicegroupRelationList);
+        $sql .= $oContactgroupServicegroupRelation->generateSql($contactgroupServicegroupRelationList). "\n\n";
 
-        $aclResourcesHostList =  $oAclResourcesHost->getList($hostRelationList);
-        $sql .=  $oAclResourcesHost->generateSql($aclResourcesHostList). "\n\n";
+        $aclResourcesHostList = $oAclResourcesHost->getList($hostRelationList);
+        $sql .= $oAclResourcesHost->generateSql($aclResourcesHostList). "\n\n";
 
-        $aclResourcesHostCategorieList =  $oAclResourcesHostCategorie->getList($hostCategoriesList);
-        $sql .=  $oAclResourcesHostCategorie->generateSql($aclResourcesHostCategorieList). "\n\n";
+        $aclResourcesHostCategorieList = $oAclResourcesHostCategorie->getList($hostCategoriesList);
+        $sql .= $oAclResourcesHostCategorie->generateSql($aclResourcesHostCategorieList). "\n\n";
 
-        $aclResourcesHostexList =  $oAclResourcesHostex->getList($hostRelationList);
-        $sql .=  $oAclResourcesHostex->generateSql($aclResourcesHostexList). "\n\n";
+        $aclResourcesHostexList = $oAclResourcesHostex->getList($hostRelationList);
+        $sql .= $oAclResourcesHostex->generateSql($aclResourcesHostexList). "\n\n";
 
-        $aclResourcesHostgroupList =  $oAclResourcesHostgroup->getList($hostgroupList);
-        $sql .=  $oAclResourcesHostgroup->generateSql($aclResourcesHostgroupList). "\n\n";
+        $aclResourcesHostgroupList = $oAclResourcesHostgroup->getList($hostgroupList);
+        $sql .= $oAclResourcesHostgroup->generateSql($aclResourcesHostgroupList). "\n\n";
 
-        $aclResourcesServiceList =  $oAclResourcesService->getList($serviceRelationList);
-        $sql .=  $oAclResourcesService->generateSql($aclResourcesServiceList). "\n\n";
+        $aclResourcesServiceList = $oAclResourcesService->getList($serviceRelationList);
+        $sql .= $oAclResourcesService->generateSql($aclResourcesServiceList). "\n\n";
 
-        $aclResourcesServiceCategorieList =  $oAclResourcesServiceCategorie->getList($serviceCategoriesList);
-        $sql .=  $oAclResourcesServiceCategorie->generateSql($aclResourcesServiceCategorieList). "\n\n";
+        $aclResourcesServiceCategorieList = $oAclResourcesServiceCategorie->getList($serviceCategoriesList);
+        $sql .= $oAclResourcesServiceCategorie->generateSql($aclResourcesServiceCategorieList). "\n\n";
 
-        $aclResourcesServicegroupList =  $oAclResourcesServicegroup->getList($servicegroupList);
-        $sql .=  $oAclResourcesServicegroup->generateSql($aclResourcesServicegroupList). "\n\n";
+        $aclResourcesServicegroupList = $oAclResourcesServicegroup->getList($servicegroupList);
+        $sql .= $oAclResourcesServicegroup->generateSql($aclResourcesServicegroupList). "\n\n";
 
-        $aclResourcesMetaList =  $oAclResourcesMeta->getList($metaServiceRelationList);
-        $sql .=  $oAclResourcesMeta->generateSql($aclResourcesMetaList). "\n\n";
+        $aclResourcesMetaList = $oAclResourcesMeta->getList($metaServiceRelationList);
+        $sql .= $oAclResourcesMeta->generateSql($aclResourcesMetaList). "\n\n";
 
-        $aclGroupContactsRelationList =  $oAclGroupContactsRelation->getList($contactList);
-        $sql .=  $oAclGroupContactsRelation->generateSql($aclGroupContactsRelationList). "\n\n";
+        $aclGroupContactsRelationList = $oAclGroupContactsRelation->getList($contactList);
+        $sql .= $oAclGroupContactsRelation->generateSql($aclGroupContactsRelationList). "\n\n";
 
-        $aclGroupContactgroupsRelationList =  $oAclGroupContactgroupsRelation->getList($ContactgroupList);
-        $sql .=  $oAclGroupContactgroupsRelation->generateSql($aclGroupContactgroupsRelationList). "\n\n";
+        $aclGroupContactgroupsRelationList = $oAclGroupContactgroupsRelation->getList($ContactgroupList);
+        $sql .= $oAclGroupContactgroupsRelation->generateSql($aclGroupContactgroupsRelationList). "\n\n";
 
-        $aclGroupsList =  $oAclGroups->getList($aclGroupContactsRelationList,$aclGroupContactgroupsRelationList);
-        $sql .=  $oAclGroups->generateSql($aclGroupsList). "\n\n";
+        $aclGroupsList = $oAclGroups->getList($aclGroupContactsRelationList,$aclGroupContactgroupsRelationList);
+        $sql .= $oAclGroups->generateSql($aclGroupsList). "\n\n";
 
-        $aclGroupTopologyList =  $oAclGroupTopology->getList($aclGroupsList);
-        $sql .=  $oAclGroupTopology->generateSql($aclGroupTopologyList). "\n\n";
+        $aclGroupTopologyList = $oAclGroupTopology->getList($aclGroupsList);
+        $sql .= $oAclGroupTopology->generateSql($aclGroupTopologyList). "\n\n";
 
-        $aclGroupActionsRelationList =  $oAclGroupActionsRelation->getList($aclGroupsList);
-        $sql .=  $oAclGroupActionsRelation->generateSql($aclGroupActionsRelationList). "\n\n";
+        $aclGroupActionsRelationList = $oAclGroupActionsRelation->getList($aclGroupsList);
+        $sql .= $oAclGroupActionsRelation->generateSql($aclGroupActionsRelationList). "\n\n";
 
-        $aclActionsList =  $oAclActions->getList($aclGroupActionsRelationList);
-        $sql .=  $oAclActions->generateSql($aclActionsList). "\n\n";
+        $aclActionsList = $oAclActions->getList($aclGroupActionsRelationList);
+        $sql .= $oAclActions->generateSql($aclActionsList). "\n\n";
 
-        $aclActionsRulesList =  $oAclActionsRules->getList($aclGroupActionsRelationList);
-        $sql .=  $oAclActionsRules->generateSql($aclActionsRulesList). "\n\n";
+        $aclActionsRulesList = $oAclActionsRules->getList($aclGroupActionsRelationList);
+        $sql .= $oAclActionsRules->generateSql($aclActionsRulesList). "\n\n";
 
-        $aclResourcesGroupRelationList =  $oAclResourcesGroupRelation->getList($aclGroupsList);
-        $sql .=  $oAclResourcesGroupRelation->generateSql($aclResourcesGroupRelationList). "\n\n";
+        $aclResourcesGroupRelationList = $oAclResourcesGroupRelation->getList($aclGroupsList);
+        $sql .= $oAclResourcesGroupRelation->generateSql($aclResourcesGroupRelationList). "\n\n";
 
-        $aclResourcesList =  $oAclResources->getList($aclResourcesGroupRelationList);
-        $sql .=  $oAclResources->generateSql($aclResourcesList). "\n\n";
+        $aclResourcesList = $oAclResources->getList($aclResourcesGroupRelationList);
+        $sql .= $oAclResources->generateSql($aclResourcesList). "\n\n";
 
 
         $this->createFile($this->backend_instance->getPath());

@@ -24,10 +24,7 @@ class PollerDisplay extends \AbstractObject
 
     public function generateFromPollerId($poller_id, $localhost)
     {
-
-
         $this->poller_id = $poller_id;
-
         $stmt = $this->backend_instance->db->prepare("SELECT id 
                                                     FROM mod_poller_display_server_relations 
                                                     WHERE nagios_server_id = :pollerId");

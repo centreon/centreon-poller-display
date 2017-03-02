@@ -66,7 +66,7 @@ class CentreonPollerDisplayCentral_MetaContact extends PHPUnit_Framework_TestCas
     public function testGetList()
     {
         self::$db->addResultSet(
-            'SELECT * FROM meta_contacts WHERE meta_id IN (1,5)',
+            'SELECT * FROM meta_contact WHERE meta_id IN (1,5)',
             array(
                 array(
                     'meta_id' => '5',
@@ -82,9 +82,9 @@ class CentreonPollerDisplayCentral_MetaContact extends PHPUnit_Framework_TestCas
     public function testGenerateSql()
     {
 
-        $expectedResult = 'DELETE FROM meta_contacts;
-TRUNCATE meta_contacts;
-INSERT INTO `meta_contacts` (`meta_id`,`contact_id`) VALUES (\'5\',\'17\');';
+        $expectedResult = 'DELETE FROM meta_contact;
+TRUNCATE meta_contact;
+INSERT INTO `meta_contact` (`meta_id`,`contact_id`) VALUES (\'5\',\'17\');';
 
         $sql = self::$meta->generateSql(self::$objectListOut);
         $this->assertEquals($sql, $expectedResult);
