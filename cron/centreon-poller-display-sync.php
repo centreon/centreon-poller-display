@@ -37,6 +37,7 @@ include_once "DB.php";
 
 include_once "/etc/centreon/centreon.conf.php";
 include_once $centreon_path . "/www/class/centreonDB.class.php";
+include_once $centreon_path . "/www/include/options/oreon/modules/DB-Func.php";
 
 $centreonDbName = $conf_centreon['db'];
 
@@ -46,7 +47,7 @@ try {
      */
     $debug = 0;
     $add = 0;
-  
+
     /*
      * Init DB connections
      */
@@ -54,18 +55,37 @@ try {
     $DBO = new CentreonDB("centstorage");
 
     /*
+    * Load conf
+    */
+    $filesPath = '/etc/centreon-broker/';
+    $hashPath = '/etc/centreon/';
+    $configNameFiles = array('centreon-poller-display', 'bam-poller-display');
+
+    foreach ($configNameFiles as $file) {
+        $fp = fopen($hashPath . $file . '-save.txt', "w+");
+        $contentFile = fgets($fp, 255);
+        $hashFile = hash_file('md5', $filesPath . $file . '.sql');
+
+        if ($contentFile != $hashFile) {
+            execute_sql_file($file . '.sql', $filesPath);
+            fwrite($fp, $hashFile);
+        }
+        fclose($fp);
+    }
+
+    /*
      * Manage pollers
      */
     $DBO->query("DELETE FROM $centreonDbName.nagios_server WHERE id IN (SELECT instance_id FROM instances WHERE running = '0')");
-    $DBO->query("DELETE FROM $centreonDbName.nagios_server WHERE id NOT IN (SELECT instance_id FROM instances WHERE running = '1' AND last_alive > '".(time() - 600)."')");
-  
+    $DBO->query("DELETE FROM $centreonDbName.nagios_server WHERE id NOT IN (SELECT instance_id FROM instances WHERE running = '1' AND last_alive > '" . (time() - 600) . "')");
+
     $request = "SELECT * FROM instances WHERE instance_id NOT IN (SELECT id FROM $centreonDbName.nagios_server) ORDER BY last_alive DESC LIMIT 1";
     $DBRESULT = $DBO->query($request);
     while ($row = $DBRESULT->fetchRow()) {
-        $request = "INSERT INTO nagios_server (id, name, localhost, ns_activate, ns_status, ns_ip_address) VALUES ('".$row['instance_id']."', '".$row["name"]."', '1', 1, 1, '127.0.0.1')";
+        $request = "INSERT INTO nagios_server (id, name, localhost, ns_activate, ns_status, ns_ip_address) VALUES ('" . $row['instance_id'] . "', '" . $row["name"] . "', '1', 1, 1, '127.0.0.1')";
         $DB->query($request);
-      
-        $request = "INSERT INTO cfg_nagios (nagios_name, nagios_server_id, interval_length, nagios_activate, command_file) VALUES ('Main file for ".$row["name"]."', '".$row["instance_id"]."', 60, '1', '/var/lib/centreon-engine/rw/centengine.cmd')";
+
+        $request = "INSERT INTO cfg_nagios (nagios_name, nagios_server_id, interval_length, nagios_activate, command_file) VALUES ('Main file for " . $row["name"] . "', '" . $row["instance_id"] . "', 60, '1', '/var/lib/centreon-engine/rw/centengine.cmd')";
         $DB->query($request);
     }
 
@@ -85,8 +105,8 @@ try {
     $request = "SELECT id FROM nagios_server LIMIT 1";
     $DBRESULT = $DB->query($request);
     $row = $DBRESULT->fetchRow();
-    $nagios_server_id = $row["id"];    
-  
+    $nagios_server_id = $row["id"];
+
     /*
      * Synch Host List
      */
@@ -94,30 +114,30 @@ try {
 
     $DBRESULT = $DBO->query("SELECT host_id, name, alias, address, check_interval, retry_interval, max_check_attempts FROM centreon_storage.hosts WHERE host_id NOT IN (SELECT host_id FROM $centreonDbName.host WHERE host_register = '1') AND enabled = '1'");
     while ($row = $DBRESULT->fetchRow()) {
-        $request = "INSERT INTO host (host_id, host_name, host_alias, host_address, host_register, host_activate, host_check_interval, host_retry_check_interval, host_max_check_attempts) VALUES ('".$row['host_id']."', '".$row['name']."',  '".$row['alias']."', '".$row['address']."', '1', '1', ".$row['check_interval'].", ".$row['retry_interval'].", ".$row['max_check_attempts'].")";
+        $request = "INSERT INTO host (host_id, host_name, host_alias, host_address, host_register, host_activate, host_check_interval, host_retry_check_interval, host_max_check_attempts) VALUES ('" . $row['host_id'] . "', '" . $row['name'] . "',  '" . $row['alias'] . "', '" . $row['address'] . "', '1', '1', " . $row['check_interval'] . ", " . $row['retry_interval'] . ", " . $row['max_check_attempts'] . ")";
         $DB->query($request);
-    
-        $request = "INSERT INTO extended_host_information (host_host_id) VALUES ('".$row['host_id']."')";
+
+        $request = "INSERT INTO extended_host_information (host_host_id) VALUES ('" . $row['host_id'] . "')";
         $DB->query($request);
-    
-        $request = "INSERT INTO ns_host_relation (nagios_server_id, host_host_id) VALUES ('$nagios_server_id', '".$row['host_id']."')";
+
+        $request = "INSERT INTO ns_host_relation (nagios_server_id, host_host_id) VALUES ('$nagios_server_id', '" . $row['host_id'] . "')";
         $DB->query($request);
 
         if ($debug) {
-            print "add host: ".$row['name']."(".$row['address'].") [".$row['host_id']."]\n";
+            print "add host: " . $row['name'] . "(" . $row['address'] . ") [" . $row['host_id'] . "]\n";
         }
         $add++;
     }
- 
+
     /*
     * Update Host properties
     */
     $DBRESULT = $DBO->query("SELECT storage.host_id, storage.name, storage.alias, storage.address FROM centreon_storage.hosts AS storage, centreon.host AS centreon WHERE storage.host_id=centreon.host_id AND storage.enabled = '1' AND (storage.name != centreon.host_name OR storage.alias != centreon.host_alias OR storage.address != centreon.host_address)");
     while ($row = $DBRESULT->fetchRow()) {
-        $request = "UPDATE host SET host_name = '".$row['name']."', host_alias = '".$row['alias']."', host_address = '".$row['address']."' WHERE host_id = '".$row['host_id']."'";
+        $request = "UPDATE host SET host_name = '" . $row['name'] . "', host_alias = '" . $row['alias'] . "', host_address = '" . $row['address'] . "' WHERE host_id = '" . $row['host_id'] . "'";
         $DB->query($request);
     }
- 
+
     /*
      * Synch Services List
      */
@@ -132,22 +152,22 @@ try {
     while ($row = $DBRESULT->fetchRow()) {
 
         // Insert service
-        $request = "INSERT INTO service (service_id, service_description, service_register, service_activate, service_normal_check_interval, service_retry_check_interval, service_max_check_attempts) VALUES ('".$row['service_id']."', '".$row['description']."', '1', '1', '".$row['check_interval']."', '".$row['retry_interval']."', '".$row['max_check_attempts']."')";
+        $request = "INSERT INTO service (service_id, service_description, service_register, service_activate, service_normal_check_interval, service_retry_check_interval, service_max_check_attempts) VALUES ('" . $row['service_id'] . "', '" . $row['description'] . "', '1', '1', '" . $row['check_interval'] . "', '" . $row['retry_interval'] . "', '" . $row['max_check_attempts'] . "')";
         $DB->query($request);
 
-        $request = "INSERT INTO extended_service_information (service_service_id) VALUES ('".$row['service_id']."')";
+        $request = "INSERT INTO extended_service_information (service_service_id) VALUES ('" . $row['service_id'] . "')";
         $DB->query($request);
-    
+
         // Insert host/service relation
-        $request = "INSERT INTO host_service_relation (host_host_id, service_service_id) VALUES ('".$row['host_id']."', '".$row['service_id']."')";
+        $request = "INSERT INTO host_service_relation (host_host_id, service_service_id) VALUES ('" . $row['host_id'] . "', '" . $row['service_id'] . "')";
         $DB->query($request);
 
         if ($debug) {
-            print "add service ".$row['description']." for host ".$row['host_id']."\n";
+            print "add service " . $row['description'] . " for host " . $row['host_id'] . "\n";
         }
         $add++;
     }
-  
+
     /*
      * Synch HostGroup List
      */
@@ -159,11 +179,11 @@ try {
     $DBRESULT = $DBO->query($request);
     while ($row = $DBRESULT->fetchRow()) {
         // insert hostgroup
-        $request = "INSERT INTO hostgroup (hg_id, hg_name, hg_activate) VALUES ('".$row['hostgroup_id']."', '".$row['name']."', '1')";
+        $request = "INSERT INTO hostgroup (hg_id, hg_name, hg_activate) VALUES ('" . $row['hostgroup_id'] . "', '" . $row['name'] . "', '1')";
         $DB->query($request);
-    
+
         if ($debug) {
-            print "add hostgroup ".$row['name']." (".$row['hostgroup_id'].")\n";
+            print "add hostgroup " . $row['name'] . " (" . $row['hostgroup_id'] . ")\n";
         }
 
         $add++;
@@ -177,16 +197,16 @@ try {
     $request = "SELECT * FROM hosts_hostgroups WHERE host_id IN (SELECT host_id FROM $centreonDbName.host WHERE host_activate = '1' AND host_register = '1')";
     $DBRESULT = $DBO->query($request);
     while ($row = $DBRESULT->fetchRow()) {
-        $request = "INSERT INTO hostgroup_relation (host_host_id, hostgroup_hg_id) VALUES ('".$row["host_id"]."', '".$row["hostgroup_id"]."')";
+        $request = "INSERT INTO hostgroup_relation (host_host_id, hostgroup_hg_id) VALUES ('" . $row["host_id"] . "', '" . $row["hostgroup_id"] . "')";
         $DB->query($request);
 
         if ($debug) {
-            print "add hostgroup link between host ".$row["host_id"]." and hostgroup ".$row["hostgroup_id"]."\n";  
+            print "add hostgroup link between host " . $row["host_id"] . " and hostgroup " . $row["hostgroup_id"] . "\n";
         }
-        
+
         $add++;
     }
-  
+
     if ($add) {
         $DB->query("UPDATE acl_resources SET changed = '1'");
     }
