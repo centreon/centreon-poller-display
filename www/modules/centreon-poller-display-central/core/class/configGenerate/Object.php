@@ -116,7 +116,7 @@ abstract class Object
                 if (isset($value)) {
                     $insertQuery .= '\'' . $value . '\',';
                 } else {
-                    $insertQuery .= ',';
+                    $insertQuery .= 'null,';
                 }
             }
             $insertQuery = substr($insertQuery, 0, -1);
