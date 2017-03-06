@@ -16,10 +16,17 @@ do
 
 SQL_FILE=$FILE_PATH${configNameFiles[$i]}$extend_sql
 HASH_FILE=$HASH_PATH${configNameFiles[$i]}$extend_save
+
+    if [ -f $HASH_FILE ] ; then
+        hash_content=`cat $HASH_FILE`
+    else
+        hash_content=''
+    fi
+
 filecontent=`cat $SQL_FILE`
 hashFile=`md5sum < $HASH_FILE`
 
-    if [ $filecontent != $hashFile ] ; then
+    if [ $hash_content != $hashFile ] ; then
         mysql --user="$USER" --password="$PASSWORD" --database="$DB_CENTREON" --execute="$filecontent"
         echo $hashFile > $HASH_FILE
         service cbd restart
