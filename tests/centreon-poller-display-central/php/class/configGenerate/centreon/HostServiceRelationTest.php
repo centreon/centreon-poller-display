@@ -101,7 +101,7 @@ class CentreonPollerDisplayCentral_HostServiceRelation extends PHPUnit_Framework
         $expectedResult = 'DELETE FROM host_service_relation;
 TRUNCATE host_service_relation;
 INSERT INTO `host_service_relation` (`hsr_id`,`hostgroup_hg_id`,`host_host_id`,`servicegroup_sg_id`,' .
-            '`service_service_id`) VALUES (\'1\',,\'1\',,\'1\');';
+            '`service_service_id`) VALUES (\'1\',NULL,\'1\',NULL,\'1\');';
 
         $sql = self::$hostServiceRelation->generateSql(self::$objectListOut);
         $this->assertEquals($sql, $expectedResult);
