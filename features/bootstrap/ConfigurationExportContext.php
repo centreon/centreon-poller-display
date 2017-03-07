@@ -16,11 +16,11 @@
  */
 
 use Centreon\Test\Behat\CentreonContext;
-use Centreon\Test\Behat\HostConfigurationPage;
-use Centreon\Test\Behat\HostMonitoringDetailsPage;
-use Centreon\Test\Behat\LoginPage;
-use Centreon\Test\Behat\ServiceConfigurationPage;
-use Centreon\Test\Behat\ServiceMonitoringDetailsPage;
+use Centreon\Test\Behat\Configuration\HostConfigurationPage;
+use Centreon\Test\Behat\Monitoring\HostMonitoringDetailsPage;
+use Centreon\Test\Behat\External\LoginPage;
+use Centreon\Test\Behat\Configuration\ServiceConfigurationPage;
+use Centreon\Test\Behat\Monitoring\ServiceMonitoringDetailsPage;
 
 class ConfigurationExportContext extends CentreonContext
 {
