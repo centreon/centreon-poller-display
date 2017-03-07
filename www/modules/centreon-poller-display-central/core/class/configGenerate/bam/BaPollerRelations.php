@@ -35,13 +35,14 @@
 
 namespace CentreonPollerDisplayCentral\ConfigGenerate\Bam;
 
-use \CentreonPollerDisplayCentral\ConfigGenerate\Object;
+use CentreonPollerDisplayCentral\ConfigGenerate\Bam\BamBaseObject;
+
 /**
  * User: kduret
  * Date: 23/02/2017
  * Time: 09:19
  */
-class BaPollerRelations extends Object
+class BaPollerRelations extends BamBaseObject
 {
     /**
      *
@@ -53,9 +54,13 @@ class BaPollerRelations extends Object
      *
      * @var array 
      */
-    protected $columns = array(
-        '*'
-    );
+    protected $columns = array('*');
+    
+    /**
+     *
+     * @var array 
+     */
+    protected $comparisonKeys = array('ba_id', 'poller_id');
     
     /**
      * 
@@ -63,26 +68,20 @@ class BaPollerRelations extends Object
      * @param type $pollerId
      * @param type $filteredObjects
      */
-    public function __construct($db, $pollerId, &$filteredObjects = array())
+    public function __construct($db, $pollerId)
     {
-        parent::__construct($db, $pollerId, $filteredObjects);
+        parent::__construct($db, $pollerId);
     }
-
-
+    
     /**
      * 
-     * @return array
+     * @param type $clauseObject
+     * @return type
      */
-    public function getLinkedBusinessActivity()
+    public function getList($clauseObject = null)
     {
-        $queryGetlinkedBa = "SELECT ba_id FROM mod_bam_poller_relations WHERE poller_id = $this->pollerId";
-        $resGetLinkedBa = $this->db->query($queryGetlinkedBa);
-        
-        $baList = array();
-        while ($row = $resGetLinkedBa->fetch()) {
-            $baList[] = $row['ba_id'];
-        }
-        
-        return $baList;
+        return parent::getList(array(
+            'poller_id' => array($this->pollerId)
+        ));
     }
 }

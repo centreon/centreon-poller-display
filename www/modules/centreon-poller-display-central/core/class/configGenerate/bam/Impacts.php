@@ -35,13 +35,14 @@
 
 namespace CentreonPollerDisplayCentral\ConfigGenerate\Bam;
 
-use \CentreonPollerDisplayCentral\ConfigGenerate\Object;
+use CentreonPollerDisplayCentral\ConfigGenerate\Bam\BamBaseObject;
+
 /**
  * User: kduret
  * Date: 23/02/2017
  * Time: 09:19
  */
-class Impacts extends Object
+class Impacts extends BamBaseObject
 {
     /**
      *
@@ -53,8 +54,6 @@ class Impacts extends Object
      *
      * @var array 
      */
-    protected $columns = array(
-        '*'
-    );
+    protected $columns = array('*');
 
 }

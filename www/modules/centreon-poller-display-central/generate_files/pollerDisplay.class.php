@@ -44,25 +44,20 @@ class PollerDisplay extends \AbstractObject
     public function generateFromPollerId($poller_id, $localhost)
     {
         $this->poller_id = $poller_id;
-        $stmt = $this->backend_instance->db->prepare("SELECT id 
-                                                    FROM mod_poller_display_server_relations 
-                                                    WHERE nagios_server_id = :pollerId");
+        $stmt = $this->backend_instance->db->prepare(
+            "SELECT id " .
+            "FROM mod_poller_display_server_relations " .
+            "WHERE nagios_server_id = :pollerId"
+        );
         $stmt->bindParam(':pollerId', $poller_id, PDO::PARAM_INT);
         $stmt->execute();
 
         if ($stmt->fetch()) {
-            Centreon::getInstance()->generateobjects($poller_id);
-
-            $stmt = $this->backend_instance->db->prepare(
-                'SELECT ba_id 
-                FROM mod_bam_poller_relations
-                WHERE poller_id = :pollerId'
-            );
-            $stmt->bindParam(':pollerId', $poller_id, PDO::PARAM_INT);
-            $stmt->execute();
-
-            if ($stmt->fetch()) {
-                Bam::getInstance()->generateobjects($poller_id);
+            //Centreon::getInstance()->generateobjects($poller_id);
+            $bamGenerateInstance = Bam::getInstance();
+            
+            if ($bamGenerateInstance->isBamModuleAvailable()) {
+                $bamGenerateInstance->generateobjects($poller_id);
             }
         }
     }

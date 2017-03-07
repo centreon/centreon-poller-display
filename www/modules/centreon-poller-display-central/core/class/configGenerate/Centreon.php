@@ -309,10 +309,14 @@ class Centreon extends \AbstractObject
         fwrite($this->fp, $sql);
         $this->close_file();
     }
-
-    private function setForeignKey($status)
+    
+    /**
+     * 
+     * @param int $status
+     * @return string
+     */
+    protected function setForeignKey($status)
     {
         return 'SET FOREIGN_KEY_CHECKS = ' . $status . ';';
     }
-
 }

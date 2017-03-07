@@ -44,7 +44,7 @@ abstract class Object
 {
     /**
      *
-     * @var type 
+     * @var \CentreonDB 
      */
     protected $db = null;
     
@@ -71,12 +71,6 @@ abstract class Object
      * @var string 
      */
     protected $primaryKey = null;
-    
-    /**
-     *
-     * @var type 
-     */
-    protected $filteredObjects;
 
     /**
      * 
@@ -84,23 +78,27 @@ abstract class Object
      * @param int $pollerId
      * @param array $filteredObjects
      */
-    public function __construct($db, $pollerId, &$filteredObjects = array())
+    public function __construct($db, $pollerId)
     {
         $this->db = $db;
         $this->pollerId = $pollerId;
-        $this->filteredObjects = $filteredObjects;
     }
 
-
-    public function generateSql($object = array())
+    /**
+     * 
+     * @param array $object
+     * @return string
+     */
+    public function generateSql($object = array(), $withCleaning = true)
     {
         if (is_null($this->table) || is_null($this->columns)) {
             return null;
         }
 
-        $deleteQuery = $this->generateDeleteQuery();
-
-        $truncateQuery = $this->generateTruncateQuery();
+        if ($withCleaning) {
+            $deleteQuery = $this->generateDeleteQuery();
+            $truncateQuery = $this->generateTruncateQuery();
+        }
 
         $insertQuery = $this->generateInsertQuery($object);
 
@@ -119,22 +117,28 @@ abstract class Object
         return $query;
     }
 
+    /**
+     * 
+     * @return string
+     */
     protected function generateDeleteQuery()
     {
         $query = 'DELETE FROM ' . $this->table . ';';
         return $query;
     }
 
-    protected function generateInsertQuery($clauseObject)
+    /**
+     * 
+     * @param type $objects
+     * @return string
+     */
+    protected function generateInsertQuery($objects)
     {
-
-        $objects = $clauseObject;
-
         $errors = array_filter($objects);
         if (empty($errors)) {
             return '';
         }
-
+        
         if (implode(',', $this->columns) == '*') {
             $this->columns = array_keys($objects[0]);
         }
@@ -149,14 +153,14 @@ abstract class Object
                 $insertQuery .= ',';
             }
             $insertQuery .= '(';
-            foreach ($object AS $value) {
-                if (isset($value)) {
-                    $insertQuery .= '\'' . $value . '\',';
+            foreach ($object as $value) {
+                if (is_null($value)) {
+                    $insertQuery .= 'NULL,';
                 } else {
-                    $insertQuery .= ',';
+                    $insertQuery .= '\'' . $value . '\',';
                 }
             }
-            $insertQuery = substr($insertQuery, 0, -1);
+            $insertQuery = rtrim($insertQuery, ',');
             $insertQuery .= ')';
             $first = false;
         }
@@ -165,16 +169,17 @@ abstract class Object
         return $insertQuery;
     }
 
-    protected function getList($clauseObject = null)
+    /**
+     * 
+     * @param type $clauseObject
+     * @return array
+     */
+    public function getList($clauseObject = null)
     {
         $list = array();
 
         $query = 'SELECT ' . implode(',', $this->columns) . ' '
             . 'FROM ' . $this->table . ' ';
-        
-        if ($idList != null) {
-            $query .= " WHERE `$this->primaryKey` IN ($idList) ";
-        }
         
         $result = $this->db->query($query);
 
@@ -183,25 +188,5 @@ abstract class Object
         }
 
         return $list;
-    }
-    
-    /**
-     * 
-     * @param string $object
-     * @param array $values
-     */
-    public function addToFilteredObjects($object, $values)
-    {
-        $this->filteredObjects[$object] = $values;
-    }
-    
-    /**
-     * 
-     * @param string $object
-     * @return array
-     */
-    public function getFromFilteredObjects($object)
-    {
-        return $this->filteredObjects[$object];
     }
 }

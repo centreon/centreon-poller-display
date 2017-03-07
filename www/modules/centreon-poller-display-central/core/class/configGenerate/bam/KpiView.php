@@ -42,40 +42,24 @@ use CentreonPollerDisplayCentral\ConfigGenerate\Bam\BamBaseObject;
  * Date: 23/02/2017
  * Time: 09:19
  */
-class Ba extends BamBaseObject
+class KpiView extends BamBaseObject
 {
     /**
      *
      * @var string 
      */
-    protected $table = 'mod_bam';
+    protected $table = 'mod_bam_view_kpi';
     
     /**
      *
      * @var array 
      */
-    protected $columns = array(
-        '*'
-    );
+    protected $columns = array('*');
     
     /**
      *
      * @var array 
      */
-    protected $comparisonKeys = array('ba_id');
-    
-    /**
-     * 
-     * @param type $baIdList
-     */
-    public function getBaList($baIdList = array())
-    {
-        $comparison = '';
-        if (count($baIdList) > 1) {
-            $comparison = ' WHERE `' . $this->primaryKey . '` IN (' . implode(',', $baIdList) . ')';
-        }
-        
-        $queryGetBaList = 'SELECT * FROM ' . $this->table . $comparison;
-        
-    }
+    protected $comparisonKeys = array('ba_id', 'boolean_id');
+
 }
