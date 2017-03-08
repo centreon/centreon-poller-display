@@ -20,24 +20,24 @@ class PollerDisplay extends \AbstractObject
 {
     /**
      *
-     * @var boolean 
+     * @var boolean
      */
     protected $engine = false;
-    
+
     /**
      *
-     * @var boolean 
+     * @var boolean
      */
     protected $broker = true;
-    
+
     /**
      *
-     * @var string 
+     * @var string
      */
     protected $generate_filename = 'bam-poller-display.sql';
 
     /**
-     * 
+     *
      * @param int $poller_id
      * @param string $localhost
      */
@@ -55,7 +55,7 @@ class PollerDisplay extends \AbstractObject
         if ($stmt->fetch()) {
             Centreon::getInstance()->generateobjects($poller_id);
             $bamGenerateInstance = Bam::getInstance();
-            
+
             if ($bamGenerateInstance->isBamModuleAvailable()) {
                 $bamGenerateInstance->generateobjects($poller_id);
             }

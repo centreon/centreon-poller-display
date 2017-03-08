@@ -46,26 +46,26 @@ class Ba extends BamBaseObject
 {
     /**
      *
-     * @var string 
+     * @var string
      */
     protected $table = 'mod_bam';
-    
+
     /**
      *
-     * @var array 
+     * @var array
      */
     protected $columns = array(
         '*'
     );
-    
+
     /**
      *
-     * @var array 
+     * @var array
      */
     protected $comparisonKeys = array('ba_id');
-    
+
     /**
-     * 
+     *
      * @param type $baIdList
      */
     public function getBaList($baIdList = array())
@@ -74,8 +74,7 @@ class Ba extends BamBaseObject
         if (count($baIdList) > 1) {
             $comparison = ' WHERE `' . $this->primaryKey . '` IN (' . implode(',', $baIdList) . ')';
         }
-        
+
         $queryGetBaList = 'SELECT * FROM ' . $this->table . $comparison;
-        
     }
 }

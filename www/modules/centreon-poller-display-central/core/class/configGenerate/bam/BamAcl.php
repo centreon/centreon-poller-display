@@ -46,21 +46,21 @@ class BamAcl extends BamBaseObject
 {
     /**
      *
-     * @var string 
+     * @var string
      */
     protected $table = 'mod_bam_acl';
-    
+
     /**
      *
-     * @var array 
+     * @var array
      */
     protected $columns = array(
         '*'
     );
-    
+
     /**
      *
-     * @var array 
+     * @var array
      */
     protected $comparisonKeys = array('ba_group_id');
 }

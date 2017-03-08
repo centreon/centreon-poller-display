@@ -46,24 +46,24 @@ class BaPollerRelations extends BamBaseObject
 {
     /**
      *
-     * @var string 
+     * @var string
      */
     protected $table = 'mod_bam_poller_relations';
-    
+
     /**
      *
-     * @var array 
+     * @var array
      */
     protected $columns = array('*');
-    
+
     /**
      *
-     * @var array 
+     * @var array
      */
     protected $comparisonKeys = array('ba_id', 'poller_id');
-    
+
     /**
-     * 
+     *
      * @param type $db
      * @param type $pollerId
      * @param type $filteredObjects
@@ -72,9 +72,9 @@ class BaPollerRelations extends BamBaseObject
     {
         parent::__construct($db, $pollerId);
     }
-    
+
     /**
-     * 
+     *
      * @param type $clauseObject
      * @return type
      */

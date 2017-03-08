@@ -87,24 +87,24 @@ class Centreon extends \AbstractObject
 {
     /**
      *
-     * @var boolean 
+     * @var boolean
      */
     protected $engine = false;
-    
+
     /**
      *
-     * @var boolean 
+     * @var boolean
      */
     protected $broker = true;
-    
+
     /**
      *
-     * @var string 
+     * @var string
      */
     protected $generate_filename = 'centreon-poller-display.sql';
 
     /**
-     * 
+     *
      * @param int $poller_id
      */
     public function generateObjects($poller_id)
@@ -309,9 +309,9 @@ class Centreon extends \AbstractObject
         fwrite($this->fp, $sql);
         $this->close_file();
     }
-    
+
     /**
-     * 
+     *
      * @param int $status
      * @return string
      */
