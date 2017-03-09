@@ -46,19 +46,19 @@ class BaBvRelations extends BamBaseObject
 {
     /**
      *
-     * @var string 
+     * @var string
      */
     protected $table = 'mod_bam_bagroup_ba_relation';
-    
+
     /**
      *
-     * @var array 
+     * @var array
      */
     protected $columns = array('*');
-    
+
     /**
      *
-     * @var array 
+     * @var array
      */
     protected $comparisonKeys = array('id_ba', 'id_ba_group');
 }

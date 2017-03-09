@@ -46,19 +46,19 @@ class BaChildrenRelations extends BamBaseObject
 {
     /**
      *
-     * @var string 
+     * @var string
      */
     protected $table = 'mod_bam_dep_child_relation';
-    
+
     /**
      *
-     * @var array 
+     * @var array
      */
     protected $columns = array('*');
-    
+
     /**
      *
-     * @var array 
+     * @var array
      */
     protected $comparisonKeys = array('id_ba', 'id_dep');
 }

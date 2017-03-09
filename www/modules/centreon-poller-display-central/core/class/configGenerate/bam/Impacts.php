@@ -46,14 +46,13 @@ class Impacts extends BamBaseObject
 {
     /**
      *
-     * @var string 
+     * @var string
      */
     protected $table = 'mod_bam_impacts';
-    
+
     /**
      *
-     * @var array 
+     * @var array
      */
     protected $columns = array('*');
-
 }

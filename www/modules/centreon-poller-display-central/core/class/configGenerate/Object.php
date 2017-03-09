@@ -44,36 +44,36 @@ abstract class Object
 {
     /**
      *
-     * @var \CentreonDB 
+     * @var \CentreonDB
      */
     protected $db = null;
-    
+
     /**
      *
-     * @var int 
+     * @var int
      */
     protected $pollerId = null;
-    
+
     /**
      *
-     * @var string 
+     * @var string
      */
     protected $table = null;
-    
+
     /**
      *
-     * @var array 
+     * @var array
      */
     protected $columns = null;
-    
+
     /**
      *
-     * @var string 
+     * @var string
      */
     protected $primaryKey = null;
 
     /**
-     * 
+     *
      * @param \CentreonDB $db
      * @param int $pollerId
      * @param array $filteredObjects
@@ -85,7 +85,7 @@ abstract class Object
     }
 
     /**
-     * 
+     *
      * @param array $object
      * @return string
      */
@@ -108,7 +108,7 @@ abstract class Object
     }
 
     /**
-     * 
+     *
      * @return string
      */
     protected function generateTruncateQuery()
@@ -118,7 +118,7 @@ abstract class Object
     }
 
     /**
-     * 
+     *
      * @return string
      */
     protected function generateDeleteQuery()
@@ -128,7 +128,7 @@ abstract class Object
     }
 
     /**
-     * 
+     *
      * @param type $objects
      * @return string
      */
@@ -138,7 +138,7 @@ abstract class Object
         if (empty($errors)) {
             return '';
         }
-        
+
         if (implode(',', $this->columns) == '*') {
             $this->columns = array_keys($objects[0]);
         }
@@ -170,7 +170,7 @@ abstract class Object
     }
 
     /**
-     * 
+     *
      * @param type $clauseObject
      * @return array
      */
@@ -180,7 +180,7 @@ abstract class Object
 
         $query = 'SELECT ' . implode(',', $this->columns) . ' '
             . 'FROM ' . $this->table . ' ';
-        
+
         $result = $this->db->query($query);
 
         while ($row = $result->fetch(\PDO::FETCH_ASSOC)) {

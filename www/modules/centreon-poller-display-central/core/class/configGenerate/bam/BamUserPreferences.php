@@ -46,19 +46,19 @@ class BamUserPreferences extends BamBaseObject
 {
     /**
      *
-     * @var string 
+     * @var string
      */
     protected $table = 'mod_bam_user_preferences';
-    
+
     /**
      *
-     * @var array 
+     * @var array
      */
     protected $columns = array('*');
-    
+
     /**
      *
-     * @var array 
+     * @var array
      */
     protected $comparisonKeys = array('user_id');
 }

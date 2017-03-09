@@ -46,14 +46,13 @@ class Boolean extends BamBaseObject
 {
     /**
      *
-     * @var string 
+     * @var string
      */
     protected $table = 'mod_bam_boolean';
-    
+
     /**
      *
-     * @var array 
+     * @var array
      */
     protected $columns = array('*');
-
 }

@@ -46,20 +46,19 @@ class KpiView extends BamBaseObject
 {
     /**
      *
-     * @var string 
+     * @var string
      */
     protected $table = 'mod_bam_view_kpi';
-    
+
     /**
      *
-     * @var array 
+     * @var array
      */
     protected $columns = array('*');
-    
+
     /**
      *
-     * @var array 
+     * @var array
      */
     protected $comparisonKeys = array('ba_id', 'boolean_id');
-
 }

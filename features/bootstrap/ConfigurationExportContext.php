@@ -116,12 +116,16 @@ class ConfigurationExportContext extends CentreonContext
      */
     public function theHostsMonitoringDataIsPrintedOnTheServer($server)
     {
+        // 
+        $this->container->execute("/bin/bash /usr/share/centreon/cron/centreon-poller-display-sync.sh", 'poller');
+        sleep(2);
+        
         // Login.
         $baseUrl = ($server == 'poller') ? $this->baseUrlPoller : $this->baseUrlCentral;
         $this->visit($baseUrl);
         $page = new LoginPage($this, false);
         $page->login('admin', 'centreon');
-
+        
         // Visit details page.
         $this->spin(
             function ($context) use ($baseUrl) {

@@ -46,19 +46,19 @@ class BaTimeperiodRelations extends BamBaseObject
 {
     /**
      *
-     * @var string 
+     * @var string
      */
     protected $table = 'mod_bam_relations_ba_timeperiods';
-    
+
     /**
      *
-     * @var array 
+     * @var array
      */
     protected $columns = array('*');
-    
+
     /**
      *
-     * @var array 
+     * @var array
      */
     protected $comparisonKeys = array('ba_id', 'tp_id');
 }
