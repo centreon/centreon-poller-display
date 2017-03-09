@@ -232,7 +232,7 @@ class Centreon extends \AbstractObject
         $sql .= $oContactServiceRelation->generateSql($contactServiceRelationList) . "\n\n";
 
         $contactList = $oContact->getList($contactHostRelationList, $contactServiceRelationList);
-        $sql .= $oContact->generateSql($contactList) . "\n\n";
+        $sql .= $oContact->generateSql($contactList, false) . "\n\n";
 
         $ContactgroupRelationList = $oContactgroupContactRelation->getList($contactList);
         $sql .= $oContactgroupContactRelation->generateSql($ContactgroupRelationList) . "\n\n";

@@ -84,6 +84,7 @@ class Contact extends Object
         $clauseQuery = ' WHERE contact_id IN (';
         $clauseQuery .= implode(',', $listContactUnique);
         $clauseQuery .= ')';
+        $clauseQuery .= " AND contact_admin = '0'";
 
         $query = 'SELECT ' . implode(',', $this->columns) . ' '
             . 'FROM ' . $this->table . $clauseQuery;
@@ -94,5 +95,24 @@ class Contact extends Object
         }
 
         return $list;
+    }
+    
+    /**
+     *
+     * @return string
+     */
+    protected function generateDeleteQuery()
+    {
+        $query = 'DELETE FROM ' . $this->table . " WHERE contact_admin = '0';";
+        return $query;
+    }
+    
+    /**
+     *
+     * @return string
+     */
+    protected function generateTruncateQuery()
+    {
+        return '';
     }
 }
