@@ -91,7 +91,7 @@ class Bam extends \AbstractObject
         
         $rowSelectModule = $resSelectBamModule->fetch();
         
-        if (count($rowSelectModule) > 0) {
+        if (($rowSelectModule !== false) && (count($rowSelectModule) > 0)) {
             $bamAvailable = true;
         }
         
