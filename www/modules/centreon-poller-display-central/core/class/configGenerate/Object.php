@@ -157,7 +157,7 @@ abstract class Object
                 if (is_null($value)) {
                     $insertQuery .= 'NULL,';
                 } else {
-                    $insertQuery .= '\'' . $value . '\',';
+                    $insertQuery .=  $this->db->quote($value) . ',';
                 }
             }
             $insertQuery = rtrim($insertQuery, ',');
