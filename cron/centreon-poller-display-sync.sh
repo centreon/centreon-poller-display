@@ -23,7 +23,7 @@ SQL_FILE=${FILE_PATH}${config_name_files[$i]}${extend_sql}
     file_content=`cat ${SQL_FILE}`
     hashFile=`md5sum < ${SQL_FILE}`
         if [ "${hash_content}" != "${hashFile}" ] ; then
-            mysql --user="$USER" --password="$PASSWORD" --database="$DB_CENTREON" --execute="$file_content"
+            mysql --user="$USER" --password="$PASSWORD" --database="$DB_CENTREON" < ${SQL_FILE}
             echo ${hashFile} > ${HASH_FILE}
             service cbd restart
         fi
