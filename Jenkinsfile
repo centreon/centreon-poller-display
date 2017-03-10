@@ -94,6 +94,18 @@ try {
     }
   }
 
+  if (env.BRANCH_NAME == 'master') {
+    stage('Delivery') {
+      node {
+        sh 'cd /opt/centreon-build && git pull && cd -'
+        sh '/opt/centreon-build/jobs/poller-display/mon-poller-display-delivery.sh'
+      }
+      if ((currentBuild.result ?: 'SUCCESS') != 'SUCCESS') {
+        error('Delivery stage failure.');
+      }
+    }
+  }
+
   stage('Acceptance tests') {
     parallel 'centos6': {
       node {
@@ -127,18 +139,6 @@ try {
     }
     if ((currentBuild.result ?: 'SUCCESS') != 'SUCCESS') {
       error('Acceptance tests stage failure.');
-    }
-  }
-
-  if (env.BRANCH_NAME == 'master') {
-    stage('Delivery') {
-      node {
-        sh 'cd /opt/centreon-build && git pull && cd -'
-        sh '/opt/centreon-build/jobs/poller-display/mon-poller-display-delivery.sh'
-      }
-      if ((currentBuild.result ?: 'SUCCESS') != 'SUCCESS') {
-        error('Delivery stage failure.');
-      }
     }
   }
 }
