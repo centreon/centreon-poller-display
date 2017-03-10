@@ -80,7 +80,7 @@ class CentreonPollerDisplayCentral_Contact extends PHPUnit_Framework_TestCase
     public function testGetList()
     {
         self::$db->addResultSet(
-            'SELECT * FROM contact WHERE contact_id IN (2,6,1)',
+            "SELECT * FROM contact WHERE contact_id IN (2,6,1) AND contact_admin = '0'",
             array(
                 array(
                     'contact_id' => '1',
@@ -100,9 +100,8 @@ class CentreonPollerDisplayCentral_Contact extends PHPUnit_Framework_TestCase
     public function testGenerateSql()
     {
 
-        $expectedResult = 'DELETE FROM contact;
-TRUNCATE contact;
-INSERT INTO `contact` (`contact_id`,`contact_name`) VALUES (\'1\',\'toto\'),(\'6\',\'tata\');';
+        $expectedResult = "DELETE FROM contact WHERE contact_admin = '0';
+INSERT INTO `contact` (`contact_id`,`contact_name`) VALUES ('1','toto'),('6','tata');";
 
         $sql = self::$contact->generateSql(self::$objectListOut);
         $this->assertEquals($sql, $expectedResult);
