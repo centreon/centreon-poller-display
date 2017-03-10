@@ -115,15 +115,6 @@ class Contact extends Object
     
     /**
      *
-     * @return string
-     */
-    protected function generateTruncateQuery()
-    {
-        return '';
-    }
-    
-    /**
-     *
      * @param array $object
      * @return string
      */
