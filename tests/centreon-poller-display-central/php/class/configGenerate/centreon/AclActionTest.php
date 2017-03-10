@@ -67,7 +67,7 @@ class CentreonPollerDisplayCentral_AclAction extends PHPUnit_Framework_TestCase
     public function testGetList()
     {
         self::$db->addResultSet(
-            'SELECT * FROM acl_actions WHERE acl_action_id IN (2,6)',
+            "SELECT * FROM acl_actions WHERE acl_action_id IN (2,6)",
             array(
                 array(
                     'acl_action_id' => '2',
@@ -86,9 +86,9 @@ class CentreonPollerDisplayCentral_AclAction extends PHPUnit_Framework_TestCase
     public function testGenerateSql()
     {
 
-        $expectedResult = 'DELETE FROM acl_actions;
+        $expectedResult = "DELETE FROM acl_actions;
 TRUNCATE acl_actions;
-INSERT INTO `acl_actions` (`acl_action_id`,`acl_action_name`) VALUES (\'2\',\'user\'),(\'6\',\'gest\');';
+INSERT INTO `acl_actions` (`acl_action_id`,`acl_action_name`) VALUES ('2','user'),('6','gest');";
 
         $sql = self::$acl->generateSql(self::$objectListOut);
         $this->assertEquals($sql, $expectedResult);

@@ -52,6 +52,12 @@ class Contact extends Object
         '*'
     );
 
+    /**
+     * 
+     * @param type $clauseHostObject
+     * @param type $clauseServiceObject
+     * @return string
+     */
     public function getList($clauseHostObject = null, $clauseServiceObject = null)
     {
         $listContact = array();
@@ -109,10 +115,23 @@ class Contact extends Object
     
     /**
      *
+     * @param array $object
      * @return string
      */
-    protected function generateTruncateQuery()
+    public function generateSql($object = array(), $withCleaning = true)
     {
-        return '';
+        if (is_null($this->table) || is_null($this->columns)) {
+            return null;
+        }
+
+        if ($withCleaning) {
+            $deleteQuery = $this->generateDeleteQuery();
+        }
+
+        $insertQuery = $this->generateInsertQuery($object);
+
+        $finalQuery = $deleteQuery . "\n" . $insertQuery;
+
+        return $finalQuery;
     }
 }
