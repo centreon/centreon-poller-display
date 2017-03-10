@@ -21,7 +21,7 @@ SQL_FILE=${FILE_PATH}${config_name_files[$i]}${extend_sql}
             hash_content=''
         fi
     file_content=`cat ${SQL_FILE}`
-    hashFile=`md5sum < ${HASH_FILE}`
+    hashFile=`md5sum < ${SQL_FILE}`
         if [ "${hash_content}" != "${hashFile}" ] ; then
             mysql --user="$USER" --password="$PASSWORD" --database="$DB_CENTREON" --execute="$file_content"
             echo ${hashFile} > ${HASH_FILE}
