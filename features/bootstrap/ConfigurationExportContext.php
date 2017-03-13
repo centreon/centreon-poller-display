@@ -118,7 +118,7 @@ class ConfigurationExportContext extends CentreonContext
     {
         // 
         $this->container->execute("/bin/bash /usr/share/centreon/cron/centreon-poller-display-sync.sh", 'poller');
-        sleep(2);
+        sleep(3);
         
         // Login.
         $baseUrl = ($server == 'poller') ? $this->baseUrlPoller : $this->baseUrlCentral;

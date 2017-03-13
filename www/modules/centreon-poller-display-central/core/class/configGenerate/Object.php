@@ -134,38 +134,39 @@ abstract class Object
      */
     protected function generateInsertQuery($objects)
     {
-        $errors = array_filter($objects);
-        if (empty($errors)) {
-            return '';
-        }
-
-        if (implode(',', $this->columns) == '*') {
-            $this->columns = array_keys($objects[0]);
-        }
-
-        $insertQuery = 'INSERT INTO `' . $this->table . '` '
-            . '(`' . implode('`,`', $this->columns) . '`) '
-            . 'VALUES ';
-
-        $first = true;
-        foreach ($objects as $object) {
-            if (!$first) {
-                $insertQuery .= ',';
+        $insertQuery = '';
+        
+        if (!empty($objects)) {
+            
+            if (implode(',', $this->columns) == '*') {
+                $this->columns = array_keys($objects[0]);
             }
-            $insertQuery .= '(';
-            foreach ($object as $value) {
-                if (is_null($value)) {
-                    $insertQuery .= 'NULL,';
-                } else {
-                    $insertQuery .=  $this->db->quote($value) . ',';
+
+            $insertQuery .= 'INSERT INTO `' . $this->table . '` '
+                . '(`' . implode('`,`', $this->columns) . '`) '
+                . 'VALUES ';
+
+            $first = true;
+            foreach ($objects as $object) {
+                if (!$first) {
+                    $insertQuery .= ',';
                 }
+                $insertQuery .= '(';
+                foreach ($object as $value) {
+                    if (is_null($value)) {
+                        $insertQuery .= 'NULL,';
+                    } else {
+                        $insertQuery .=  $this->db->quote($value) . ',';
+                    }
+                }
+                $insertQuery = rtrim($insertQuery, ',');
+                $insertQuery .= ')';
+                $first = false;
             }
-            $insertQuery = rtrim($insertQuery, ',');
-            $insertQuery .= ')';
-            $first = false;
+            $insertQuery .= ';';
+            
         }
-        $insertQuery .= ';';
-
+        
         return $insertQuery;
     }
 
