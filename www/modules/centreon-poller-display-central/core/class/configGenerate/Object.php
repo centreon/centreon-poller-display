@@ -135,9 +135,8 @@ abstract class Object
     protected function generateInsertQuery($objects)
     {
         $insertQuery = '';
-        
+
         if (!empty($objects)) {
-            
             if (implode(',', $this->columns) == '*') {
                 $this->columns = array_keys($objects[0]);
             }
@@ -164,9 +163,8 @@ abstract class Object
                 $first = false;
             }
             $insertQuery .= ';';
-            
         }
-        
+
         return $insertQuery;
     }
 

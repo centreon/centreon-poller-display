@@ -53,7 +53,7 @@ class Contact extends Object
     );
 
     /**
-     * 
+     *
      * @param type $clauseHostObject
      * @param type $clauseServiceObject
      * @return string
@@ -102,7 +102,7 @@ class Contact extends Object
 
         return $list;
     }
-    
+
     /**
      *
      * @return string
@@ -112,7 +112,7 @@ class Contact extends Object
         $query = 'DELETE FROM ' . $this->table . " WHERE contact_admin = '0';";
         return $query;
     }
-    
+
     /**
      *
      * @param array $object
