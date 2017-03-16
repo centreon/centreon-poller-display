@@ -171,11 +171,6 @@ class Bam extends \AbstractObject
         $sql .=  $kpiObj->generateSql($kpiList) . "\n\n";
         $booleanKpiSimpleList = $this->getSimpleObjectList($kpiList, 'boolean_id');
 
-        //
-        $kpiViewObj = new KpiView($this->backend_instance->db, $poller_id);
-        $kpiViewList = $kpiViewObj->getList(array('id_ba' => $baSimpleList));
-        $sql .=  $kpiViewObj->generateSql($kpiViewList) . "\n\n";
-
         // Generate boolean Kpi
         $booleanKpiObj = new Boolean($this->backend_instance->db, $poller_id);
         $booleanKpiList = $booleanKpiObj->getList($booleanKpiSimpleList);
