@@ -50,7 +50,6 @@ use \CentreonPollerDisplayCentral\ConfigGenerate\Bam\Bv;
 use \CentreonPollerDisplayCentral\ConfigGenerate\Bam\Boolean;
 use \CentreonPollerDisplayCentral\ConfigGenerate\Bam\Impacts;
 use \CentreonPollerDisplayCentral\ConfigGenerate\Bam\Kpi;
-use \CentreonPollerDisplayCentral\ConfigGenerate\Bam\KpiView;
 
 /**
  * User: kduret
