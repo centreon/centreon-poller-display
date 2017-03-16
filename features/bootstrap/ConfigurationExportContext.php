@@ -75,7 +75,7 @@ class ConfigurationExportContext extends CentreonContext
             'max_check_attempts' => 1,
             'normal_check_interval' => 1,
             'retry_check_interval' => 1,
-            'active_checks_enabled' => 0,
+            'active_checks_enabled' => 1,
             'passive_checks_enabled' => 1
         ));
         $page->save();
@@ -96,7 +96,7 @@ class ConfigurationExportContext extends CentreonContext
             'max_check_attempts' => 1,
             'normal_check_interval' => 1,
             'retry_check_interval' => 1,
-            'active_checks_enabled' => 0,
+            'active_checks_enabled' => 1,
             'passive_checks_enabled' => 1
         ));
         $page->save();
@@ -125,16 +125,16 @@ class ConfigurationExportContext extends CentreonContext
      */
     public function theHostsMonitoringDataIsPrintedOnTheServer($server)
     {
-        // 
+        // cron daemon is not started, run cron task manually.
         $this->container->execute("/bin/bash /usr/share/centreon/cron/centreon-poller-display-sync.sh", 'poller');
         sleep(3);
-        
+
         // Login.
         $baseUrl = ($server == 'poller') ? $this->baseUrlPoller : $this->baseUrlCentral;
         $this->visit($baseUrl);
         $page = new LoginPage($this, false);
         $page->login('admin', 'centreon');
-        
+
         // Visit details page.
         $this->spin(
             function ($context) use ($baseUrl) {
