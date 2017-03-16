@@ -116,6 +116,11 @@ class ConfigurationExportContext extends CentreonContext
      */
     public function iExportThePollerConfiguration()
     {
+        $this->container->execute(
+            "centreon -u admin -p centreon -o ENGINECFG -a SETPARAM -v" .
+            " 'Centreon Engine Poller;max_host_check_spread;1'",
+            'web'
+        );
         $this->restartAllPollers();
         $this->iAmLoggedOut();
     }
