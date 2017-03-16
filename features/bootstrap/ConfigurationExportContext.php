@@ -101,6 +101,15 @@ class ConfigurationExportContext extends CentreonContext
         ));
         $page->save();
     }
+    
+    /**
+     * 
+     * @return type
+     */
+    public function getHostName()
+    {
+        return $this->hostName;
+    }
 
     /**
      *  @When I export the poller configuration
@@ -131,7 +140,7 @@ class ConfigurationExportContext extends CentreonContext
             function ($context) use ($baseUrl) {
                 $context->visit(
                     $baseUrl . 'main.php?p=20202&o=hd&host_name=' .
-                    $context->hostName
+                    $context->getHostName()
                 );
                 $page = new HostMonitoringDetailsPage($context, null, false);
                 $props = $page->getProperties();
