@@ -69,7 +69,7 @@ class BamBaseObject extends Object
         $initLoop = true;
 
         foreach ($this->comparisonKeys as $comparisonKey) {
-            if (isset($clauseObject[$comparisonKey])) {
+            if (isset($clauseObject[$comparisonKey]) && count($clauseObject[$comparisonKey]) > 0) {
                 if ($initLoop) {
                     $queryGetList .=  " WHERE ";
                     $initLoop = false;
