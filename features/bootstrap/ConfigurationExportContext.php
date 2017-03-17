@@ -75,7 +75,7 @@ class ConfigurationExportContext extends CentreonContext
             'max_check_attempts' => 1,
             'normal_check_interval' => 1,
             'retry_check_interval' => 1,
-            'active_checks_enabled' => 0,
+            'active_checks_enabled' => 1,
             'passive_checks_enabled' => 1
         ));
         $page->save();
@@ -96,14 +96,14 @@ class ConfigurationExportContext extends CentreonContext
             'max_check_attempts' => 1,
             'normal_check_interval' => 1,
             'retry_check_interval' => 1,
-            'active_checks_enabled' => 0,
+            'active_checks_enabled' => 1,
             'passive_checks_enabled' => 1
         ));
         $page->save();
     }
-    
+
     /**
-     * 
+     *
      * @return type
      */
     public function getHostName()
@@ -116,6 +116,16 @@ class ConfigurationExportContext extends CentreonContext
      */
     public function iExportThePollerConfiguration()
     {
+        $this->container->execute(
+            "centreon -u admin -p centreon -o ENGINECFG -a SETPARAM -v" .
+            " 'Centreon Engine Poller;max_host_check_spread;1'",
+            'web'
+        );
+        $this->container->execute(
+            "centreon -u admin -p centreon -o ENGINECFG -a SETPARAM -v" .
+            " 'Centreon Engine Poller;max_service_check_spread;1'",
+            'web'
+        );
         $this->restartAllPollers();
         $this->iAmLoggedOut();
     }
@@ -125,16 +135,16 @@ class ConfigurationExportContext extends CentreonContext
      */
     public function theHostsMonitoringDataIsPrintedOnTheServer($server)
     {
-        // 
+        // cron daemon is not started, run cron task manually.
         $this->container->execute("/bin/bash /usr/share/centreon/cron/centreon-poller-display-sync.sh", 'poller');
         sleep(3);
-        
+
         // Login.
         $baseUrl = ($server == 'poller') ? $this->baseUrlPoller : $this->baseUrlCentral;
         $this->visit($baseUrl);
         $page = new LoginPage($this, false);
         $page->login('admin', 'centreon');
-        
+
         // Visit details page.
         $this->spin(
             function ($context) use ($baseUrl) {
@@ -148,6 +158,7 @@ class ConfigurationExportContext extends CentreonContext
                     ($props['state'] !== HostMonitoringDetailsPage::STATE_UP)) {
                     throw new \Exception('Invalid host properties.');
                 }
+                return true;
             },
             'Properties of host ' . $this->hostName .
             ' are not correct on server ' . $server . '.'
@@ -173,6 +184,7 @@ class ConfigurationExportContext extends CentreonContext
                 if ($props['state'] !== ServiceMonitoringDetailsPage::STATE_OK) {
                     throw new \Exception('Invalid service properties.');
                 }
+                return true;
             },
             'Properties of service ' . $this->serviceDescription .
             ' are not correct on server ' . $server
