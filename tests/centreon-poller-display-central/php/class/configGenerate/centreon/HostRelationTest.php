@@ -68,6 +68,11 @@ class CentreonPollerDisplayCentral_HostRelation extends PHPUnit_Framework_TestCa
                 )
             )
         );
+        
+        self::$db->addResultSet(
+            "SELECT host_id FROM host WHERE host_name = '_Module_BAM_1'",
+            array()
+        );
 
         $sql = self::$hostRelation->getList();
         $this->assertEquals($sql, self::$objectList);
