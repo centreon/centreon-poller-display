@@ -94,18 +94,6 @@ try {
     }
   }
 
-  if (env.BRANCH_NAME == 'master') {
-    stage('Delivery') {
-      node {
-        sh 'cd /opt/centreon-build && git pull && cd -'
-        sh '/opt/centreon-build/jobs/poller-display/mon-poller-display-delivery.sh'
-      }
-      if ((currentBuild.result ?: 'SUCCESS') != 'SUCCESS') {
-        error('Delivery stage failure.');
-      }
-    }
-  }
-
   stage('Acceptance tests') {
     parallel 'centos6': {
       node {
@@ -141,12 +129,22 @@ try {
       error('Acceptance tests stage failure.');
     }
   }
+
+  if (env.BRANCH_NAME == 'master') {
+    stage('Delivery') {
+      node {
+        sh 'cd /opt/centreon-build && git pull && cd -'
+        sh '/opt/centreon-build/jobs/poller-display/mon-poller-display-delivery.sh'
+      }
+      if ((currentBuild.result ?: 'SUCCESS') != 'SUCCESS') {
+        error('Delivery stage failure.');
+      }
+    }
+  }
 }
 finally {
   buildStatus = currentBuild.result ?: 'SUCCESS';
-  /*
   if ((buildStatus != 'SUCCESS') && (env.BRANCH_NAME == 'master')) {
     slackSend channel: '#monitoring-metrology', message: "@channel Centreon Poller Display build ${env.BUILD_NUMBER} was broken by ${source.COMMITTER}. Please fix it ASAP."
   }
-  */
 }
