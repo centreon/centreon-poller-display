@@ -101,9 +101,9 @@ class ConfigurationExportContext extends CentreonContext
         ));
         $page->save();
     }
-    
+
     /**
-     * 
+     *
      * @return type
      */
     public function getHostName()
@@ -119,6 +119,11 @@ class ConfigurationExportContext extends CentreonContext
         $this->container->execute(
             "centreon -u admin -p centreon -o ENGINECFG -a SETPARAM -v" .
             " 'Centreon Engine Poller;max_host_check_spread;1'",
+            'web'
+        );
+        $this->container->execute(
+            "centreon -u admin -p centreon -o ENGINECFG -a SETPARAM -v" .
+            " 'Centreon Engine Poller;max_service_check_spread;1'",
             'web'
         );
         $this->restartAllPollers();
@@ -153,6 +158,7 @@ class ConfigurationExportContext extends CentreonContext
                     ($props['state'] !== HostMonitoringDetailsPage::STATE_UP)) {
                     throw new \Exception('Invalid host properties.');
                 }
+                return true;
             },
             'Properties of host ' . $this->hostName .
             ' are not correct on server ' . $server . '.'
@@ -178,6 +184,7 @@ class ConfigurationExportContext extends CentreonContext
                 if ($props['state'] !== ServiceMonitoringDetailsPage::STATE_OK) {
                     throw new \Exception('Invalid service properties.');
                 }
+                return true;
             },
             'Properties of service ' . $this->serviceDescription .
             ' are not correct on server ' . $server
