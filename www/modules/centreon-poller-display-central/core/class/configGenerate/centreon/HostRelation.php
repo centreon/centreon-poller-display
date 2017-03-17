@@ -64,7 +64,26 @@ class HostRelation extends Object
         while ($row = $result->fetch(\PDO::FETCH_ASSOC)) {
             $list[] = $row;
         }
+        
+        $this->getVirtualHostBam($list);
 
         return $list;
+    }
+    
+    /**
+     *
+     * @param type $hosts
+     */
+    private function getVirtualHostBam(&$list)
+    {
+        $queryVirtual = "SELECT host_id FROM host WHERE host_name = '_Module_BAM_" . $this->pollerId . "'";
+        $resultVirtual = $this->db->query($queryVirtual);
+        
+        while ($rowVirtual = $resultVirtual->fetch(\PDO::FETCH_ASSOC)) {
+            $list[] = array(
+                'nagios_server_id' => $this->pollerId,
+                'host_host_id' => $rowVirtual['host_id']
+            );
+        }
     }
 }
