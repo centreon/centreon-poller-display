@@ -1,15 +1,38 @@
 Configuration
 =============
 
+.. note::
+
+   All configuration will occur on the central server.
+
+
+Declare poller as poller-display-enabled
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+On the central server, you first need to declare the poller as poller-display-enabled.
+This can be done thanks to the **centreon-poller-display-central** module. Go to:
+
+::
+  Configuration > Pollers > Poller display
+
+Add your poller to the list of poller-display-enabled pollers and save the changes.
+
+.. image:: images/poller_display_enabled.png
+   :align: center
+   :width: 800 px
+
+
+Centreon Broker configuration
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
 Specific Centreon Broker streams configurations are required for the "Poller" server that will host Centreon Poller Display. These streams are configured from the Central server like monitored ressources configuration. Only ACLs, contacts and general options can be configured at the Poller's end.
 
-It is necessary to setup tree Centreon-Broker streams:
+It is necessary to setup three Centreon-Broker streams:
 
 * A "classic" configuration for the streams between Centreon-Broker module on the Poller server and Centreon-Broker daemon (cbd) on the Central server
 * A configuration for the stream between Centreon-Broker module on the Poller server and Centreon-Broker daemon (cbd) on the Poller server
 * A configuration for the stream between Centreon-Broker module on the Poller server and Centreon-Broker daemon (cbd) on the Central server for RRDs files generation
 
- 
 "Poller" Configuration
 ----------------------
 
@@ -138,7 +161,7 @@ You can now validate form. Configuration is now Ok for this object.
 "Poller-Display-RRD" configuration
 ----------------------------------
 
-This step aims to configure the dedicated stream for RRD's file generation on the Poller. For this go to : 
+This step aims to configure the dedicated stream for RRD's file generation on the Poller. For this go to :
 
 ::
 
