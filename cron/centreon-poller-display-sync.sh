@@ -12,20 +12,19 @@ extend_sql='.sql'
 
 for ((i=0; i < ${#config_name_files[@]}; i++))
 do
-SQL_FILE=${FILE_PATH}${config_name_files[$i]}${extend_sql}
+    SQL_FILE=${FILE_PATH}${config_name_files[$i]}${extend_sql}
     if [ -f ${SQL_FILE} ] ; then
-    HASH_FILE=${HASH_PATH}${config_name_files[$i]}${extend_save}
+        HASH_FILE=${HASH_PATH}${config_name_files[$i]}${extend_save}
         if [ -f ${HASH_FILE} ] ; then
             hash_content=`cat ${HASH_FILE}`
         else
             hash_content=''
         fi
-    file_content=`cat ${SQL_FILE}`
-    hashFile=`md5sum < ${SQL_FILE}`
+        hashFile=`md5sum < ${SQL_FILE}`
         if [ "${hash_content}" != "${hashFile}" ] ; then
             mysql --user="$USER" --password="$PASSWORD" --database="$DB_CENTREON" < ${SQL_FILE}
-            echo ${hashFile} > ${HASH_FILE}
-            service cbd restart
+            echo "${hashFile}" > ${HASH_FILE}
+            service cbd reload
         fi
    fi
 done
