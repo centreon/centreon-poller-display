@@ -1,19 +1,46 @@
 Configuration
 =============
 
+.. note::
+
+   Toute la configuration s'effectue sur le serveur central.
+
+
+Déclarer la présence de poller-display
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Sur le serveur central, vous devez tout d'abord déclarer la présence du module
+poller-display sur le poller. Ceci se fait grâce au module de configuration
+**centreon-poller-display-central**. Rendez-vous à
+
+::
+
+   Configuration > Collecteurs > Poller display
+
+Ajoutez votre poller à la liste des poller disposant de poller-display et
+sauvegardez.
+
+.. image:: images/poller_display_enabled.png
+   :align: center
+   :width: 800px
+
+
+Configuration de Centreon Broker
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
 Il est maintenant nécessaire de configurer différents nouveaux flux Centreon-Broker au niveau du serveur de type "poller" qui hébergera l'interface web. Ces flux sont à configurer au niveau du serveur central. Il ne sera jamais nécessaire de configurer quoi que ce soit au niveau du poller au sujet de la configuration des ressources supervisées. Seule les ACL, les contacts et les options générales peuvent être configurées au niveau des pollers.
 
-Pour gérer les différents flux de Centreon-Broker, il est nécessaire de créer trois configurations différentes : 
+Pour gérer les différents flux de Centreon-Broker, il est nécessaire de créer trois configurations différentes :
 
 * Une configuration "classique" entre le module Centreon-Broker du collecteur et le démon Centreon-Broker sur le serveur central
 * Une configuration pour le flux entre le module Centreon-Broker sur le collecteur et le démon Centreon-Broker sur le poller
 * Une configuration pour le flux vers le démon Centreon-Broker pour la génération des fichiers RRDs.
 
- 
+
 Configuration "Poller"
 ----------------------
 
-La première étape revient à configurer votre poller avec une configuration classique. Il est donc possible de la générer avec le wizzard. Dans le menu :
+La première étape revient à configurer votre poller avec une configuration classique. Il est donc possible de la générer avec le wizard. Dans le menu :
 
 ::
 
@@ -28,7 +55,7 @@ La première étape revient à configurer votre poller avec une configuration cl
 
 Il est possible que vous n'ayez pas besoin de passer par cette étape si votre poller est déjà en fonctionnement et que les données remontent déjà sur le serveur central.
 
-Il est toutefois nécessaire de configurer la connexion entre ce module Broker et le démon broker local. 
+Il est toutefois nécessaire de configurer la connexion entre ce module Broker et le démon broker local.
 Pour cela, dans la configuration de ce poller, il est nécessaire d'ajouter un **Output** de type **IPv4** :
 
 .. image:: images/poller-output.png
@@ -37,7 +64,7 @@ Pour cela, dans la configuration de ce poller, il est nécessaire d'ajouter un *
 Configuration "Poller-Display-Broker"
 -------------------------------------
 
-La deuxième étape consiste à configurer le flux entre le module Centreon-Broker du poller et le démon Centreon-Broker sur le poller. Un démon Centreon-Broker sera nécessaire afin de constituer un cache local dans la base de données "centreon_storage" pour que l'interface Web de Centreon puisse l'afficher. Pour cela aller dans : 
+La deuxième étape consiste à configurer le flux entre le module Centreon-Broker du poller et le démon Centreon-Broker sur le poller. Un démon Centreon-Broker sera nécessaire afin de constituer un cache local dans la base de données "centreon_storage" pour que l'interface Web de Centreon puisse l'afficher. Pour cela aller dans :
 
 ::
 
@@ -104,7 +131,7 @@ Vous pouvez maintenant valider le formulaire. Votre configuration est maintenant
 Configuration "Poller-Display-RRD"
 ----------------------------------
 
-Cette étape consiste maintenant à configurer le flux pour la création des fichiers RRDs sur le poller. Un démon "RRD" sera également ajouté pour la création des bases de données RRDTool sur le poller comme nous avons l'habitude de le faire sur le serveur Central. Pour cela aller dans : 
+Cette étape consiste maintenant à configurer le flux pour la création des fichiers RRDs sur le poller. Un démon "RRD" sera également ajouté pour la création des bases de données RRDTool sur le poller comme nous avons l'habitude de le faire sur le serveur Central. Pour cela aller dans :
 
 ::
 
