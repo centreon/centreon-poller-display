@@ -1,6 +1,41 @@
 Installation
 ============
 
+Installation sur le serveur central
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Depuis le repository
+--------------------
+
+Référez-vous à la `documentation de Centreon Web <https://documentation-fr.centreon.com/docs/centreon/en/2.8.x/installation/index.html>`_
+pour installer et configurer correctement votre serveur central.
+
+Une fois ceci fait, installez le module *centreon-poller-display-central*.
+
+::
+
+  yum install centreon-poller-display-central
+
+Installation Web
+----------------
+
+La suite de l'installation de l'extension s'effectue via l'interface web de **Centreon**.
+
+Accédez au menu de gestion des modules : Administration > Extensions.
+
+.. image:: images/module_central.png
+   :align: center
+   :width: 800px
+
+Cliquez sur l'icone d'installation du module **centreon-poller-display-central**.
+
+Sur la page suivante, cliquer sur "Installer le module".
+
+Le module est maintenant installé.
+
+Installation sur le poller
+^^^^^^^^^^^^^^^^^^^^^^^^^^
+
 Depuis le repository
 --------------------
 
@@ -33,7 +68,7 @@ Accéder au menu de gestion des modules : Administration > Extensions sur l'inte
 .. image:: images/centreon_administration_modules.png
    :align: center
    :width: 800 px
-   
+
 Au niveau du module **centreon-poller-display** , cliquer sur l'icône d'installation.
 
 Sur la nouvelle page cliquer sur "Installer Module" .
