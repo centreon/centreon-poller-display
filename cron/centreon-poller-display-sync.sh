@@ -9,6 +9,7 @@ HASH_PATH="/etc/centreon/"
 config_name_files=( "centreon-poller-display" "bam-poller-display" )
 extend_save='-save.txt'
 extend_sql='.sql'
+PATH="$PATH:/usr/sbin:/sbin"
 
 for ((i=0; i < ${#config_name_files[@]}; i++))
 do
