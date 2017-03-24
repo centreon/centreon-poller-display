@@ -1,7 +1,7 @@
 <?php
 
 // Be carefull with name, it's case sensitive (with directory module name).
-$module_conf['centreon-poller-display']["rname"] = "Centreon Poller Display Central";
+$module_conf['centreon-poller-display']["rname"] = "Centreon Poller Display";
 $module_conf['centreon-poller-display']["name"] = "centreon-poller-display";
 $module_conf['centreon-poller-display']["mod_release"] = "1.6.0";
 $module_conf['centreon-poller-display']["infos"] = "centreon-poller-display";
