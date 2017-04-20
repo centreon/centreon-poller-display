@@ -1,0 +1,12 @@
+WARNING
+
+We changed the Centreon Poller Display module!
+
+You need to install the centreon-poller-display-central package on your Centreon central server.
+
+You need also to define pollers which use Centreon Poller display module on Centreon configuration.
+
+Please read the documentation available on our Centreon online documentation:
+
+https://documentation.centreon.com/docs/centreon-poller-display/en/latest/
+
