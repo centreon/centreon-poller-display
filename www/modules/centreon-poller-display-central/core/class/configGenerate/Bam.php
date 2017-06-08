@@ -88,7 +88,7 @@ class Bam extends \AbstractObject
         $resSelectBamModule = $this->backend_instance->db->query($querySelectBamModule);
 
         $rowSelectModule = $resSelectBamModule->fetch();
-        
+
         if (($rowSelectModule !== false) && (count($rowSelectModule) > 0)) {
             $bamAvailable = true;
         }
@@ -102,7 +102,25 @@ class Bam extends \AbstractObject
      */
     public function generateObjects($poller_id)
     {
-        $sql = '';
+
+      #Check that the poller id is used as a BAM poller display to prevent
+      #a BAM configuration to be sent to a  poller display without Bam
+      $isBamPoller = false;
+
+      $queryIsPollerUsedWithBAM = "SELECT count(*) as nbBa FROM mod_bam_poller_relations where poller_id = ".$poller_id;
+      $IsPollerUsedWithBAM = $this->backend_instance->db->query($queryIsPollerUsedWithBAM);
+
+      $rowIsPollerUsedWithBAM = $IsPollerUsedWithBAM->fetch();
+
+      if ((($rowIsPollerUsedWithBAM !== false) && $rowIsPollerUsedWithBAM['nbBa'] > 0)) {
+        $isBamPoller = true;
+      }
+
+      #If the poller is used as an additionnal poller for BAM, he should have
+      #Centreon BAM installed so we can continue
+      $sql = '';
+
+      if($isBamPoller){
         $filteredObjects = array();
 
         // Disable MySQL foreign key check
@@ -187,7 +205,7 @@ class Bam extends \AbstractObject
 
         // Enable MySQL foreign key check
         $sql .= $this->setForeignKey(1). "\n\n";
-
+      }
         $this->createFile($this->backend_instance->getPath());
         fwrite($this->fp, $sql);
         $this->close_file();
