@@ -177,6 +177,7 @@ try {
       node {
         sh 'cd /opt/centreon-build && git pull && cd -'
         sh '/opt/centreon-build/jobs/poller-display/3.4/mon-poller-display-delivery.sh'
+        sh '/opt/centreon-build/jobs/poller-display/3.5/mon-poller-display-delivery.sh'
       }
       if ((currentBuild.result ?: 'SUCCESS') != 'SUCCESS') {
         error('Delivery stage failure.');
