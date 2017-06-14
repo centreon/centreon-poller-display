@@ -4,7 +4,7 @@ stage('Source') {
     dir('centreon-poller-display') {
       checkout scm
     }
-    sh '/opt/centreon-build/jobs/poller-display/mon-poller-display-source.sh'
+    sh '/opt/centreon-build/jobs/poller-display/3.4/mon-poller-display-source.sh'
     source = readProperties file: 'source.properties'
     env.VERSION = "${source.VERSION}"
     env.RELEASE = "${source.RELEASE}"
@@ -16,7 +16,7 @@ try {
     parallel 'centos6': {
       node {
         sh 'cd /opt/centreon-build && git pull && cd -'
-        sh '/opt/centreon-build/jobs/poller-display/mon-poller-display-unittest.sh centos6'
+        sh '/opt/centreon-build/jobs/poller-display/3.4/mon-poller-display-unittest.sh centos6'
         step([
           $class: 'XUnitBuilder',
           thresholds: [
@@ -30,7 +30,7 @@ try {
     'centos7': {
       node {
         sh 'cd /opt/centreon-build && git pull && cd -'
-        sh '/opt/centreon-build/jobs/poller-display/mon-poller-display-unittest.sh centos7'
+        sh '/opt/centreon-build/jobs/poller-display/3.4/mon-poller-display-unittest.sh centos7'
         step([
           $class: 'XUnitBuilder',
           thresholds: [
@@ -62,13 +62,13 @@ try {
     parallel 'centos6': {
       node {
         sh 'cd /opt/centreon-build && git pull && cd -'
-        sh '/opt/centreon-build/jobs/poller-display/mon-poller-display-package.sh centos6'
+        sh '/opt/centreon-build/jobs/poller-display/3.4/mon-poller-display-package.sh centos6'
       }
     },
     'centos7': {
       node {
         sh 'cd /opt/centreon-build && git pull && cd -'
-        sh '/opt/centreon-build/jobs/poller-display/mon-poller-display-package.sh centos7'
+        sh '/opt/centreon-build/jobs/poller-display/3.4/mon-poller-display-package.sh centos7'
       }
     }
     if ((currentBuild.result ?: 'SUCCESS') != 'SUCCESS') {
@@ -80,13 +80,13 @@ try {
     parallel 'centos6': {
       node {
         sh 'cd /opt/centreon-build && git pull && cd -'
-        sh '/opt/centreon-build/jobs/poller-display/mon-poller-display-bundle.sh centos6'
+        sh '/opt/centreon-build/jobs/poller-display/3.4/mon-poller-display-bundle.sh centos6'
       }
     },
     'centos7': {
       node {
         sh 'cd /opt/centreon-build && git pull && cd -'
-        sh '/opt/centreon-build/jobs/poller-display/mon-poller-display-bundle.sh centos7'
+        sh '/opt/centreon-build/jobs/poller-display/3.4/mon-poller-display-bundle.sh centos7'
       }
     }
     if ((currentBuild.result ?: 'SUCCESS') != 'SUCCESS') {
@@ -98,7 +98,7 @@ try {
     parallel 'centos6': {
       node {
         sh 'cd /opt/centreon-build && git pull && cd -'
-        sh '/opt/centreon-build/jobs/poller-display/mon-poller-display-acceptance.sh centos6'
+        sh '/opt/centreon-build/jobs/poller-display/3.4/mon-poller-display-acceptance.sh centos6'
         step([
           $class: 'XUnitBuilder',
           thresholds: [
@@ -113,7 +113,7 @@ try {
     'centos7': {
       node {
         sh 'cd /opt/centreon-build && git pull && cd -'
-        sh '/opt/centreon-build/jobs/poller-display/mon-poller-display-acceptance.sh centos7'
+        sh '/opt/centreon-build/jobs/poller-display/3.4/mon-poller-display-acceptance.sh centos7'
         step([
           $class: 'XUnitBuilder',
           thresholds: [
@@ -130,11 +130,11 @@ try {
     }
   }
 
-  if (env.BRANCH_NAME == 'master') {
+  if (env.BRANCH_NAME == '1.6.x') {
     stage('Delivery') {
       node {
         sh 'cd /opt/centreon-build && git pull && cd -'
-        sh '/opt/centreon-build/jobs/poller-display/mon-poller-display-delivery.sh'
+        sh '/opt/centreon-build/jobs/poller-display/3.4/mon-poller-display-delivery.sh'
       }
       if ((currentBuild.result ?: 'SUCCESS') != 'SUCCESS') {
         error('Delivery stage failure.');
@@ -144,7 +144,7 @@ try {
 }
 finally {
   buildStatus = currentBuild.result ?: 'SUCCESS';
-  if ((buildStatus != 'SUCCESS') && (env.BRANCH_NAME == 'master')) {
+  if ((buildStatus != 'SUCCESS') && (env.BRANCH_NAME == '1.6.x')) {
     slackSend channel: '#monitoring-metrology', message: "@channel Centreon Poller Display build ${env.BUILD_NUMBER} was broken by ${source.COMMITTER}. Please fix it ASAP."
   }
 }
