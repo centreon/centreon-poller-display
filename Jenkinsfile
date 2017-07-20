@@ -145,6 +145,6 @@ try {
 finally {
   buildStatus = currentBuild.result ?: 'SUCCESS';
   if ((buildStatus != 'SUCCESS') && (env.BRANCH_NAME == '1.6.x')) {
-    slackSend channel: '#monitoring-metrology', message: "@channel Centreon Poller Display build ${env.BUILD_NUMBER} was broken by ${source.COMMITTER}. Please fix it ASAP."
+    slackSend channel: '#monitoring-metrology', message: "@channel Centreon Poller Display build ${env.BUILD_NUMBER} of branch ${env.BRANCH_NAME} was broken by ${source.COMMITTER}. Please fix it ASAP."
   }
 }
