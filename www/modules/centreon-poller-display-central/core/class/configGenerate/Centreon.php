@@ -41,6 +41,8 @@ use \CentreonPollerDisplayCentral\ConfigGenerate\Centreon\AclGroupActionsRelatio
 use \CentreonPollerDisplayCentral\ConfigGenerate\Centreon\AclGroupContactgroupsRelation;
 use \CentreonPollerDisplayCentral\ConfigGenerate\Centreon\AclGroupContactsRelation;
 use \CentreonPollerDisplayCentral\ConfigGenerate\Centreon\AclGroupTopology;
+use \CentreonPollerDisplayCentral\ConfigGenerate\Centreon\AclTopology;
+use \CentreonPollerDisplayCentral\ConfigGenerate\Centreon\AclTopologyRelation;
 use \CentreonPollerDisplayCentral\ConfigGenerate\Centreon\AclGroups;
 use \CentreonPollerDisplayCentral\ConfigGenerate\Centreon\AclResources;
 use \CentreonPollerDisplayCentral\ConfigGenerate\Centreon\AclResourcesGroupRelation;
@@ -117,6 +119,8 @@ class Centreon extends \AbstractObject
         $oAclGroupContactgroupsRelation = new AclGroupContactgroupsRelation($db, $poller_id);
         $oAclGroupContactsRelation = new AclGroupContactsRelation($db, $poller_id);
         $oAclGroupTopology = new AclGroupTopology($db, $poller_id);
+        $oAclTopology = new AclTopology($db, $poller_id);
+        $oAclTopologyRelation = new AclTopologyRelation($db, $poller_id);
         $oAclGroups = new AclGroups($db, $poller_id);
         $oAclResources = new AclResources($db, $poller_id);
         $oAclResourcesGroupRelation = new AclResourcesGroupRelation($db, $poller_id);
@@ -159,8 +163,9 @@ class Centreon extends \AbstractObject
         $oServicegroup = new Servicegroup($db, $poller_id);
         $oServicegroupRelation = new ServicegroupRelation($db, $poller_id);
 
+
         $sql = '';
-        $sql .= $this->setForeignKey(0). "\n\n";
+        $sql .= $this->setForeignKey(0) . "\n\n";
 
         $nagiosServerList = $oNagiosServer->getList();
         $sql .= $oNagiosServer->generateSql($nagiosServerList) . "\n\n";
@@ -287,6 +292,12 @@ class Centreon extends \AbstractObject
 
         $aclGroupTopologyList = $oAclGroupTopology->getList($aclGroupsList);
         $sql .= $oAclGroupTopology->generateSql($aclGroupTopologyList) . "\n\n";
+
+        $aclTopologyList = $oAclTopology->getList($aclGroupTopologyList);
+        $sql .= $oAclTopology->generateSql($aclTopologyList) . "\n\n";
+
+        $aclTopologyRelationList = $oAclTopologyRelation->getList($aclTopologyList);
+        $sql .= $oAclTopologyRelation->generateSql($aclTopologyRelationList) . "\n\n";
 
         $aclGroupActionsRelationList = $oAclGroupActionsRelation->getList($aclGroupsList);
         $sql .= $oAclGroupActionsRelation->generateSql($aclGroupActionsRelationList) . "\n\n";

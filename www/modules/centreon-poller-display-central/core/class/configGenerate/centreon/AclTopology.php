@@ -37,13 +37,13 @@ namespace CentreonPollerDisplayCentral\ConfigGenerate\Centreon;
 
 use CentreonPollerDisplayCentral\ConfigGenerate\Object;
 
-class AclGroups extends Object
+class AclTopology extends Object
 {
 
     /**
      * @var table
      */
-    protected $table = 'acl_groups';
+    protected $table = 'acl_topology';
 
     /**
      * @var array
@@ -53,64 +53,35 @@ class AclGroups extends Object
         '*'
     );
 
-    public function getList($clauseContactObject = null, $clauseContactgObject = null)
+    public function getList($clauseObject = null)
     {
-        $listAcl = array();
-        $list = array();
-
-        $contactgroups = $clauseContactgObject;
-        $contacts = $clauseContactObject;
-
-        $cgErrors = array_filter($contactgroups);
-        $cErrors = array_filter($contacts);
-
-        if (empty($cgErrors) && empty($cErrors)) {
+        $aclTopology = $clauseObject;
+        $errors = array_filter($aclTopology);
+        if (empty($errors)) {
             return '';
         }
 
-        if (!empty($cgErrors)) {
-            foreach ($contactgroups as $contactgroup) {
-                array_push($listAcl, $contactgroup['acl_group_id']);
+        $first = true;
+        $clauseQuery = ' WHERE acl_topo_id IN (';
+        foreach ($aclTopology as $acl) {
+            if (!$first) {
+                $clauseQuery .= ',';
             }
+            $clauseQuery .= $acl['acl_topology_id'];
+            $first = false;
         }
-
-        if (!empty($cErrors)) {
-            foreach ($contacts as $contact) {
-                array_push($listAcl, $contact['acl_group_id']);
-            }
-        }
-
-        $listAclUnique = array_unique($listAcl);
-        $clauseQuery = ' WHERE acl_group_id IN (';
-        $clauseQuery .= implode(',', $listAclUnique);
         $clauseQuery .= ')';
 
+        $list = array();
         $query = 'SELECT ' . implode(',', $this->columns) . ' '
             . 'FROM ' . $this->table . $clauseQuery;
 
         $result = $this->db->query($query);
+
         while ($row = $result->fetch(\PDO::FETCH_ASSOC)) {
             $list[] = $row;
         }
 
         return $list;
-    }
-
-    /**
-     *
-     * @param type $objects
-     * @return string
-     */
-    protected function generateInsertQuery($objects)
-    {
-        foreach ($objects as &$object) {
-            foreach ($object as $key => &$value) {
-                if ($key == "acl_group_changed") {
-                    $value = 1;
-                }
-            }
-        }
-
-        return parent::generateInsertQuery($objects);
     }
 }

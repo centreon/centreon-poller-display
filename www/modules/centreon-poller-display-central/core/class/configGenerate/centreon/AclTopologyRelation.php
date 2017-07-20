@@ -37,13 +37,13 @@ namespace CentreonPollerDisplayCentral\ConfigGenerate\Centreon;
 
 use CentreonPollerDisplayCentral\ConfigGenerate\Object;
 
-class AclGroups extends Object
+class AclTopologyRelation extends Object
 {
 
     /**
      * @var table
      */
-    protected $table = 'acl_groups';
+    protected $table = 'acl_topology_relations';
 
     /**
      * @var array
@@ -53,42 +53,31 @@ class AclGroups extends Object
         '*'
     );
 
-    public function getList($clauseContactObject = null, $clauseContactgObject = null)
+    public function getList($clauseObject = null)
     {
-        $listAcl = array();
-        $list = array();
-
-        $contactgroups = $clauseContactgObject;
-        $contacts = $clauseContactObject;
-
-        $cgErrors = array_filter($contactgroups);
-        $cErrors = array_filter($contacts);
-
-        if (empty($cgErrors) && empty($cErrors)) {
+        $aclTopology = $clauseObject;
+        $errors = array_filter($aclTopology);
+        if (empty($errors)) {
             return '';
         }
 
-        if (!empty($cgErrors)) {
-            foreach ($contactgroups as $contactgroup) {
-                array_push($listAcl, $contactgroup['acl_group_id']);
+        $first = true;
+        $clauseQuery = ' WHERE acl_topo_id IN (';
+        foreach ($aclTopology as $acl) {
+            if (!$first) {
+                $clauseQuery .= ',';
             }
+            $clauseQuery .= $acl['acl_topo_id'];
+            $first = false;
         }
-
-        if (!empty($cErrors)) {
-            foreach ($contacts as $contact) {
-                array_push($listAcl, $contact['acl_group_id']);
-            }
-        }
-
-        $listAclUnique = array_unique($listAcl);
-        $clauseQuery = ' WHERE acl_group_id IN (';
-        $clauseQuery .= implode(',', $listAclUnique);
         $clauseQuery .= ')';
 
+        $list = array();
         $query = 'SELECT ' . implode(',', $this->columns) . ' '
             . 'FROM ' . $this->table . $clauseQuery;
 
         $result = $this->db->query($query);
+
         while ($row = $result->fetch(\PDO::FETCH_ASSOC)) {
             $list[] = $row;
         }
@@ -103,14 +92,44 @@ class AclGroups extends Object
      */
     protected function generateInsertQuery($objects)
     {
-        foreach ($objects as &$object) {
-            foreach ($object as $key => &$value) {
-                if ($key == "acl_group_changed") {
-                    $value = 1;
+        $insertQuery = '';
+        if (!empty($objects)) {
+            if (implode(',', $this->columns) == '*') {
+                $this->columns = array_keys($objects[0]);
+            }
+            foreach ($objects as $object) {
+                $topologyDesc = $this->getTopologyDesc($object['topology_topology_id']);
+                $topologyQuery = '(SELECT topology_id FROM topology ' .
+                    'WHERE topology_name = "' . $topologyDesc['topology_name'] . '" ' .
+                    'AND topology_page = "' . $topologyDesc['topology_page'] . '")';
+
+                $insertQuery .= 'INSERT INTO `' . $this->table . '` (`' . implode('`,`', $this->columns) . '`) ' . "\n";
+                $insertQuery .= 'SELECT * FROM (SELECT ';
+                $values = array();
+                foreach ($object as $key => $value) {
+                    if (is_null($value)) {
+                        $values[] = 'NULL';
+                    } elseif ($key == 'topology_topology_id') {
+                        $values[] = $topologyQuery;
+                    } else {
+                        $values[] = $this->db->quote($value);
+                    }
                 }
+                $insertQuery .= implode(',', $values) . ') as tmp WHERE ' . $topologyQuery . "; \n";
             }
         }
 
-        return parent::generateInsertQuery($objects);
+        return $insertQuery;
+    }
+
+    public function getTopologyDesc($id)
+    {
+        if (empty($id)) {
+            return '';
+        }
+        $query = 'SELECT topology_name, topology_page FROM topology WHERE topology_id = ' . $id;
+        $result = $this->db->query($query);
+        $row = $result->fetch(\PDO::FETCH_ASSOC);
+        return $row;
     }
 }

@@ -13,6 +13,12 @@ solution. It also allows not to use WAN interconnections for example.
     This interface is not compatible with poller which receives data from
     many pollers.
 
+.. warning::
+    Warning version 1.6 uses a new ACLs management system.
+    All ACLs initially created on the Centreon Poller Display interface will be removed.
+    Only the contacts ACLs related to objects supervised by the collector will be synchronized.
+
+
 Centreon Poller Display allows to build the following architecture:
 
 .. image :: /images/eschema.png
