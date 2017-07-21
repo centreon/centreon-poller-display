@@ -16,6 +16,11 @@ interface peut être également utilisée comme solution de secours. Cela permet
     Cette interface n'est pas compatible avec un poller recevant les données
     collectés de plusieurs pollers.
 
+.. warning::
+    Attention la version 1.6 utilise un nouveau système de gestion des ACLs.
+    Toutes les ACLs initialement créées sur l'interface Centreon Poller Display vont être supprimées.
+    Seules les ACLs des contacts liés à des objets supervisés par le collecteur seront synchronisées.
+
 Centreon Poller Display permet alors de mettre en place l’architecture suivante :
 
 .. image :: /images/eschema.png
