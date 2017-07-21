@@ -43,7 +43,6 @@ use \CentreonPollerDisplayCentral\ConfigGenerate\Centreon\AclGroupContactsRelati
 use \CentreonPollerDisplayCentral\ConfigGenerate\Centreon\AclGroupTopology;
 use \CentreonPollerDisplayCentral\ConfigGenerate\Centreon\AclTopology;
 use \CentreonPollerDisplayCentral\ConfigGenerate\Centreon\AclTopologyRelation;
-use \CentreonPollerDisplayCentral\ConfigGenerate\Centreon\Topology;
 use \CentreonPollerDisplayCentral\ConfigGenerate\Centreon\AclGroups;
 use \CentreonPollerDisplayCentral\ConfigGenerate\Centreon\AclResources;
 use \CentreonPollerDisplayCentral\ConfigGenerate\Centreon\AclResourcesGroupRelation;
@@ -163,7 +162,6 @@ class Centreon extends \AbstractObject
         $oServiceInformation = new ServiceInformation($db, $poller_id);
         $oServicegroup = new Servicegroup($db, $poller_id);
         $oServicegroupRelation = new ServicegroupRelation($db, $poller_id);
-        $oTopology = new Topology($db, $poller_id);
 
 
         $sql = '';
@@ -300,9 +298,6 @@ class Centreon extends \AbstractObject
 
         $aclTopologyRelationList = $oAclTopologyRelation->getList($aclTopologyList);
         $sql .= $oAclGroupTopology->generateSql($aclTopologyRelationList) . "\n\n";
-
-        $topologyList = $oTopology->getList($aclTopologyRelationList);
-        $sql .= $oTopology->generateSql($topologyList) . "\n\n";
 
         $aclGroupActionsRelationList = $oAclGroupActionsRelation->getList($aclGroupsList);
         $sql .= $oAclGroupActionsRelation->generateSql($aclGroupActionsRelationList) . "\n\n";
