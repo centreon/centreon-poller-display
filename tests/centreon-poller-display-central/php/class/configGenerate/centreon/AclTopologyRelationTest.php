@@ -57,6 +57,8 @@ class CentreonPollerDisplayCentral_AclTopologyRelation extends PHPUnit_Framework
                 'acl_topo_id' => '4'
             )
         );
+
+
     }
 
     public function tearDown()
@@ -86,10 +88,28 @@ class CentreonPollerDisplayCentral_AclTopologyRelation extends PHPUnit_Framework
 
     public function testGenerateSql()
     {
+        self::$db->addResultSet(
+            'SELECT topology_name FROM topology WHERE topology_id = 2',
+            array(
+                array(
+                    'topology_id' => '2',
+                    'topology_name' => 'toto'
+                )
+            )
+        );
+        self::$db->addResultSet(
+            'SELECT topology_name FROM topology WHERE topology_id = 3',
+            array(
+                array(
+                    'topology_id' => '3',
+                    'topology_name' => 'tutu'
+                )
+            )
+        );
 
         $expectedResult = 'DELETE FROM acl_topology_relations;
 TRUNCATE acl_topology_relations;
-INSERT INTO `acl_topology_relations` (`topology_topology_id`,`acl_topo_id`) VALUES (\'2\',\'1\'),(\'3\',\'4\');';
+INSERT INTO `acl_topology_relations` (`topology_topology_id`,`acl_topo_id`) VALUES ((SELECT topology_id FROM topology WHERE topology_name = "toto"),\'1\'),((SELECT topology_id FROM topology WHERE topology_name = "tutu"),\'4\');';
 
         $sql = self::$acl->generateSql(self::$objectListOut);
         $this->assertEquals($sql, $expectedResult);
