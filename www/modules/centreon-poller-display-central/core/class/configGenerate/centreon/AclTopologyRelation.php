@@ -93,52 +93,44 @@ class AclTopologyRelation extends Object
     protected function generateInsertQuery($objects)
     {
         $insertQuery = '';
-
         if (!empty($objects)) {
             if (implode(',', $this->columns) == '*') {
                 $this->columns = array_keys($objects[0]);
             }
-
-            $insertQuery .= 'INSERT INTO `' . $this->table . '` '
-                . '(`' . implode('`,`', $this->columns) . '`) '
-                . 'VALUES ';
-
-            $first = true;
             foreach ($objects as $object) {
-                if (!$first) {
-                    $insertQuery .= ',';
-                }
-                $insertQuery .= '(';
+                $topologyDesc = $this->getTopologyDesc($object['topology_topology_id']);
+                $topologyQuery = '(SELECT topology_id FROM topology ' .
+                    'WHERE topology_name = "' . $topologyDesc['topology_name'] . '" ' .
+                    'AND topology_page = "' . $topologyDesc['topology_page'] . '")';
+
+                $insertQuery .= 'INSERT INTO `' . $this->table . '` (`' . implode('`,`', $this->columns) . '`) ' . "\n";
+                $insertQuery .= 'SELECT ';
                 foreach ($object as $key => $value) {
                     if (is_null($value)) {
                         $insertQuery .= 'NULL,';
                     } else {
                         if ($key == 'topology_topology_id') {
-                            $topologyName = $this->getTopologyName($value);
-                            $insertQuery .= '(SELECT topology_id FROM topology ' .
-                                'WHERE topology_name = "' . $topologyName . '"),';
+                            $insertQuery .= $topologyQuery . ',';
                         } else {
                             $insertQuery .= $this->db->quote($value) . ',';
                         }
                     }
                 }
                 $insertQuery = rtrim($insertQuery, ',');
-                $insertQuery .= ')';
-                $first = false;
+                $insertQuery .= "\n" . 'WHERE ' . $topologyQuery . "; \n";
             }
-            $insertQuery .= ';';
         }
         return $insertQuery;
     }
 
-    public function getTopologyName($id)
+    public function getTopologyDesc($id)
     {
         if (empty($id)) {
             return '';
         }
-        $query = 'SELECT topology_name FROM topology WHERE topology_id = ' . $id;
+        $query = 'SELECT topology_name, topology_page FROM topology WHERE topology_id = ' . $id;
         $result = $this->db->query($query);
-        $row = $result->fetchRow();
-        return $row['topology_name'];
+        $row = $result->fetch(\PDO::FETCH_ASSOC);
+        return $row;
     }
 }
