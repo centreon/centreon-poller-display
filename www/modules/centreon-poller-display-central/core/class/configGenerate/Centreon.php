@@ -297,7 +297,7 @@ class Centreon extends \AbstractObject
         $sql .= $oAclTopology->generateSql($aclTopologyList) . "\n\n";
 
         $aclTopologyRelationList = $oAclTopologyRelation->getList($aclTopologyList);
-        $sql .= $oAclGroupTopology->generateSql($aclTopologyRelationList) . "\n\n";
+        $sql .= $oAclTopologyRelation->generateSql($aclTopologyRelationList) . "\n\n";
 
         $aclGroupActionsRelationList = $oAclGroupActionsRelation->getList($aclGroupsList);
         $sql .= $oAclGroupActionsRelation->generateSql($aclGroupActionsRelationList) . "\n\n";
