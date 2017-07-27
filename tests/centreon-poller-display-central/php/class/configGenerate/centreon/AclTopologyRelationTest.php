@@ -89,19 +89,19 @@ class CentreonPollerDisplayCentral_AclTopologyRelation extends PHPUnit_Framework
     public function testGenerateSql()
     {
         self::$db->addResultSet(
-            'SELECT topology_name FROM topology WHERE topology_id = 2',
+            'SELECT topology_name, topology_page FROM topology WHERE topology_id = 2',
             array(
                 array(
-                    'topology_id' => '2',
+                    'topology_page' => '20',
                     'topology_name' => 'toto'
                 )
             )
         );
         self::$db->addResultSet(
-            'SELECT topology_name FROM topology WHERE topology_id = 3',
+            'SELECT topology_name, topology_page FROM topology WHERE topology_id = 3',
             array(
                 array(
-                    'topology_id' => '3',
+                    'topology_page' => '30',
                     'topology_name' => 'tutu'
                 )
             )
@@ -109,7 +109,13 @@ class CentreonPollerDisplayCentral_AclTopologyRelation extends PHPUnit_Framework
 
         $expectedResult = 'DELETE FROM acl_topology_relations;
 TRUNCATE acl_topology_relations;
-INSERT INTO `acl_topology_relations` (`topology_topology_id`,`acl_topo_id`) VALUES ((SELECT topology_id FROM topology WHERE topology_name = "toto"),\'1\'),((SELECT topology_id FROM topology WHERE topology_name = "tutu"),\'4\');';
+INSERT INTO `acl_topology_relations` (`topology_topology_id`,`acl_topo_id`) 
+SELECT (SELECT topology_id FROM topology WHERE topology_name = "toto" AND topology_page = "20"),\'1\'
+WHERE (SELECT topology_id FROM topology WHERE topology_name = "toto" AND topology_page = "20"); 
+INSERT INTO `acl_topology_relations` (`topology_topology_id`,`acl_topo_id`) 
+SELECT (SELECT topology_id FROM topology WHERE topology_name = "tutu" AND topology_page = "30"),\'4\'
+WHERE (SELECT topology_id FROM topology WHERE topology_name = "tutu" AND topology_page = "30"); 
+';
 
         $sql = self::$acl->generateSql(self::$objectListOut);
         $this->assertEquals($sql, $expectedResult);
