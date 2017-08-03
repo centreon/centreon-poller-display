@@ -141,10 +141,8 @@ try {
       }
     }
   }
-}
-finally {
-  buildStatus = currentBuild.result ?: 'SUCCESS';
-  if ((buildStatus != 'SUCCESS') && (env.BRANCH_NAME == 'master')) {
-    slackSend channel: '#monitoring-metrology', message: "@channel Centreon Poller Display build ${env.BUILD_NUMBER} of branch ${env.BRANCH_NAME} was broken by ${source.COMMITTER}. Please fix it ASAP."
+} catch(e) {
+  if (env.BRANCH_NAME == 'master') {
+    slackSend channel: "#monitoring-metrology", color: "#F30031", message: "*FAILURE*: `CENTREON POLLER DISPLAY` <${env.BUILD_URL}|build #${env.BUILD_NUMBER}> on branch ${env.BRANCH_NAME}\n*COMMIT*: <https://github.com/centreon/centreon-poller-display/commit/${source.COMMIT}|here> by ${source.COMMITTER}\n*INFO*: ${e}"
   }
 }
