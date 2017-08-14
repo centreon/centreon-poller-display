@@ -53,8 +53,8 @@ class PollerDisplay extends \AbstractObject
         $stmt->execute();
 
         if ($stmt->fetch()) {
-            Centreon::getInstance()->generateobjects($poller_id);
-            $bamGenerateInstance = Bam::getInstance();
+            Centreon::getInstance($this->dependencyInjector)->generateobjects($poller_id);
+            $bamGenerateInstance = Bam::getInstance($this->dependencyInjector);
 
             if ($bamGenerateInstance->isBamModuleAvailable()) {
                 $bamGenerateInstance->generateobjects($poller_id);
