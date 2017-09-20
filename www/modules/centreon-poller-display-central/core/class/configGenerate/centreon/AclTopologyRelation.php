@@ -104,22 +104,21 @@ class AclTopologyRelation extends Object
                     'AND topology_page = "' . $topologyDesc['topology_page'] . '")';
 
                 $insertQuery .= 'INSERT INTO `' . $this->table . '` (`' . implode('`,`', $this->columns) . '`) ' . "\n";
-                $insertQuery .= 'SELECT ';
+                $insertQuery .= 'SELECT * FROM (SELECT ';
+                $values = array();
                 foreach ($object as $key => $value) {
                     if (is_null($value)) {
-                        $insertQuery .= 'NULL,';
+                        $values[] = 'NULL';
+                    } elseif ($key == 'topology_topology_id') {
+                        $values[] = $topologyQuery;
                     } else {
-                        if ($key == 'topology_topology_id') {
-                            $insertQuery .= $topologyQuery . ',';
-                        } else {
-                            $insertQuery .= $this->db->quote($value) . ',';
-                        }
+                        $values[] = $this->db->quote($value);
                     }
                 }
-                $insertQuery = rtrim($insertQuery, ',');
-                $insertQuery .= "\n" . 'WHERE ' . $topologyQuery . "; \n";
+                $insertQuery .= implode(',', $values) . ') as tmp WHERE ' . $topologyQuery . "; \n";
             }
         }
+
         return $insertQuery;
     }
 
