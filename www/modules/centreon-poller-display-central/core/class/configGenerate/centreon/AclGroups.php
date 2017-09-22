@@ -95,4 +95,22 @@ class AclGroups extends Object
 
         return $list;
     }
+
+    /**
+     *
+     * @param type $objects
+     * @return string
+     */
+    protected function generateInsertQuery($objects)
+    {
+        foreach ($objects as &$object) {
+            foreach ($object as $key => &$value) {
+                if ($key == "acl_group_changed") {
+                    $value = 1;
+                }
+            }
+        }
+
+        return parent::generateInsertQuery($objects);
+    }
 }
