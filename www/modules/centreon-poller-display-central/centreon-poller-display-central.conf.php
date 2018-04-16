@@ -15,6 +15,8 @@
  * limitations under the License.
  */
 
+require_once _CENTREON_PATH_ . '/bootstrap.php';
+
 if (!defined('_MODULE_PATH_')) {
     define('_MODULE_PATH_', _CENTREON_PATH_ . '/www/modules/centreon-poller-display-central/');
 }
