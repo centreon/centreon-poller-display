@@ -132,7 +132,7 @@ Add an *IPV4* output type
 
 Add an *IPV4* output type
 
-
+##### les 3 étapes supplémentaires (4D/4E/4F) ne sont pas indiqués dans la doc en francais !! ( les supprimer ou les adapter en francais ? : vous avez le dernier mot )
 **Step 4d : Network stream to the local MySQL Broker**
 
 .. image:: images/Output-1-4.png
