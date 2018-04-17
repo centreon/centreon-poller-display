@@ -44,7 +44,7 @@ require_once _MODULE_PATH_ . 'core/configuration/help.php';
 
 use \CentreonPollerDisplayCentral\Factory;
 
-$factoryObj = new Factory($pearDB);
+$factoryObj = new Factory($dependencyInjector);
 $pollerDisplayObj = $factoryObj->newPollerDisplay();
 
 // Smarty template Init

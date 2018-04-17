@@ -52,9 +52,9 @@ class Factory
      * Factory constructor.
      * @param $db \CentreonDB
      */
-    public function __construct($db)
+    public function __construct(\Pimple\Container $dependencyInjector)
     {
-        $this->db = $db;
+        $this->db = $dependencyInjector['configuration_db'];
     }
 
     /**

@@ -14,6 +14,7 @@
       { "type": "composer", "url": "http://ci.int.centreon.com" }
     ],
     "require-dev": {
+        "pimple/pimple": "~3.0",
         "behat/behat": "^3.0",
         "behat/mink": "^1.7",
         "phpunit/phpunit": "^4.8",

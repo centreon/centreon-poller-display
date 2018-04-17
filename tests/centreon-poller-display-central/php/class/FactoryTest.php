@@ -17,6 +17,8 @@
 
 use \Centreon\Test\Mock\CentreonDB;
 use \CentreonPollerDisplayCentral\Factory;
+use Centreon\Test\Mock\DependencyInjector\ServiceContainer;
+use Centreon\Test\Mock\DependencyInjector\ConfigurationDBProvider;
 
 /**
  * @package centreon-poller-display-central
@@ -25,23 +27,30 @@ use \CentreonPollerDisplayCentral\Factory;
  */
 class CentreonPollerDisplayCentral_FactoryTest extends PHPUnit_Framework_TestCase
 {
+    protected static $container;
     protected static $db;
+    protected static $dbProvider;
     protected static $factory;
     
     public function setUp()
     {
+        self::$container = new ServiceContainer();
         self::$db = new CentreonDB();
-        self::$factory = new Factory(self::$db);
+        self::$dbProvider = new ConfigurationDBProvider(self::$db);
+        self::$dbProvider->register(self::$container);
+        self::$factory = new Factory(self::$container);
     }
     
     public function tearDown()
     {
+        self::$dbProvider->terminate(self::$container);
+        self::$container->terminate();
         self::$db = null;
     }
     
     public function testNewPollerDisplay()
     {
         $pollerDisplayObj = self::$factory->newPollerDisplay();
-        $this->assertInstanceOf('CentreonPollerDisplayCentral\PollerDisplay', $pollerDisplayObj);
+        $this->assertInstanceOf('\CentreonPollerDisplayCentral\PollerDisplay', $pollerDisplayObj);
     }
 }

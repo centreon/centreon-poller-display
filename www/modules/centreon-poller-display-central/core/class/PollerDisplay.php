@@ -114,7 +114,7 @@ class PollerDisplay
         $result = $this->db->query($query);
 
         $pollers = array();
-        while ($row = $result->fetchRow()) {
+        while ($row = $result->fetch()) {
             $pollers[$row['name']] = $row['id'];
         }
 
