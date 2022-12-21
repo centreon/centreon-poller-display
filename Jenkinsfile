@@ -51,11 +51,6 @@ try {
           useDeltaValues: true,
           failedNewAll: '0'
         ])
-        if (env.BRANCH_NAME == 'master') {
-          withSonarQubeEnv('SonarQubeDev') {
-            sh './centreon-build/jobs/poller-display/3.4/mon-poller-display-analysis.sh'
-          }
-        }
       }
     }
     if ((currentBuild.result ?: 'SUCCESS') != 'SUCCESS') {
